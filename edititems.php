@@ -80,6 +80,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                     <th>Item Name</th>
                     <th>Item Price</th>
                     <th>Item Bulk Price</th>
+                    <th>Item Bulk Amount</th>
                     <th>Item Stock</th>
                 </tr>
             </thead>
@@ -97,6 +98,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                     <td><input type='text' name='itemName[]' value='{$row['itemName']}'></td>
                                     <td><input type='text' name='itemPrice[]' value='{$row['itemPrice']}'></td>
                                     <td><input type='text' name='bulkPrice[]' value='{$row['bulkPrice']}'></td>
+                                    <td><input type='text' name='bulkAmount[]' value='{$row['bulkAmount']}'></td>
                                     <td><input type='text' name='itemStock[]' value='{$row['itemStock']}'></td>
                                 </tr>\n
                             ";

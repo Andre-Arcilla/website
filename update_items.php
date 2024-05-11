@@ -15,7 +15,7 @@ if (!$conn) {
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the form fields are set
-    if (isset($_POST['itemID']) && isset($_POST['itemName']) && isset($_POST['itemPrice']) && isset($_POST['bulkPrice']) && isset($_POST['itemStock'])) {
+    if (isset($_POST['itemID']) && isset($_POST['itemName']) && isset($_POST['itemPrice']) && isset($_POST['bulkPrice']) && isset($_POST['bulkAmount']) && isset($_POST['itemStock'])) {
         // Loop through the submitted data
         for ($i = 0; $i < count($_POST['itemID']); $i++) {
             // Escape user inputs for security
@@ -23,10 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $itemName = mysqli_real_escape_string($conn, $_POST['itemName'][$i]);
             $itemPrice = mysqli_real_escape_string($conn, $_POST['itemPrice'][$i]);
             $bulkPrice = mysqli_real_escape_string($conn, $_POST['bulkPrice'][$i]);
+            $bulkAmount = mysqli_real_escape_string($conn, $_POST['bulkAmount'][$i]);
             $itemStock = mysqli_real_escape_string($conn, $_POST['itemStock'][$i]);
 
             // Update query
-            $sql = "UPDATE items SET itemName='$itemName', itemPrice='$itemPrice', bulkPrice='$bulkPrice', itemStock='$itemStock' WHERE itemID='$itemID'";
+            $sql = "UPDATE items SET itemName='$itemName', itemPrice='$itemPrice', bulkPrice='$bulkPrice', bulkAmount='$bulkAmount', itemStock='$itemStock' WHERE itemID='$itemID'";
 
             if (!mysqli_query($conn, $sql)) {
                 echo "Error updating record: " . mysqli_error($conn);

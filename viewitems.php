@@ -49,6 +49,7 @@
                 <th>Item Name</th>
                 <th>Item Price</th>
                 <th>Item Bulk Price</th>
+                <th>Item Bulk Amount</th>
                 <th>Item Stock</th>
             </tr>
         </thead>
@@ -64,6 +65,7 @@
                                 <td>{$row['itemName']}</td>
                                 <td>{$row['itemPrice']}</td>
                                 <td>{$row['bulkPrice']}</td>
+                                <td>{$row['bulkAmount']}</td>
                                 <td>{$row['itemStock']}</td>
                             </tr>\n
                         ";
