@@ -41,7 +41,7 @@
         $result = mysqli_query($conn, $sql);
     ?>
 
-    <table border="1vw">
+    <!--<table border="1vw">
 
         <thead>
             <tr>
@@ -59,13 +59,43 @@
                 <th>Comments</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody>-->
             <?php
+                $string2 = "";
                 if (mysqli_num_rows($result) == 0) {
                     echo "<tr><td colspan='6'>no rows returned</td></tr>";
                 } else {
                     while ($row = mysqli_fetch_assoc($result)) {
-                        echo "
+                        $string1 = $row['trackingNum'];
+                        if ($string1 != $string2) {
+                            echo "<br><br>$string1
+                                {$row['customerName']}
+                                {$row['orderAddress']}
+                                {$row['orderEmail']}
+                                {$row['orderPNum']}
+                                {$row['orderDate']}
+                                <br>
+                                {$row['itemID']}
+                                {$row['bulk']}
+                                {$row['itemAmount']}
+                                {$row['totalPrice']}
+                                {$row['orderTotal']}
+                                {$row['orderComment']}
+                            ";
+                        } else if ($string1 == $string2) {
+                            echo "
+                                <br>
+                                {$row['itemID']}
+                                {$row['bulk']}
+                                {$row['itemAmount']}
+                                {$row['totalPrice']}
+                                {$row['orderTotal']}
+                                {$row['orderComment']}
+                            ";
+                        }
+                        $string2 = $string1;
+
+                        /*echo "
                             <tr>
                                 <td><a id='customer' href='customerpage.php'>[{$row['trackingNum']}]</a></td>
                                 <td>{$row['customerName']}</td>
@@ -80,13 +110,13 @@
                                 <td>{$row['orderTotal']}</td>
                                 <td>{$row['orderComment']}</td>
                             </tr>
-                        ";
+                        ";*/
                     }
                 }
                 mysqli_close($conn);
             ?>
-        </tbody>
-    </table>
+        <!--</tbody>
+    </table>-->
 
     <br>
 
