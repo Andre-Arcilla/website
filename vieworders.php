@@ -41,82 +41,90 @@
         $result = mysqli_query($conn, $sql);
     ?>
 
-    <!--<table border="1vw">
+    <table border="1vw">
+        <?php
+            $string2 = "";
 
-        <thead>
-            <tr>
-                <th>Tracking Number</th>
-                <th>Customer Name</th>
-                <th>Customer Address</th>
-                <th>Customer Email</th>
-                <th>Customer Phone Number</th>
-                <th>Order Date</th>
-                <th>Items</th>
-                <th>Bulk (Y/N)</th>
-                <th>Amount</th>
-                <th>item Total</th>
-                <th>Order Total</th>
-                <th>Comments</th>
-            </tr>
-        </thead>
-        <tbody>-->
-            <?php
-                $string2 = "";
-                if (mysqli_num_rows($result) == 0) {
-                    echo "<tr><td colspan='6'>no rows returned</td></tr>";
-                } else {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $string1 = $row['trackingNum'];
-                        if ($string1 != $string2) {
-                            echo "<br><br>$string1
-                                {$row['customerName']}
-                                {$row['orderAddress']}
-                                {$row['orderEmail']}
-                                {$row['orderPNum']}
-                                {$row['orderDate']}
-                                <br>
-                                {$row['itemID']}
-                                {$row['bulk']}
-                                {$row['itemAmount']}
-                                {$row['totalPrice']}
-                                {$row['orderTotal']}
-                                {$row['orderComment']}
-                            ";
-                        } else if ($string1 == $string2) {
-                            echo "
-                                <br>
-                                {$row['itemID']}
-                                {$row['bulk']}
-                                {$row['itemAmount']}
-                                {$row['totalPrice']}
-                                {$row['orderTotal']}
-                                {$row['orderComment']}
-                            ";
-                        }
-                        $string2 = $string1;
 
-                        /*echo "
+            if (mysqli_num_rows($result) == 0) {
+                echo "<tr><td colspan='6'>no rows returned</td></tr>";
+            } else {
+                while ($row = mysqli_fetch_assoc($result)) {
+
+                    $string1 = $row['trackingNum'];
+                    if ($string1 != $string2) {
+                        echo "
                             <tr>
-                                <td><a id='customer' href='customerpage.php'>[{$row['trackingNum']}]</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>Tracking Number</th>
+                                <th>Customer Name</th>
+                                <th>Customer Address</th>
+                                <th>Customer Email</th>
+                                <th>Customer Phone Number</th>
+                                <th>Order Date</th>
+                                <th>Order Total</th>
+                                <th>Comments</th>
+                            </tr>
+                            <tr>
+                                <td>$string1</td>
                                 <td>{$row['customerName']}</td>
                                 <td>{$row['orderAddress']}</td>
                                 <td>{$row['orderEmail']}</td>
                                 <td>{$row['orderPNum']}</td>
                                 <td>{$row['orderDate']}</td>
-                                <td>{$row['itemID']}</td>
+                                <td>{$row['orderTotal']}</td>
+                                <td>{$row['orderComment']}</td>
+                            </tr>
+                            <tr>
+                                <th colspan='2'>Items</th>
+                                <th colspan='2'>Bulk (Y/N)</th>
+                                <th colspan='2'>Amount</th>
+                                <th colspan='2'>item Total</th>
+                            </tr>
+                            <tr>
+                                <td colspan='2'>{$row['itemName']}</td>
+                                <td colspan='2'>{$row['bulk']}</td>
+                                <td colspan='2'>{$row['itemAmount']}</td>
+                                <td colspan='2'>{$row['totalPrice']}</td>
+                            </tr>
+                        ";
+                    } else if ($string1 == $string2) {
+                        echo "
+                            <tr>
+                                <td>{$row['itemName']}</td>
                                 <td>{$row['bulk']}</td>
                                 <td>{$row['itemAmount']}</td>
                                 <td>{$row['totalPrice']}</td>
                                 <td>{$row['orderTotal']}</td>
                                 <td>{$row['orderComment']}</td>
                             </tr>
-                        ";*/
+                        ";
                     }
+                    $string2 = $string1;
+
+                    /*echo "
+                        <tr>
+                            <td><a id='customer' href='customerpage.php'>[{$row['trackingNum']}]</a></td>
+                            <td>{$row['customerName']}</td>
+                            <td>{$row['orderAddress']}</td>
+                            <td>{$row['orderEmail']}</td>
+                            <td>{$row['orderPNum']}</td>
+                            <td>{$row['orderDate']}</td>
+                            <td>{$row['itemID']}</td>
+                            <td>{$row['bulk']}</td>
+                            <td>{$row['itemAmount']}</td>
+                            <td>{$row['totalPrice']}</td>
+                            <td>{$row['orderTotal']}</td>
+                            <td>{$row['orderComment']}</td>
+                        </tr>
+                    ";*/
                 }
-                mysqli_close($conn);
-            ?>
-        <!--</tbody>
-    </table>-->
+            }
+            mysqli_close($conn);
+        ?>
+    </table>
 
     <br>
 
