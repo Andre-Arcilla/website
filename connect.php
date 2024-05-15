@@ -7,40 +7,30 @@
     $conn = "";
 
 
-    try{
-
-        $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
-
-    }catch(mysqli_sql_exception){
-        echo "Error: Connection Lost!";
-
+    $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
+    
+    if (!$conn) {
+        die ("Luh, Anong ginawa mo???" . mysqli_connect_error());
+    } else {
+        echo "Connected Successfully!</br>";
     }
 
-    $uname = mysqli_real_escape_string($conn, $_POST['uname']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $pnumber = mysqli_real_escape_string($conn, $_POST['pnumber']);
-
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-    $sql = "INSERT INTO customerform (Username, Password, EmailAddress, PhoneNumber)
-            VALUES ('$uname', '$email', '$pnumber', '$hashed_password')";
-
-    try {
-        if(mysqli_query($conn, $sql)) {
-            echo "New Record created successfully";
-
-        } else {
-            echo "Error . " . $sql. "<br>" . mysqli_error($conn);
-
-        }
+    $uname = $_POST['uname'];
+    $password = $_POST['password'];
+    $email = $_POST['email'];
+    $pnumber = $_POST['pnumber'];
 
 
-    }catch(mysqli_sql_exception $e) {
-        echo "ERROR: MALI ANG CODE";
+    $sql = "INSERT INTO customerform (Username, password, EmailAddress, PhoneNumber)
+            VALUES ('$uname', '$email', '$pnumber', '$password')";
+
+
+    if(mysqli_query($conn, $sql)) {
+        echo "New Record created successfully";
+
+    } else {
+        echo "Error . " . $sql. "<br>" . mysqli_error($conn);
 
     }
-
-
     mysqli_close($conn);
 ?>
