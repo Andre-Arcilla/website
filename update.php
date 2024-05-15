@@ -13,19 +13,19 @@
             echo "Error: Connection Lost!";
         }
 
-        $Anumber = mysqli_real_escape_string ($conn, $_POST ['AccountNumber']);
-        $uname = mysqli_real_escape_string ($conn, $_POST['uname']);
-        $password = mysqli_real_escape_string ($conn, $_POST['password']);
-        $email = mysqli_real_escape_string ($conn, $_POST['email']);
+        $AccountNumber = $_POST['AccountNumber']; 
+        $uname = $_POST['uname'];
+        $password = $_POST['password'];
+        $email = $_POST['email'];
+        $pnumber = $_POST['pnumber'];
 
-        $sql = "UPDATE customerform SET Username = '$Uname', Password = '$password', EmailAddress = '$email' WHERE AccountNumber = '$Anumber'";
-        $exists = "SELECT * FROM customerform WHERE AccountNumber = '$Anumber'";
+        $sql = "UPDATE customerform SET Username = '$Uname', EmailAddress = '$email' WHERE AccountNumber = '$AccountNumber'";
 
-            if (mysqli_query($conn, $sql)) {
-                echo "<br> Record Updated";
-            } else {
-                echo "Error: " . $sql. "<br>" . mysqli_error ($conn);
-            }
-            mysqli_close($conn);
+        if (mysqli_query($conn, $sql)) {
+            echo "<br> Record Updated";
+        } else {
+            echo "Error: " . $sql. "<br>" . mysqli_error ($conn);
+        }
+        mysqli_close($conn);
     }
 ?>
