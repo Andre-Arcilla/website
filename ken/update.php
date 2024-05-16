@@ -1,31 +1,38 @@
-<?php   
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        error_reporting(E_ERROR | E_PARSE);
+<?php
+
         $db_server = "localhost";
-        $db_pass = "root";
-        $db_name = "dct";
+        $db_user = "root";
+        $db_pass = "";
+        $db_name = "infodatabase"; 
         $conn = "";
 
-        try {
-            $conn = mysqli_connect ($db_server, $db_user, $db_pass, $db_name);
 
-        } catch (mysqli_sql_exception) {
-            echo "Error: BONAK MAG CODE!!";
+        $conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
+
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         }
 
-        $account_number = $_POST['Anumber']; 
-        $uname = mysqli_real_escape_string($conn, $_POST['username']);
-        $password = mysqli_real_escape_string($conn, $_POST['passWord']);
-        $pnumber = mysqli_real_escape_string($conn, $_POST['phoneNumber']);
-        $email = mysqli_real_escape_string($conn, $_POST['emailAddress']);
 
-        $sql = "UPDATE customerform SET Username = '$Uname', EmailAddress = '$email' WHERE AccountNumber = '$AccountNumber'";
+            $AccountNumber = $_POST['AccountNumber'];
+            $uname =  $_POST['username'];
+            $password = $_POST['passWord'];
+            $phonenumber = $_POST['phoneNumber'];
+            $email = $_POST['emailAddress'];
 
-        if (mysqli_query($conn, $sql)) {
-            echo "<br> Record Updated";
-        } else {
-            echo "Error: ". $sql. "<br>" . mysqli_error ($conn);
-        }
-        mysqli_close($conn);
-    }
+                $sql = "UPDATE customerform 
+                        SET username = '$uname', 
+                            passWord = '$password', 
+                            phoneNumber = '$phonenumber', 
+                            emailAddress = '$email' 
+                        WHERE AccountNumber = '$AccountNumber'";
+
+
+            if ($conn->query($sql) === TRUE) {
+                echo "Record updated successfully";
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
+            $conn->close();
 ?>
