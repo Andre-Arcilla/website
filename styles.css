@@ -40,11 +40,12 @@ nav ul li a {
 }
 
 .hero {
-    background-image: url('hero.jpg');
+    background-image: url(hero.jpg);
     background-size: cover;
-    color: white;
+    color: black;
     padding: 4rem 0;
     text-align: center;
+    margin-top: 25vh;
 }
 
 .categories {
@@ -62,6 +63,7 @@ nav ul li a {
 }
 
 .featured-products {
+    margin-top: 46vh;
     padding: 4rem 0;
     text-align: center;
 }

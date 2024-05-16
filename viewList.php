@@ -10,7 +10,7 @@
         $db_server = "localhost";
         $db_user = "root";
         $db_pass = "";
-        $db_name = "infodatabase"; 
+        $db_name = "dct"; 
         $conn = "";
     
     
@@ -50,11 +50,11 @@
             while($row = mysqli_fetch_assoc($result)) {
                 echo "
                         <tr>
-                            <td>{$row["AccountNumber"]}</td>
-                            <td>{$row["Username"]}</td>
-                            <td>{$row["Pass"]}</td>
-                            <td>{$row["EmailAddress"]}</td>
-                            <td>{$row["PhoneNumber"]}</td>
+                            <td>{$row["accountnumber"]}</td>
+                            <td>{$row["username"]}</td>
+                            <td>{$row["password"]}</td>
+                            <td>{$row["emailaddress"]}</td>
+                            <td>{$row["phonenumber"]}</td>
                             <br>
                         </tr>
                     ";

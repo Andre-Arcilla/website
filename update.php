@@ -3,7 +3,7 @@
         error_reporting(E_ERROR | E_PARSE);
         $db_server = "localhost";
         $db_pass = "root";
-        $db_name = "infodatabase";
+        $db_name = "dct";
         $conn = "";
 
         try {
