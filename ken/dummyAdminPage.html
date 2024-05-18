@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dummy admin page</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <div id="wrapper"></div>
+
+    <script>
+        var track = {
+            delay : 10000,
+            timer : null,
+            hWrap : null,
+
+            init : () => {
+                track.hWrap = documment.getElementById("wrapper");
+                track.show();
+                track.timer = setInterval(track.how, track.delay);
+            },
+
+            show : () => {
+                var data = new FormData ();
+                data.append ("req", "get");
+
+                fetch("ajaxTrack.php", { method : "post", body:data})
+                .then(res => res.json())
+                .then(data => { for (let r of data) {
+                    let row = document.createElement ("div");
+                    row.className = "row";
+                    row.innerHTML = 
+                        `<div class = "title"> [${r.track_time}] Rider ${r.IDRider}</div>
+                        <div class = "data"> [${r.track_lat}], ${r.track_lng}</div>`;
+                    track.hWrap.appendChild(row);
+                }})
+                .catch(err => track.error(err));
+            },
+            error : err => {
+                console.error(err);
+                alert ("An error has occured!");
+                clearInterval(track.timer);
+            }
+        };
+        window.onload = track.init;
+
+    </script>
+    
+</body>
+</html>
