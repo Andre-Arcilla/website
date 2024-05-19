@@ -79,51 +79,6 @@
         // Additional validations or form submission logic can be added here
         return true; // Allow form submission
     }
-
-    function togglePassword(passwordId) {
-        const passwordField = document.getElementById(passwordId);
-        const showPasswordCheckbox = document.getElementById('show-' + passwordId);
-        if (showPasswordCheckbox.checked) {
-            passwordField.type = 'text';
-        } else {
-            passwordField.type = 'password';
-        }
-    }
-
-    function validateForm() {
-        var email1 = document.getElementById('email1').value;
-        var email2 = document.getElementById('email2').value;
-        var password1 = document.getElementById('password1').value;
-        var password2 = document.getElementById('password2').value;
-
-        if (email1 !== email2) {
-            document.getElementById('match-error').innerText = "Email addresses do not match.";
-            document.getElementById('match-error').style.display = 'block';
-            return false; // Prevent form submission
-        } else {
-            document.getElementById('match-error').innerText = ""; // Clear error message
-            document.getElementById('match-error').style.display = 'none';
-        }
-
-        if (password1 !== password2) {
-            document.getElementById('match-error').innerText = "Passwords do not match.";
-            document.getElementById('match-error').style.display = 'block';
-            return false; // Prevent form submission
-        } else {
-            document.getElementById('match-error').innerText = ""; // Clear error message
-            document.getElementById('match-error').style.display = 'none';
-        }
-
-        return true; // Allow form submission
-    }
-
-    function adjustScroll() {
-        window.scrollTo(0, document.getElementById('signup-form').offsetTop - 10);
-    }
-
-    document.querySelectorAll('.signup-form input').forEach(input => {
-        input.addEventListener('focus', adjustScroll);
-    });
     </script>
 </body>
 </html>
