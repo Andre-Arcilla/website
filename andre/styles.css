@@ -96,9 +96,10 @@ button:hover {
 
 /* Styles for mobile */
 @media (max-width: 95vw) {
-    .signup-form {
-        background: rgba(0, 0, 0, 0.1);
+    .container {
         margin-top: 10vh;
-        width: 90vw;
+    }
+    .signup-form {
+        width: 95vw;
     }
 }
