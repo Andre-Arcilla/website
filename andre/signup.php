@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form id="signup-form" class="signup-form" onsubmit="return validateForm()">
+        <form action="signup-action.php" method="post" id="signup-form" class="signup-form" onsubmit="return validateForm()">
             <h2>SIGN UP</h2>
 
             <!-- post username, phone, email1 and password1 to database -->
@@ -44,7 +44,6 @@
         </form>
     </div>
 
-    
     <script>
     function togglePassword(passwordId) {
         const passwordField = document.getElementById(passwordId);
