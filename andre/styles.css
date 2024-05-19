@@ -97,7 +97,7 @@ button:hover {
 /* Styles for mobile */
 @media (max-width: 95vw) {
     .container {
-        margin-top: 10vh;
+        max-height: 90vh;
     }
     .signup-form {
         width: 95vw;
