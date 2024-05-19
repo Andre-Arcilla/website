@@ -1,0 +1,15 @@
+FOR STAFF ONLY{
+adminmain.php > main menu for admin pages
+
+edititems.php > page to change item infos
+update_items.php > updates the database with info from edititems.php
+
+viewitems.php > view item details
+
+vieworders.php > view orders of customers
+}
+
+FRONT END {
+signup.php > allows users to sighup
+signup-action.php > posts user signup info from signup.php to database
+}
