@@ -1,0 +1,8 @@
+info pages
+-customerform > creates accounts
+-updateform > updates accounts
+-viewlist > shows accounts
+
+info database handlers
+-connect.php > used by customerform
+-update.php > used by updateform
