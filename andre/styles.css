@@ -24,6 +24,15 @@ body, html {
     align-items: center;
 }
 
+.error-message {
+    display: none;
+    background-color: rgba(255, 71, 71, 0.616);
+    padding: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 50px;
+}
+
 .signup-form h2 {
     margin-bottom: 20px;
 }
@@ -35,7 +44,8 @@ body, html {
 
 .signup-form input[type="email"],
 .signup-form input[type="text"],
-.signup-form input[type="password"] {
+.signup-form input[type="password"],
+.signup-form input[type="tel"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
