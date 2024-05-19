@@ -95,13 +95,50 @@ button:hover {
 }
 
 /* Styles for mobile */
-@media (max-width: 95vw) {
+@media (max-width: 768px) {
     .container {
-        max-height: 80vh;
+        width: 90%;
+        padding: 10px;
+    }
+    
+    .signup-form h2 {
+        margin-bottom: 15px;
+        font-size: 1.5em;
     }
 
-    .signup-form {
-        width: 95vw;
-        font-size: 2vh;
+    .signup-form label {
+        margin: 8px 0 4px;
+        font-size: 1em;
+    }
+
+    .signup-form input[type="email"],
+    .signup-form input[type="text"],
+    .signup-form input[type="password"],
+    .signup-form input[type="tel"] {
+        padding: 8px;
+        margin-bottom: 8px;
+        font-size: 1em;
+    }
+
+    .show-password {
+        margin-bottom: 8px;
+    }
+
+    .signup-form button {
+        padding: 12px;
+        font-size: 1em;
+        margin: 15px 0;
+        width: 100%;
+    }
+
+    .signup-form .already-account {
+        font-size: 1em;
+    }
+
+    .error-message {
+        padding: 10px;
+        padding-left: 30px;
+        padding-right: 30px;
+        font-size: 0.9em;
     }
 }
