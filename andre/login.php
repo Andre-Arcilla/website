@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <form action="login-action.php" method="post" class="signup-form" id="login-form">
+            <h2>LOGIN</h2>
+            <div class="error-message" id="error-message">email or password incorrect</div>
+            <label for="email">EMAIL:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">PASSWORD:</label>
+            <input type="password" id="password" name="password" required>
+            <div class="show-password">
+                <input type="checkbox" id="show-password">
+                <label for="show-password">show password</label>
+            </div>
+            <button type="submit">sign up</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('show-password').addEventListener('change', function() {
+            const passwordInput = document.getElementById('password');
+            if (this.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    </script>
+</body>
+</html>

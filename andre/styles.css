@@ -33,6 +33,7 @@ body, html {
     padding-left: 50px;
     padding-right: 50px;
     border-radius: 50px;
+    margin-bottom: 10px;
 }
 
 .signup-form h2 {
@@ -45,8 +46,8 @@ body, html {
 }
 
 .signup-form input[type="email"],
-.signup-form input[type="text"],
 .signup-form input[type="password"],
+.signup-form input[type="text"],
 .signup-form input[type="tel"] {
     width: 100%;
     padding: 10px;
@@ -73,7 +74,7 @@ body, html {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin: 20px 0;
+    margin: 5px 0;
 }
 
 .signup-form .already-account {
@@ -115,8 +116,8 @@ button:hover {
     }
 
     .signup-form input[type="email"],
-    .signup-form input[type="text"],
     .signup-form input[type="password"],
+    .signup-form input[type="text"],
     .signup-form input[type="tel"] {
         padding: 8px;
         margin-bottom: 8px;

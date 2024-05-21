@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form action="signup-action.php" method="post" id="signup-form" class="signup-form" onsubmit="return validateForm()">
+        <form action="signup-action.php" method="post" class="signup-form" onsubmit="return validateForm()">
             <h2>SIGN UP</h2>
 
             <!-- post username, phone, email1 and password1 to database -->
@@ -66,13 +66,13 @@
     
         if (email1 !== email2) {
             matchError.innerText = "Email addresses do not match.";
-            document.getElementById('match-error').style.display = 'block';
+            matchError.style.display = 'block';
             return false; // Prevent form submission
         }
     
         if (password1 !== password2) {
             matchError.innerText = "Passwords do not match.";
-            document.getElementById('match-error').style.display = 'block';
+            matchError.style.display = 'block';
             return false; // Prevent form submission
         }
     
