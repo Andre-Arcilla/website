@@ -16,7 +16,7 @@
             <div class="error-message" id="match-error"></div>
 
             <div>
-                <label for="username">USERNAME:</label>
+                <label for="username">NAME:</label>
                 <input type="text" id="username" name="username" required>
 
                 <label for="username">ADDRESS:</label>
@@ -24,7 +24,7 @@
 
                 <label for="phone">PHONE NUMBER:</label>
                 <input type="tel" id="phone" name="phone" pattern="[0-9]{4}-?[0-9]{3}-?[0-9]{4}" placeholder="e.g., 0123-456-7890" required>
-                
+
                 <label for="email1">EMAIL:</label>
                 <input type="email" id="email1" name="email1" required>
                 <label for="email2">CONFIRM EMAIL:</label>

@@ -12,4 +12,11 @@ vieworders.php > view orders of customers
 FRONT END {
 signup.php > allows users to sighup
 signup-action.php > posts user signup info from signup.php to database
+
+login.php > allows users to login
+login-action.php > compares input to database accounts
+}
+
+PROTOTYPES {
+    item selection test
 }
