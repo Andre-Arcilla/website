@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="signup-login-styles.css">
 </head>
 <body>
     <div class="container">
@@ -15,29 +15,34 @@
 
             <div class="error-message" id="match-error"></div>
 
-            <label for="username">USERNAME:</label>
-            <input type="text" id="username" name="username" required>
-    
-            <label for="phone">PHONE NUMBER:</label>
-            <input type="tel" id="phone" name="phone" pattern="[0-9]{4}-?[0-9]{3}-?[0-9]{4}" placeholder="e.g., 0123-456-7890" required>
-    
-            <label for="email1">EMAIL:</label>
-            <input type="email" id="email1" name="email1" required>
-            <label for="email2">CONFIRM EMAIL:</label>
-            <input type="email" id="email2" name="email2" required>
-    
-            <label for="password1">PASSWORD:</label>
-            <input type="password" id="password1" name="password1" required>
-            <div class="show-password">
-                <input type="checkbox" id="show-password1" onclick="togglePassword('password1')">
-                <label for="show-password1">show password</label>
-            </div>
-    
-            <label for="password2">CONFIRM PASSWORD:</label>
-            <input type="password" id="password2" name="password2" required>
-            <div class="show-password">
-                <input type="checkbox" id="show-password2" onclick="togglePassword('password2')">
-                <label for="show-password2">show password</label>
+            <div>
+                <label for="username">USERNAME:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="username">ADDRESS:</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="phone">PHONE NUMBER:</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{4}-?[0-9]{3}-?[0-9]{4}" placeholder="e.g., 0123-456-7890" required>
+                
+                <label for="email1">EMAIL:</label>
+                <input type="email" id="email1" name="email1" required>
+                <label for="email2">CONFIRM EMAIL:</label>
+                <input type="email" id="email2" name="email2" required>
+        
+                <div class="show-password">
+                    <label for="password1">PASSWORD:</label>
+                    <input type="password" id="password1" name="password1" required>
+                    <input type="checkbox" id="show-password1" onclick="togglePassword('password1')">
+                    <label for="show-password1">show password</label>
+                </div>
+        
+                <div class="show-password">
+                    <label for="password2">CONFIRM PASSWORD:</label>
+                    <input type="password" id="password2" name="password2" required>
+                    <input type="checkbox" id="show-password2" onclick="togglePassword('password2')">
+                    <label for="show-password2">show password</label>
+                </div>
             </div>
     
             <button type="submit">sign up</button>

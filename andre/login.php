@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="signup-login-styles.css">
 </head>
 <body>
     <div class="container">
         <form action="login-action.php" method="post" class="signup-form" id="login-form">
             <h2>LOGIN</h2>
+
+            <!-- error message, hidden unless triggered -->
             <div class="error-message" id="error-message">email or password incorrect</div>
+
             <label for="email">EMAIL:</label>
             <input type="email" id="email" name="email" required>
             <label for="password">PASSWORD:</label>
