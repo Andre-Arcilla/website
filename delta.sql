@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2024 at 04:59 PM
+-- Generation Time: May 23, 2024 at 08:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,33 +53,32 @@ INSERT INTO `accounts` (`accountID`, `name`, `password`, `phonenumber`, `emailad
 CREATE TABLE `items` (
   `itemID` varchar(4) NOT NULL,
   `itemPrice` double NOT NULL,
-  `bulkPrice` double NOT NULL,
   `itemName` varchar(30) NOT NULL,
   `itemStock` int(11) NOT NULL,
-  `bulkAmount` int(11) NOT NULL
+  `soldAmount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`itemID`, `itemPrice`, `bulkPrice`, `itemName`, `itemStock`, `bulkAmount`) VALUES
-('BAND', 20, 100, 'ID Bands', 100, 5),
-('BDGA', 50, 100, 'Adhesive Bandage', 1238, 100),
-('BDGB', 123, 1244, 'Elastic Bandage', 100, 214),
-('CTTN', 50, 500, 'Cotton Applicators', 100, 10),
-('FACE', 15, 150, 'Face Masks', 100, 10),
-('GAUZ', 100, 500, 'Gauze', 23, 23),
-('GLOV', 75, 375, 'Gloves', 100, 5),
-('HEAD', 10, 100, 'Head Caps', 100, 50),
-('SHOE', 35, 175, 'Shoe Covers', 100, 5),
-('SNTZ', 100, 250, 'Hand Sanitizer', 100, 23),
-('SPLA', 300, 1500, 'Wrist Splints', 100, 5),
-('SPLB', 20, 100, 'Traction Splints', 100, 5),
-('STSC', 100, 500, 'Stethoscope', 100, 5),
-('THRM', 213, 123, 'Thermometer', 87, 54),
-('TISS', 20, 200, 'Tissues', 94, 10),
-('UNDR', 150, 750, 'Under Pads', 100, 5);
+INSERT INTO `items` (`itemID`, `itemPrice`, `itemName`, `itemStock`, `soldAmount`) VALUES
+('BAND', 20, 'ID Bands', 97, 3),
+('BDGA', 50, 'Adhesive Bandage', 238, 1000),
+('BDGB', 123, 'Elastic Bandage', 95, 5),
+('CTTN', 50, 'Cotton Applicators', 96, 0),
+('FACE', 15, 'Face Masks', 100, 465),
+('GAUZ', 100, 'Gauze', 15, 0),
+('GLOV', 75, 'Gloves', 95, 5),
+('HEAD', 10, 'Head Caps', 97, 989),
+('SHOE', 35, 'Shoe Covers', 100, 0),
+('SNTZ', 100, 'Hand Sanitizer', 100, 0),
+('SPLA', 300, 'Wrist Splints', 100, 0),
+('SPLB', 20, 'Traction Splints', 100, 0),
+('STSC', 100, 'Stethoscope', 100, 0),
+('THRM', 213, 'Thermometer', 87, 0),
+('TISS', 20, 'Tissues', 94, 4653),
+('UNDR', 150, 'Under Pads', 100, 0);
 
 -- --------------------------------------------------------
 
@@ -102,7 +101,13 @@ CREATE TABLE `order_info` (
 INSERT INTO `order_info` (`orderID`, `accountID`, `orderDate`, `orderTotal`, `orderComment`) VALUES
 (1, 1, '2024-05-23', 100, NULL),
 (2, 1, '2024-05-23', 469, NULL),
-(3, 1, '2024-05-23', 3413, NULL);
+(3, 1, '2024-05-23', 3413, NULL),
+(4, 1, '2024-05-23', 200, NULL),
+(5, 1, '2024-05-23', 50, NULL),
+(6, 1, '2024-05-23', 200, NULL),
+(7, 1, '2024-05-23', 800, NULL),
+(8, 1, '2024-05-23', 50000, NULL),
+(9, 1, '2024-05-23', 1080, NULL);
 
 -- --------------------------------------------------------
 
@@ -127,7 +132,40 @@ INSERT INTO `order_items` (`orderID`, `itemID`, `itemAmount`, `totalPrice`) VALU
 (2, 'CTTN', 2, 100),
 (3, 'BAND', 14, 280),
 (3, 'BDGA', 11, 550),
-(3, 'BDGB', 21, 2583);
+(3, 'BDGB', 21, 2583),
+(4, 'CTTN', 4, 200),
+(5, 'CTTN', 1, 50),
+(6, 'CTTN', 4, 200),
+(7, 'GAUZ', 8, 800),
+(8, 'BDGA', 1000, 50000),
+(9, 'BAND', 3, 60),
+(9, 'BDGB', 5, 615),
+(9, 'GLOV', 5, 375),
+(9, 'HEAD', 3, 30);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `orderID` int(11) NOT NULL,
+  `gcashName` varchar(100) NOT NULL,
+  `gcashNumber` bigint(20) NOT NULL,
+  `gcashReferenceNum` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`orderID`, `gcashName`, `gcashNumber`, `gcashReferenceNum`) VALUES
+(5, 'Suisei Hoshimachi', 123456789, '963852741'),
+(6, 'Suisei Hoshimachi', 123456, '456'),
+(7, 'Suisei Hoshimachi', 123456, '963852741'),
+(8, 'Suisei Hoshimachi', 123456, '963852741'),
+(9, 'Suisei Hoshimachi', 123456, '963852741');
 
 --
 -- Indexes for dumped tables
@@ -160,6 +198,12 @@ ALTER TABLE `order_items`
   ADD KEY `itemID` (`itemID`);
 
 --
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`orderID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -173,7 +217,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `order_info`
 --
 ALTER TABLE `order_info`
-  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -191,6 +235,12 @@ ALTER TABLE `order_info`
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `order_info` (`orderID`),
   ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`itemID`) REFERENCES `items` (`itemID`);
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `order_info` (`orderID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
