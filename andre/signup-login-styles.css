@@ -7,8 +7,10 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('images/bg2.jpg') no-repeat center center fixed;
+    background: url('images/bg2.jpg');
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .container {
@@ -77,13 +79,13 @@ body, html {
     margin: 5px 0;
 }
 
-.signup-form .already-account {
+.signup-form .login-signup {
     color: blue;
     text-decoration: none;
     margin-top: 10px;
 }
 
-.signup-form .already-account:hover {
+.signup-form .login-signup:hover {
     text-decoration: underline;
 }
 

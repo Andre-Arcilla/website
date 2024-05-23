@@ -44,7 +44,9 @@
                     <label for="show-password2">show password</label>
                 </div>
             </div>
-    
+
+            <a href="login.php" class="login-signup">already have an account?</a>
+
             <button type="submit">sign up</button>
         </form>
     </div>

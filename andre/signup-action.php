@@ -39,11 +39,18 @@
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
                 // Check if email already exists
-                $sql = "SELECT accountnumber FROM accounts WHERE emailaddress = ?";
+                $sql = "SELECT emailaddress FROM accounts WHERE emailaddress = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("s", $email);
                 $stmt->execute();
                 $stmt->store_result();
+
+                // Check if the 'type' key exists in $_POST array
+                if (isset($_POST['type'])) {
+                    $type = $_POST['type'];
+                } else {
+                    $type = 'user';
+                }
 
                     //Tells user if email is already in-use
                 if ($stmt->num_rows > 0) {
@@ -53,7 +60,7 @@
                     // Use prepared statements to prevent SQL injection
                     $stmt->close(); // Close the previous statement
 
-                    $stmt = $conn->prepare("INSERT INTO customerform (username, password, phonenumber, emailaddress, type) VALUES (?, ?, ?, ?, ?)");
+                    $stmt = $conn->prepare("INSERT INTO accounts (name, password, phonenumber, emailaddress, type) VALUES (?, ?, ?, ?, ?)");
                     $stmt->bind_param("sssss", $username, $hashed_password, $phone, $email, $type);
 
                     if ($stmt->execute()) {
@@ -67,7 +74,7 @@
                 $stmt->close();
                 $conn->close();
             ?>
-            <button type="button" onclick="window.location.href='../indexa.html'">Return to Home Page</button>
+            <button type="button" onclick="window.location.href='../indexa.php'">Return to Home Page</button>
         </div>
     </div>
 </body>

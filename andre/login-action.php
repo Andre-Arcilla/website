@@ -10,6 +10,9 @@
     <div class="container">
         <div class="signup-form">
             <?php
+                // Start a session at the beginning
+                session_start();
+
                 // Database connection details
                 $servername = "localhost";
                 $username = "root";
@@ -33,7 +36,7 @@
                     $email = htmlspecialchars(strip_tags($email));
 
                     // Check if email exists
-                    $sql = "SELECT password FROM accounts WHERE emailaddress = ?";
+                    $sql = "SELECT accountID, password FROM accounts WHERE emailaddress = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("s", $email);
                     $stmt->execute();
@@ -41,11 +44,15 @@
 
                     if ($stmt->num_rows > 0) {
                         // Email found, now fetch the hashed password
-                        $stmt->bind_result($hashed_password_from_db);
+                        $stmt->bind_result($user_id, $hashed_password_from_db);
                         $stmt->fetch();
 
                         // Verify the hashed password
                         if (password_verify($password, $hashed_password_from_db)) {
+                            // Set session variables
+                            $_SESSION["userid"] = $user_id;
+                            $_SESSION["email"] = $email;
+
                             echo 'Login successful!';
                         } else {
                             echo '<span>Incorrect password.</span><br>
@@ -62,7 +69,7 @@
                 
                 $conn->close();
             ?>
-            <button type="button" onclick="window.location.href='../indexa.html'">Return to Home Page</button>
+            <button type="button" onclick="window.location.href='../indexa.php'">Return to Home Page</button>
         </div>
     </div>
 </body>

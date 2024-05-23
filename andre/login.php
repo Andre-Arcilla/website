@@ -22,6 +22,9 @@
                 <input type="checkbox" id="show-password">
                 <label for="show-password">show password</label>
             </div>
+
+            <a href="signup.php" class="login-signup">dont have an account yet?</a>
+
             <button type="submit">sign up</button>
         </form>
     </div>
