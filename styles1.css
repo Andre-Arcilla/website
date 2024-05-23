@@ -111,6 +111,17 @@ body {
     margin-top: 35vh;
 }
 
+hr {
+    border: 0;
+    height: 5px; /* Set the desired thickness here */
+    background-color: #000000; /* Set the color of the line */
+}
+
+.success-message {
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
 .hero-container {
     background-color: rgba(255, 255, 255, 0.623);
     width: 35vw;

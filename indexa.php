@@ -73,10 +73,17 @@
             <div class="navbar">
                 <img class="header-logo" src="images\DCT no bg v2.png">
                 <nav class="navigation">
-                    <a href="indexa.php">Home</a>
-                    <a href="products.php">Products</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Contact Us</a>
+                    <?php if (isset($_SESSION["userid"])): ?>
+                        <a href="indexa.php">Home</a>
+                        <a href="products.php">Products</a>
+                        <a href="#">About Us</a>
+                        <a href="#">Contact Us</a>
+                <?php else: ?>
+                        <a href="login.php">Home</a>
+                        <a href="login.php">Products</a>
+                        <a href="login.php">About Us</a>
+                        <a href="login.php">Contact Us</a>
+                <?php endif; ?>
                 </nav>
                 <div class="search-bar">
                     <input type="text" placeholder="Search Medical Supplies...">
@@ -99,6 +106,12 @@
             <img src="images\DCT no bg.png">
             <h1>Find the Best Medical Supplies</h1>
             <p>Your one-stop shop for quality medical supplies.</p>
+            <?php
+                // Check if success parameter is set and display success message
+                if (isset($_GET["success"]) && $_GET["success"] == 1) {
+                    echo "<hr><p class='success-message'>Order placed successfully!</p>";
+                }
+            ?>
         </div>
     </div>
 
