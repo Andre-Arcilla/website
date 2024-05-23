@@ -16,7 +16,7 @@
     }
 
     // SQL query to fetch specific columns for "TISS", "HEAD", and "FACE" items
-    $sql = "SELECT itemID, itemPrice, bulkPrice, itemStock, bulkAmount FROM items";
+    $sql = "SELECT itemID, itemPrice, itemStock, soldAmount FROM items";
 
     // Execute the query
     $result = $conn->query($sql);
@@ -26,29 +26,25 @@
             // Access data from the row
             $itemName = $row["itemID"];
             $itemPrice = $row["itemPrice"];
-            $bulkPrice = $row["bulkPrice"];
             $itemStock = $row["itemStock"];
-            $bulkAmount = $row["bulkAmount"];
+            $soldAmount = $row["soldAmount"];
 
             // Assign data to respective variables based on item name
             switch ($itemName) {
                 case 'TISS':
                     $tissuePrice = $itemPrice;
                     $tissueStock = $itemStock;
-                    $tissueBPrice = $bulkPrice;
-                    $tissueBAmount = $bulkAmount;
+                    $tissueSoldAmount = $soldAmount;
                     break;
                 case 'HEAD':
                     $headPrice = $itemPrice;
                     $headStock = $itemStock;
-                    $headBPrice = $bulkPrice;
-                    $headBAmount = $bulkAmount;
+                    $headSoldAmount = $soldAmount;
                     break;
                 case 'FACE':
                     $facePrice = $itemPrice;
                     $faceStock = $itemStock;
-                    $faceBPrice = $bulkPrice;
-                    $faceBAmount = $bulkAmount;
+                    $faceSoldAmount = $soldAmount;
                     break;
                 default:
                     // Handle unexpected item name
@@ -125,14 +121,8 @@
                 </div>
                 <div class="description">
                     <h3>
+                        <h2><?php echo $tissueSoldAmount; ?> BOXES SOLD!</h2>
                         Price per box: PHP<?php echo $tissuePrice; ?>
-                        <br>
-                        <br>
-                        (<?php echo $tissueBAmount; ?> boxes per bulk order)
-                        <bR>
-                        Bulk price: PHP<?php echo $tissueBPrice; ?>
-                        <br>
-                        <br>
                         Stock: <?php echo $tissueStock; ?> boxes
                     </h3>
                 </div>
@@ -144,14 +134,8 @@
                 </div>
                 <div class="description">
                     <h3>
+                        <h2><?php echo $faceSoldAmount; ?> BOXES SOLD!</h2>
                         Price per box: PHP<?php echo $facePrice; ?>
-                        <br>
-                        <br>
-                        (<?php echo $faceBAmount; ?> boxes per bulk order)
-                        <bR>
-                        Bulk price: PHP<?php echo $faceBPrice; ?>
-                        <br>
-                        <br>
                         Stock: <?php echo $faceStock; ?> boxes
                     </h3>
                 </div>
@@ -163,14 +147,8 @@
                 </div>
                 <div class="description">
                     <h3>
+                        <h2><?php echo $headSoldAmount; ?> BOXES SOLD!</h2>
                         Price per box: PHP<?php echo $headPrice; ?>
-                        <br>
-                        <br>
-                        (<?php echo $headBAmount; ?> boxes per bulk order)
-                        <bR>
-                        Bulk price: PHP<?php echo $headBPrice; ?>
-                        <br>
-                        <br>
                         Stock: <?php echo $headStock; ?> boxes
                     </h3>
                 </div>

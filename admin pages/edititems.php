@@ -9,7 +9,6 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
 <head>
     <title>admin page</title>
     <style>
-        /* CSS styles */
         body {
             background-color: hsl(180, 12%, 45%);
             margin-top: 5vh;
@@ -17,35 +16,36 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
             display: flex;
             flex-direction: column;
             align-items: center;
+            background: url('../images/backgrounds/bg2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        table {
+            width: 60vw;
+            border-collapse: collapse; /* Ensure borders are collapsed into a single border */
+            margin-top: 1rem; /* Add margin to separate table from header */
+            background-color: lightblue; /* Optional: Change background color to distinguish from table body */
+        }
+
+        th, td, #customer {
+            padding: .5vw;
+            font-size: 1.5vw;
+            border: 1px solid black; /* Set border for cells */
+        }
+
+        thead {
+            position: sticky;
+            top: 0; /* Stick the header row to the top of the viewport */
+            background-color: deepskyblue; /* Optional: Change background color to distinguish from table body */
         }
 
         a {
             color: black;
             text-decoration: none !important;
             font-size: 1.5vw;
-        }
-
-        table {
-            width: 60vw;
-        }
-
-        th, td {
-            padding: .5vw;
-            font-size: 2vw;
-            width: 12.5vw;
-            text-align: center;
-        }
-
-        input[type="text"] {
-            font-size: 1.5vw;
-            width: 12.5vw;
-            text-align: center;
-        }
-
-        input[type="submit"] {
-            font-size: 1.5vw;
-            width: 12vw;
-            height: 3vw;
+            margin-bottom: 5rem;
         }
     </style>
 </head>
@@ -72,16 +72,15 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
     ?>
 
     <!-- Form to update items -->
-    <form method="post" action="update_items-action.php">
+    <form method="post" action="edititems-action.php">
         <table border="1vw">
             <thead>
                 <tr>
                     <th>Item ID</th>
                     <th>Item Name</th>
                     <th>Item Price</th>
-                    <th>Item Bulk Price</th>
-                    <th>Item Bulk Amount</th>
                     <th>Item Stock</th>
+                    <th>Amount Sold</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,9 +96,8 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                                     <td><input type='text' name='itemID[]' value='{$row['itemID']}' readonly></td>
                                     <td><input type='text' name='itemName[]' value='{$row['itemName']}'></td>
                                     <td><input type='text' name='itemPrice[]' value='{$row['itemPrice']}'></td>
-                                    <td><input type='text' name='bulkPrice[]' value='{$row['bulkPrice']}'></td>
-                                    <td><input type='text' name='bulkAmount[]' value='{$row['bulkAmount']}'></td>
                                     <td><input type='text' name='itemStock[]' value='{$row['itemStock']}'></td>
+                                    <td><input type='text' name='soldAmount[]' value='{$row['soldAmount']}'></td>
                                 </tr>\n
                             ";
                         }

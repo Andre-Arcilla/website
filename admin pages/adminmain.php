@@ -9,6 +9,10 @@
             margin-top: 5%;
             text-align: center;
             font-size: 1.3vw;
+            background: url('../images/backgrounds/bg2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         a {

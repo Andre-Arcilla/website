@@ -118,7 +118,7 @@
         </div>
     </header>
 
-    <div class="featured-products">
+    <div class="contents">
         <div class="product-grid">
             <?php
             // Retrieve items from the database
@@ -132,9 +132,6 @@
                         <h3><?php echo $row["itemName"]; ?></h3>
                         <p>Price: PHP <?php echo $row["itemPrice"]; ?></p>
                         <p>Stock: <?php echo $row["itemStock"]; ?></p>
-                        <label for="bulk-idband">
-                            <input type="checkbox" id="bulk-idband" name="bulk" value="N"> Buy in Bulk
-                        </label>
                         <!-- Add to cart form -->
                         <form method="post">
                             <input type="hidden" name="item_id" value="<?php echo $row["itemID"]; ?>">

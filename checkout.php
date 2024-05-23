@@ -1,61 +1,102 @@
 <?php
-session_start();
+    session_start();
 
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "delta";
+    // Database connection details
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "delta";
 
-// Connect to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
+    // Connect to the database
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if the checkout form was submitted
-if (isset($_POST["checkout"])) {
-    // Get customer information from the accounts table based on session
-    $userID = $_SESSION['userid']; // Assuming you have stored the user's ID in the session
-    $customerInfoQuery = "SELECT * FROM accounts WHERE accountID = $userID";
-    $customerInfoResult = $conn->query($customerInfoQuery);
-    $customerInfo = $customerInfoResult->fetch_assoc();
-
-    // Insert order information into order_info table
-    $orderDate = date("Y-m-d");
-    $orderTotal = 0; // Initialize order total
-    $insertOrderQuery = "INSERT INTO order_info (accountID, orderDate, orderTotal) 
-                        VALUES ('$userID', '$orderDate', '$orderTotal')";
-    if ($conn->query($insertOrderQuery) === TRUE) {
-        $orderID = $conn->insert_id; // Get the last inserted orderID
-        foreach ($_SESSION["cart"] as $itemID => $quantity) {
-            // Calculate total price for each item and update order total
-            $itemPriceQuery = "SELECT itemPrice FROM items WHERE itemID = '$itemID'";
-            $itemPriceResult = $conn->query($itemPriceQuery);
-            $itemPrice = $itemPriceResult->fetch_assoc()['itemPrice'];
-            $totalPrice = $itemPrice * $quantity;
-            $orderTotal += $totalPrice;
-
-            // Insert item into order_items table
-            $insertItemQuery = "INSERT INTO order_items (orderID, itemID, itemAmount, totalPrice) 
-                                VALUES ('$orderID', '$itemID', '$quantity', '$totalPrice')";
-            $conn->query($insertItemQuery);
-        }
-
-        // Update order total in order_info table
-        $updateOrderTotalQuery = "UPDATE order_info SET orderTotal = '$orderTotal' WHERE orderID = '$orderID'";
-        $conn->query($updateOrderTotalQuery);
-
-        // Clear the session's cart
-        unset($_SESSION["cart"]);
-
-        // Redirect to success page
-        header("Location: indexa.php?success=1");
-        exit();
-    } else {
-        echo "Error: " . $insertOrderQuery . "<br>" . $conn->error;
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
-}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Supplies Online</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="navbar">
+                <img class="header-logo" src="images\DCT no bg v2.png">
+                <nav class="navigation">
+                    <?php if (isset($_SESSION["userid"])): ?>
+                        <a href="indexa.php">Home</a>
+                        <a href="products.php">Products</a>
+                        <a href="#">About Us</a>
+                        <a href="#">Contact Us</a>
+                <?php else: ?>
+                        <a href="login.php">Home</a>
+                        <a href="login.php">Products</a>
+                        <a href="login.php">About Us</a>
+                        <a href="login.php">Contact Us</a>
+                <?php endif; ?>
+                </nav>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search Medical Supplies...">
+                    <button>Search</button>
+                </div>
+            </div>
+            <nav class="account-info">
+                <?php if (isset($_SESSION["userid"])): ?>
+                    <a href="actions/logout-action.php">Logout</a>
+                <?php else: ?>
+                    <a href="login.php">Login</a>
+                    <a href="signup.php">Signup</a>
+                <?php endif; ?>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contents">
+        <form class="form-box" action="actions/checkout-action.php" method="post">
+            <div class="qr-box">
+                <div class="qr-code">
+                    <img src="images\qrcode.png" class="qr">
+                    <h1>SCAN THIS QR CODE</h1>
+                </div>
+                <div class="payment-info">
+                    <label>
+                        <h2>GCash Account Name:</h2>
+                        <input type="text" name="gcashName" required>
+                    </label>
+                    <label>
+                        <h2>GCash Account Number:</h2>
+                        <input type="text" name="gcashNumber" required>
+                    </label>
+                    <label>
+                        <h2>Reference Number:</h2>
+                        <input type="text" name="gcashReferenceNum" required>
+                    </label>
+                </div>
+            </div>
+            <button type="submit" name="checkout">Checkout</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-nav">
+                <a href="#">Home</a>
+                <a href="#">Products</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="social-icons">
+                <!-- Add social media icons here -->
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
