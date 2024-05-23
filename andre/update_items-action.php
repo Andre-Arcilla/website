@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "dct";
+$dbname = "delta";
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);

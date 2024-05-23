@@ -32,7 +32,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "dct";
+        $dbname = "delta";
 
         //connects to the database
         $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -47,7 +47,7 @@
 
 
             if (mysqli_num_rows($result) == 0) {
-                echo "<tr><td colspan='6'>no rows returned</td></tr>";
+                echo "<tr><td colspan='6'><img src='images/arisbm.gif'> no orders yet! <img src='images/arisbm.gif'></td></tr>";
             } else {
                 while ($row = mysqli_fetch_assoc($result)) {
 

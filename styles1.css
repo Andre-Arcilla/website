@@ -1,0 +1,293 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('images/backgrounds/bg3.jpg'), url('images/backgrounds/bg2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    font-family: Arial, sans-serif;
+    background-color: #c98f8f;
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 2vw;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    padding: 1rem 0;
+    width: 100%; /* Ensure the header spans the full width of the screen */
+    position: fixed; /* Fix the header at the top */
+    top: 0; /* Position it at the top */
+    left: 0; /* Align it to the left */
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+
+.header-logo {
+    width: 150px; /* Adjust the width as needed */
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.navigation {
+    display: flex;
+}
+
+.navigation a{
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+    margin-top: 0;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: 35rem;
+}
+
+.search-bar input[type="text"] {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    margin-right: 0.5rem;
+    width: 100%;
+}
+
+.search-bar button {
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0;
+}
+
+.search-bar button:hover {
+    background-color: #777;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+}
+
+.account-info a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    margin-top: 0;
+}
+
+/* Updated Styles */
+.hero {
+    background-image: url(hero.jpg);
+    background-size: cover;
+    color: black;
+    text-align: center;
+    margin-top: 35vh;
+}
+
+.hero-container {
+    background-color: rgba(255, 255, 255, 0.623);
+    width: 35vw;
+    margin: auto;
+    padding: 20px;
+    border-radius: 75px;
+}
+
+.hero-container img {
+    width: 100%;
+}
+
+.categories {
+    background-color: #f9f9f9;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.category {
+    margin: 1rem;
+}
+
+.category img {
+    max-width: 100%;
+}
+
+.featured-products {
+    margin-top: 46vh;
+    padding: 2rem 0;
+    text-align: center;
+    background-color: #499399c2;
+    border-radius: 100px 100px 0 0;
+}
+
+.product-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product {
+    display: flex;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+    width: 250px;
+    height: 300px;
+    flex-direction: row;
+    cursor: pointer;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.product.expanded {
+    display: flex;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+    width: 500px;
+    height: 300px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.description {
+    width: 100%;
+    text-align: left;
+    display: none;
+    margin: auto;
+}
+
+.product img {
+    width: 200px;
+}
+
+.price {
+    font-weight: bold;
+    color: #333;
+    margin-top: 0.5rem;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+    margin-top: 0;
+}
+
+.footer-section {
+    display: inline-block;
+    margin: 0 2rem;
+}
+
+.footer-section h3 {
+    margin-bottom: 1rem;
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.shopping-cart {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-logo {
+        margin-bottom: 1rem;
+    }
+
+    .navbar {
+        flex-direction: column;
+    }
+
+    .navigation {
+        margin-top: 1rem;
+    }
+
+    .search-bar {
+        margin-top: 1rem;
+    }
+}

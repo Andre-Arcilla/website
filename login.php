@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form action="login-action.php" method="post" class="signup-form" id="login-form">
+        <form action="actions/login-action.php" method="post" class="signup-form" id="login-form">
             <h2>LOGIN</h2>
 
             <!-- error message, hidden unless triggered -->

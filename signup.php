@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form action="signup-action.php" method="post" class="signup-form" onsubmit="return validateForm()">
+        <form action="actions/signup-action.php" method="post" class="signup-form" onsubmit="return validateForm()">
             <h2>SIGN UP</h2>
 
             <!-- post username, phone, email1 and password1 to database -->

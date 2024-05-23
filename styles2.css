@@ -112,7 +112,7 @@ body {
 }
 
 .hero-container {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.623);
     width: 35vw;
     margin: auto;
     padding: 20px;
@@ -138,37 +138,83 @@ body {
 }
 
 .featured-products {
-    margin-top: 46vh;
+    display: flex;
+    margin-top: 9vh;
     padding: 2rem 0;
     text-align: center;
     background-color: #499399c2;
-    border-radius: 100px 100px 0 0;
+    justify-content: space-around;
 }
 
 .product-grid {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-right: 350px; /* Adjust the margin to accommodate the fixed cart box */
 }
 
 .product {
     display: flex;
     background-color: white;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 50px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin: 1rem;
     padding: 1rem;
     text-align: center;
     width: 250px;
-    height: 340px;
+    height: 450px;
     flex-direction: column;
     justify-content: flex-end;
+    align-items: center;
+}
+
+.cart-box {
+    background-color: white;
+    border-radius: 50px 0 0 50px;
+    padding: 25px;
+    margin: 1rem;
+    position: fixed;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    width: 300px;
+    z-index: 1000; /* Ensure it stays above other elements */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-height: 600px; /* Set a maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.cart-box li {
+    text-align: left;
+    margin-left: 60px;
+}
+
+.product.expanded {
+    display: flex;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+    width: 500px;
+    height: 300px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.description {
+    width: 100%;
+    text-align: left;
+    display: none;
+    margin: auto;
 }
 
 .product img {
-    width: 100%;
+    width: 200px;
 }
 
 .price {
@@ -237,7 +283,6 @@ footer a {
 a {
     color: blue;
     text-decoration: none;
-    margin-top: 10px;
 }
 
 a:hover {

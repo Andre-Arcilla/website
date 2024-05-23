@@ -56,7 +56,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "dct";
+        $dbname = "delta";
 
         // Connect to the database
         $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -72,7 +72,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
     ?>
 
     <!-- Form to update items -->
-    <form method="post" action="update_items.php">
+    <form method="post" action="update_items-action.php">
         <table border="1vw">
             <thead>
                 <tr>

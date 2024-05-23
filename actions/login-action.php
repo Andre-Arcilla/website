@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="signup-login-styles.css">
+    <link rel="stylesheet" href="../signup-login-styles.css">
 </head>
 <body>
     <div class="container">
@@ -17,7 +17,7 @@
                 $servername = "localhost";
                 $username = "root";
                 $password = "";
-                $dbname = "dct";
+                $dbname = "delta";
 
                 // Connect to the database
                 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -53,7 +53,8 @@
                             $_SESSION["userid"] = $user_id;
                             $_SESSION["email"] = $email;
 
-                            echo 'Login successful!';
+                            header("Location: ../indexa.php");
+                            exit();
                         } else {
                             echo '<span>Incorrect password.</span><br>
                             <button type="button" onclick="window.location.href=\'login.php\'">Return to Login Page</button>';
