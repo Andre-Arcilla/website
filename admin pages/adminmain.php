@@ -1,3 +1,14 @@
+<?php
+    session_start();
+
+    // Check if the usertype is not set or is not 'admin'
+    if (!isset($_SESSION["usertype"]) || $_SESSION["usertype"] != 'admin') {
+        // Redirect to the login page
+        header("Location: ../login.php");
+        exit(); // Stop further execution
+    }
+?>
+
 <!DOCTYPE html>
 <head>
     <title>admin page</title>
@@ -32,14 +43,20 @@
     <hr>
 
     <h1>
-        <a href="viewhistory.php">[VIEW CHANGE HISTORY]</a>
         <a href="vieworders.php">[VIEW ORDERS]</a>
+        <a href="viewpayments.php">[VIEW ORDER PAYMENTS]</a>
     </h1>
 
     <hr>
 
     <h1>
         <a href="editadmin.php">[EDIT ADMIN ACCOUNT]</a>
+    </h1>
+
+    <hr>
+
+    <h1>
+        <a href="../indexa.php">[RETURN TO WEBSITE]</a>
     </h1>
 
     <hr>

@@ -31,24 +31,15 @@
             <div class="navbar">
                 <img class="header-logo" src="images\DCT no bg v2.png">
                 <nav class="navigation">
-                    <?php if (isset($_SESSION["userid"])): ?>
-                        <a href="indexa.php">Home</a>
-                        <a href="products.php">Products</a>
-                        <a href="#">About Us</a>
-                        <a href="#">Contact Us</a>
-                <?php else: ?>
-                        <a href="login.php">Home</a>
-                        <a href="login.php">Products</a>
-                        <a href="login.php">About Us</a>
-                        <a href="login.php">Contact Us</a>
-                <?php endif; ?>
+                    <a href="indexa.php">Home</a>
+                    <a href="products.php">Store</a>
+                    <a href="orders.php">Your Orders</a>
                 </nav>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search Medical Supplies...">
-                    <button>Search</button>
-                </div>
             </div>
             <nav class="account-info">
+                <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
+                    <a href="admin pages/adminmain.php">Admin Page</a>
+                <?php endif; ?>
                 <?php if (isset($_SESSION["userid"])): ?>
                     <a href="actions/logout-action.php">Logout</a>
                 <?php else: ?>

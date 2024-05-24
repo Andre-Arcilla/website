@@ -1,8 +1,17 @@
 <?php
-// Check if success parameter is set
-if (isset($_GET['success']) && $_GET['success'] == 1) {
-    echo "<p>Update successful!</p>";
-}
+    session_start();
+
+    // Check if the usertype is not set or is not 'admin'
+    if (!isset($_SESSION["usertype"]) || $_SESSION["usertype"] != 'admin') {
+        // Redirect to the login page
+        header("Location: ../login.php");
+        exit(); // Stop further execution
+    }
+
+    // Check if success parameter is set
+    if (isset($_GET['success']) && $_GET['success'] == 1) {
+        echo "<p>Update successful!</p>";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +34,6 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
         table {
             width: 60vw;
             border-collapse: collapse; /* Ensure borders are collapsed into a single border */
-            margin-top: 1rem; /* Add margin to separate table from header */
             background-color: lightblue; /* Optional: Change background color to distinguish from table body */
         }
 
@@ -45,7 +53,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
             color: black;
             text-decoration: none !important;
             font-size: 1.5vw;
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
         }
     </style>
 </head>
@@ -70,6 +78,9 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
         $sql = "SELECT * FROM items";
         $result = mysqli_query($conn, $sql);
     ?>
+
+    <!-- Return link -->
+    <a href="adminmain.php">[RETURN]</a>
 
     <!-- Form to update items -->
     <form method="post" action="edititems-action.php">
@@ -115,10 +126,5 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
         <!-- Submit button to update items -->
         <input type="submit" value="Update">
     </form>
-
-    <br>
-
-    <!-- Return link -->
-    <a href="adminmain.php">[RETURN]</a>
 </body>
 </html>

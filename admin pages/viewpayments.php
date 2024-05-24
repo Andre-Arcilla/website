@@ -62,7 +62,7 @@
         //connects to the database
         $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-        $sql = "select * from items";
+        $sql = "select * from payments";
         $result = mysqli_query($conn, $sql);
     ?>
 
@@ -73,11 +73,10 @@
 
         <thead>
             <tr>
-                <th>Item ID</th>
-                <th>Item Name</th>
-                <th>Item Price</th>
-                <th>Amount Sold</th>
-                <th>Item Stock</th>
+                <th>Order ID</th>
+                <th>GCash Name</th>
+                <th>GCash Number</th>
+                <th>GCash Reference Number</th>
             </tr>
         </thead>
         <tbody>
@@ -88,11 +87,10 @@
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "
                             <tr>
-                                <td>{$row['itemID']}</td>
-                                <td>{$row['itemName']}</td>
-                                <td>{$row['itemPrice']}</td>
-                                <td>{$row['soldAmount']}</td>
-                                <td>{$row['itemStock']}</td>
+                                <td>{$row['orderID']}</td>
+                                <td>{$row['gcashName']}</td>
+                                <td>{$row['gcashNumber']}</td>
+                                <td>{$row['gcashReferenceNum']}</td>
                             </tr>\n
                         ";
                     }

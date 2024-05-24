@@ -36,7 +36,7 @@
                     $email = htmlspecialchars(strip_tags($email));
 
                     // Check if email exists
-                    $sql = "SELECT accountID, password FROM accounts WHERE emailaddress = ?";
+                    $sql = "SELECT accountID, password, type FROM accounts WHERE emailaddress = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("s", $email);
                     $stmt->execute();
@@ -44,13 +44,14 @@
 
                     if ($stmt->num_rows > 0) {
                         // Email found, now fetch the hashed password
-                        $stmt->bind_result($user_id, $hashed_password_from_db);
+                        $stmt->bind_result($accountID, $hashed_password_from_db, $type);
                         $stmt->fetch();
 
                         // Verify the hashed password
                         if (password_verify($password, $hashed_password_from_db)) {
                             // Set session variables
-                            $_SESSION["userid"] = $user_id;
+                            $_SESSION["usertype"] = $type;
+                            $_SESSION["userid"] = $accountID;
                             $_SESSION["email"] = $email;
 
                             header("Location: ../indexa.php");
