@@ -94,9 +94,9 @@
     <header class="header">
         <div class="container">
             <div class="navbar">
-                <img class="header-logo" src="images\DCT no bg v2.png">
+                <img class="header-logo" src="images/DCT no bg v2.png" alt="Logo">
                 <nav class="navigation">
-                    <a href="indexa.php">Home</a>
+                    <a href="index.php">Home</a>
                     <a href="products.php">Store</a>
                     <a href="orders.php">Your Orders</a>
                 </nav>
@@ -132,7 +132,11 @@
                         <!-- Add to cart form -->
                         <form method="post">
                             <input type="hidden" name="item_id" value="<?php echo $row["itemID"]; ?>">
-                            <input type="number" name="quantity" value="0" min="0">
+                            <div class="number-input">
+                                <button type="button" onclick="decrement('quantity-<?php echo $row["itemID"]; ?>')">-</button>
+                                <input type="text" value="0" min="0" max="<?php echo $row["itemStock"]; ?>" id="quantity-<?php echo $row["itemID"]; ?>" name="quantity">
+                                <button type="button" onclick="increment('quantity-<?php echo $row["itemID"]; ?>')">+</button>
+                            </div>
                             <button type="submit" name="add_to_cart">Add to Cart</button>
                         </form>
                     </div>
@@ -167,14 +171,14 @@
                                     <br>
                                     Price: <b>PHP <?php echo $itemPrice * $quantity; ?></b>
                                 </li>
-                                    <br>
+                                <br>
                                 <?php
                             }
                             ?>
                         <?php endforeach; ?>
                     </ul>
-                        <h4>Total Price: PHP <?php echo calculateTotalPrice(); ?></h4>
-                        
+                    <h4>Total Price: PHP <?php echo calculateTotalPrice(); ?></h4>
+                    
                     <form action="checkout.php" method="post">
                         <button type="submit" name="checkout">Checkout</button>
                     </form>
@@ -192,15 +196,37 @@
         <div class="container">
             <div class="footer-nav">
                 <a href="#">Home</a>
-                <a href="#">Products</a>
-                <a href="#">About Us</a>
-                <a href="#">Contact Us</a>
+                <a href="#">Store</a>
             </div>
-            <div class="social-icons">
-                <!-- Add social media icons here -->
-            </div>
+            <img class="easter-egg" src="images\arisbm.gif">
         </div>
     </footer>
+    
+    <script>
+        // Increment function to increase quantity
+        function increment(id) {
+            var input = document.getElementById(id);
+            var value = parseInt(input.value, 10);
+            var max = parseInt(input.max, 10);
+            input.value = value < max ? value + 1 : max;
+        }
+
+        // Decrement function to decrease quantity
+        function decrement(id) {
+            var input = document.getElementById(id);
+            var value = parseInt(input.value, 10);
+            input.value = value > 0 ? value - 1 : 0;
+        }
+
+        // Validate input value to ensure it doesn't exceed max for each item
+        document.querySelectorAll('input[type="text"]').forEach(function(input) {
+            input.addEventListener('input', function() {
+                var value = parseInt(this.value, 10);
+                var max = parseInt(this.max, 10);
+                this.value = isNaN(value) ? 0 : value > max ? max : value;
+            });
+        });
+    </script>
 </body>
 </html>
 

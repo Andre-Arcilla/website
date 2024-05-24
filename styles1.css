@@ -30,7 +30,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 2vw;
+    margin: 0 0 0 2vw;
+
 }
 
 .header {
@@ -80,7 +81,7 @@ body {
 .account-info a {
     color: white;
     text-decoration: none;
-    margin-left: 1rem;
+    margin-right: 1rem;
     margin-top: 0;
 }
 
@@ -212,7 +213,7 @@ button:hover {
 footer {
     background-color: #333;
     color: white;
-    padding: 1rem 0;
+    padding: 1rem 0 0 0;
     text-align: center;
 }
 
@@ -259,4 +260,9 @@ a {
 a:hover {
     text-decoration: underline;
     font-weight: bold;
+}
+
+.easter-egg {
+    display: flex;
+    width: 20px;
 }

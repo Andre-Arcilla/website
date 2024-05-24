@@ -25,7 +25,7 @@
 
             <a href="signup.php" class="login-signup">dont have an account yet?</a>
 
-            <button type="submit">sign up</button>
+            <button type="submit"><img class="easter-egg" src="images\arisbm.gif">sign up<img class="easter-egg" src="images\arisbm.gif"></button>
         </form>
     </div>
     <script>

@@ -49,7 +49,7 @@
     <hr>
 
     <h1>
-        <a href="../indexa.php">[RETURN TO WEBSITE]</a>
+        <a href="../index.php">[RETURN TO WEBSITE]</a>
     </h1>
 
     <hr>

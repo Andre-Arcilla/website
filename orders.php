@@ -103,7 +103,7 @@
             <div class="navbar">
                 <img class="header-logo" src="images\DCT no bg v2.png">
                 <nav class="navigation">
-                    <a href="indexa.php">Home</a>
+                    <a href="index.php">Home</a>
                     <a href="products.php">Store</a>
                     <a href="orders.php">Your Orders</a>
                 </nav>
@@ -173,13 +173,9 @@
         <div class="container">
             <div class="footer-nav">
                 <a href="#">Home</a>
-                <a href="#">Products</a>
-                <a href="#">About Us</a>
-                <a href="#">Contact Us</a>
+                <a href="#">Store</a>
             </div>
-            <div class="social-icons">
-                <!-- Add social media icons here -->
-            </div>
+            <img class="easter-egg" src="images\arisbm.gif">
         </div>
     </footer>
 </body>

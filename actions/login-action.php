@@ -54,7 +54,7 @@
                             $_SESSION["userid"] = $accountID;
                             $_SESSION["email"] = $email;
 
-                            header("Location: ../indexa.php");
+                            header("Location: ../index.php");
                             exit();
                         } else {
                             echo '<span>Incorrect password.</span><br>
@@ -71,7 +71,7 @@
                 
                 $conn->close();
             ?>
-            <button type="button" onclick="window.location.href='../indexa.php'">Return to Home Page</button>
+            <button type="button" onclick="window.location.href='../index.php'">Return to Home Page</button>
         </div>
     </div>
 </body>

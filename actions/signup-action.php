@@ -66,7 +66,7 @@
                     $stmt->bind_param("ssssss", $username, $hashed_password, $phone, $email, $address, $type);
 
                     if ($stmt->execute()) {
-                        header("Location: ../indexa.php");
+                        header("Location: ../index.php");
                         exit();
                     } else {
                         echo "Error: " . $stmt->error;
@@ -77,7 +77,7 @@
                 $stmt->close();
                 $conn->close();
             ?>
-            <button type="button" onclick="window.location.href='../indexa.php'">Return to Home Page</button>
+            <button type="button" onclick="window.location.href='../index.php'">Return to Home Page</button>
         </div>
     </div>
 </body>

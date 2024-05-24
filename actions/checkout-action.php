@@ -70,7 +70,7 @@ if (isset($_POST["checkout"])) {
         unset($_SESSION["cart"]);
 
         // Redirect to success page
-        header("Location: ../indexa.php?success=1");
+        header("Location: ../index.php?success=1");
         exit();
     } else {
         echo "Error: " . $insertOrderQuery . "<br>" . $conn->error;

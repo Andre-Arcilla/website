@@ -246,3 +246,20 @@ footer a {
     margin-right: 1rem;
     margin-top: 0;
 }
+
+.number-input input[type="text"] {
+    text-align: center;
+    font-size: inherit;
+    width: 4rem;
+}
+
+.number-input button {
+    margin: auto;
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+.easter-egg {
+    display: flex;
+    width: 20px;
+}

@@ -47,7 +47,7 @@
 
             <a href="login.php" class="login-signup">already have an account?</a>
 
-            <button type="submit">sign up</button>
+            <button type="submit"><img class="easter-egg" src="images\arisbm.gif">sign up<img class="easter-egg" src="images\arisbm.gif"></button>
         </form>
     </div>
 
