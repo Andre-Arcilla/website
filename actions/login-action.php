@@ -58,11 +58,11 @@
                             exit();
                         } else {
                             echo '<span>Incorrect password.</span><br>
-                            <button type="button" onclick="window.location.href=\'login.php\'">Return to Login Page</button>';
+                            <button type="button" onclick="window.location.href=\'/..login.php\'">Return to Login Page</button>';
                         }
                     } else {
                         echo '<span>Email not found.</span><br>
-                        <button type="button" onclick="window.location.href=\'login.php\'">Return to Login Page</button>';
+                        <button type="button" onclick="window.location.href=\'../login.php\'">Return to Login Page</button>';
                     }
 
                     // Close the statement and connection

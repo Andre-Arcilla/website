@@ -15,42 +15,25 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // SQL query to fetch specific columns for "TISS", "HEAD", and "FACE" items
-    $sql = "SELECT itemID, itemPrice, itemStock, soldAmount FROM items";
+    // SQL query to fetch top 3 items with highest soldAmount
+    $sql = "SELECT itemID, itemPrice, itemStock, soldAmount, itemName FROM items ORDER BY soldAmount DESC LIMIT 3";
 
     // Execute the query
     $result = $conn->query($sql);
 
-    // Check if there are any rows returned
-        while ($row = $result->fetch_assoc()) {
-            // Access data from the row
-            $itemName = $row["itemID"];
-            $itemPrice = $row["itemPrice"];
-            $itemStock = $row["itemStock"];
-            $soldAmount = $row["soldAmount"];
+    // Initialize variables to store item data
+    $topItems = [];
 
-            // Assign data to respective variables based on item name
-            switch ($itemName) {
-                case 'TISS':
-                    $tissuePrice = $itemPrice;
-                    $tissueStock = $itemStock;
-                    $tissueSoldAmount = $soldAmount;
-                    break;
-                case 'HEAD':
-                    $headPrice = $itemPrice;
-                    $headStock = $itemStock;
-                    $headSoldAmount = $soldAmount;
-                    break;
-                case 'FACE':
-                    $facePrice = $itemPrice;
-                    $faceStock = $itemStock;
-                    $faceSoldAmount = $soldAmount;
-                    break;
-                default:
-                    // Handle unexpected item name
-                    break;
-            }
-        }
+    // Check if there are any rows returned
+    while ($row = $result->fetch_assoc()) {
+        $topItems[] = [
+            'itemID' => $row["itemID"],
+            'itemPrice' => $row["itemPrice"],
+            'itemStock' => $row["itemStock"],
+            'soldAmount' => $row["soldAmount"],
+            'itemName' => $row["itemName"]
+        ];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +49,7 @@
     <header class="header">
         <div class="container">
             <div class="navbar">
-                <img class="header-logo" src="images\DCT no bg v2.png">
+                <img id="header-logo" class="header-logo" src="images/DCT no bg v2.png" alt="Logo">
                 <nav class="navigation">
                     <a href="indexa.php">Home</a>
                     <a href="products.php">Store</a>
@@ -89,11 +72,10 @@
     
     <div class="hero">
         <div class="hero-container">
-            <img src="images\DCT no bg.png">
+            <img src="images/DCT no bg.png" alt="Hero Image">
             <h1>Find the Best Medical Supplies</h1>
             <b>Your one-stop shop for quality medical supplies.</b>
             <?php
-                // Check if success parameter is set and display success message
                 if (isset($_GET["success"]) && $_GET["success"] == 1) {
                     echo "<hr><p class='success-message'>Order placed successfully!</p>";
                 }
@@ -104,46 +86,23 @@
     <div class="featured-products">
         <h2>Best Sellers</h2>
         <div class="product-grid">
-            <div class="product" onclick="toggleProduct(this, 0)">
-                <div>
-                    <img src="images/products/Tissues.png" alt="Product 1">
-                    <h3>TISSUES</h3>
+            <?php foreach ($topItems as $item): ?>
+                <div class="product" onclick="toggleProduct(this, 0)">
+                    <div>
+                        <img src="images/products/<?php echo $item['itemName']; ?>.png" alt="Product">
+                        <h3><?php echo strtoupper($item['itemName']); ?></h3>
+                    </div>
+                    <div class="description">
+                        <h3>
+                            <h2><?php echo $item['soldAmount']; ?> BOXES SOLD!</h2>
+                            <br>
+                            Price per box: PHP<?php echo $item['itemPrice']; ?>
+                            <br>
+                            Stock: <?php echo $item['itemStock']; ?> boxes
+                        </h3>
+                    </div>
                 </div>
-                <div class="description">
-                    <h3>
-                        <h2><?php echo $tissueSoldAmount; ?> BOXES SOLD!</h2>
-                        Price per box: PHP<?php echo $tissuePrice; ?>
-                        Stock: <?php echo $tissueStock; ?> boxes
-                    </h3>
-                </div>
-            </div>
-            <div class="product" onclick="toggleProduct(this, 1)">
-                <div>
-                    <img src="images/products/Face Masks.png" alt="Product 2">
-                    <h3>FACE MASKS</h3>
-                </div>
-                <div class="description">
-                    <h3>
-                        <h2><?php echo $faceSoldAmount; ?> BOXES SOLD!</h2>
-                        Price per box: PHP<?php echo $facePrice; ?>
-                        Stock: <?php echo $faceStock; ?> boxes
-                    </h3>
-                </div>
-            </div>
-            <div class="product" onclick="toggleProduct(this, 2)">
-                <div>
-                    <img src="images/products/Head Caps.png" alt="Product 3">
-                    <h3>HEAD CAPS</h3>
-                </div>
-                <div class="description">
-                    <h3>
-                        <h2><?php echo $headSoldAmount; ?> BOXES SOLD!</h2>
-                        Price per box: PHP<?php echo $headPrice; ?>
-                        Stock: <?php echo $headStock; ?> boxes
-                    </h3>
-                </div>
-            </div>
-            <!-- Add more product divs as needed -->
+            <?php endforeach; ?>
         </div>
     </div>
 
@@ -161,22 +120,22 @@
         </div>
     </footer>
 
+    <!-- Hidden GIF image -->
+    <img id="hidden-gif" src="images\arisbm.gif">
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const products = document.querySelectorAll(".product");
 
             products.forEach(product => {
                 product.addEventListener("click", function() {
-                    // Toggle the 'expanded' class on the clicked product
                     this.classList.toggle("expanded");
 
-                    // Toggle the visibility of the description div
                     const description = this.querySelector(".description");
                     if (description) {
                         description.style.display = this.classList.contains("expanded") ? "block" : "none";
                     }
 
-                    // Collapse other expanded products
                     products.forEach(p => {
                         if (p !== this && p.classList.contains("expanded")) {
                             p.classList.remove("expanded");
@@ -189,11 +148,48 @@
                 });
             });
         });
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const logo = document.getElementById('header-logo');
+            const hiddenGif = document.getElementById('hidden-gif');
+
+            if (!logo) {
+                console.error('Logo element not found!');
+                return;
+            }
+
+            let clickCount = 0;
+            const maxClicks = 5;
+            const clickTimeout = 1000; // 1 second
+            let clickTimer = null;
+
+            logo.addEventListener('click', () => {
+                clickCount++;
+                console.log(`Logo clicked ${clickCount} times`);
+
+                if (clickTimer) {
+                    clearTimeout(clickTimer);
+                }
+
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, clickTimeout);
+
+                if (clickCount === maxClicks) {
+                    hiddenGif.style.display = 'block';
+                    clickCount = 0;
+
+                    // Hide the GIF after 3 seconds (3000 ms)
+                    setTimeout(() => {
+                        hiddenGif.style.display = 'none';
+                    }, 3000);
+                }
+            });
+        });
     </script>
 </body>
 </html>
 
 <?php
-    // Close the database connection
     $conn->close();
 ?>

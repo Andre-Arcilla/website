@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2024 at 05:56 PM
+-- Generation Time: May 24, 2024 at 06:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,8 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`accountID`, `name`, `password`, `phonenumber`, `emailaddress`, `type`, `address`) VALUES
-(1, 'Simp4Suisei123', '$2y$10$0lBECBVGNRSnilAkfAp9Jeele3y1JLGqmGGbQvdGQ.yhPa3v.IwrW', 123, 'hoshimachi.suisei@gmail.com', 'admin', '659 Hagenes Orchard, Port Terrellton, IN');
+(1, 'admin1', '$2y$10$bUunUstloQkUtcCIdxlhi.SyUQpJpcdRVyCGnhPPfokCmfOEavwry', 123, 'norealemail@nomail.com', 'admin', 'NA'),
+(2, 'admin2', '$2y$10$xZg1wpxIPGsVAYmJ.sEyQ./IYsrwxt8gslm7vBj5HYuKt.4IjqnOC', 123, 'nomail@mail.com', 'admin', 'NA');
 
 -- --------------------------------------------------------
 
@@ -63,10 +64,10 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`itemID`, `itemPrice`, `itemName`, `itemStock`, `soldAmount`) VALUES
-('BAND', 20, 'ID Bands', 97, 3),
+('BAND', 20, 'ID Bands', 97, 2310),
 ('BDGA', 50, 'Adhesive Bandage', 142, 1096),
 ('BDGB', 123, 'Elastic Bandage', 95, 5),
-('CTTN', 50, 'Cotton Applicators', 94, 2),
+('CTTN', 50, 'Cotton Applicators', 93, 3),
 ('FACE', 15, 'Face Masks', 100, 465),
 ('GAUZ', 100, 'Gauze', 15, 0),
 ('GLOV', 75, 'Gloves', 95, 5),
@@ -94,15 +95,6 @@ CREATE TABLE `order_info` (
   `orderStatus` varchar(20) NOT NULL DEFAULT 'processing'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `order_info`
---
-
-INSERT INTO `order_info` (`orderID`, `accountID`, `orderDate`, `orderTotal`, `orderStatus`) VALUES
-(11, 1, '2024-05-24', 100, 'cancelled'),
-(12, 1, '2024-05-24', 100, 'cancelled'),
-(13, 1, '2024-05-24', 100, 'processing');
-
 -- --------------------------------------------------------
 
 --
@@ -116,15 +108,6 @@ CREATE TABLE `order_items` (
   `totalPrice` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `order_items`
---
-
-INSERT INTO `order_items` (`orderID`, `itemID`, `itemAmount`, `totalPrice`) VALUES
-(11, 'BDGA', 2, 100),
-(12, 'BDGA', 2, 100),
-(13, 'CTTN', 2, 100);
-
 -- --------------------------------------------------------
 
 --
@@ -137,15 +120,6 @@ CREATE TABLE `payments` (
   `gcashNumber` bigint(20) NOT NULL,
   `gcashReferenceNum` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `payments`
---
-
-INSERT INTO `payments` (`orderID`, `gcashName`, `gcashNumber`, `gcashReferenceNum`) VALUES
-(11, 'Suisei Hoshimachi', 123456, '963852741'),
-(12, 'Suisei Hoshimachi', 123456, '963852741'),
-(13, 'Suisei Hoshimachi', 123456, '963852741');
 
 --
 -- Indexes for dumped tables
@@ -191,13 +165,13 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `accountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `accountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_info`
 --
 ALTER TABLE `order_info`
-  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

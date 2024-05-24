@@ -44,13 +44,6 @@
 
     <h1>
         <a href="vieworders.php">[VIEW ORDERS]</a>
-        <a href="viewpayments.php">[VIEW ORDER PAYMENTS]</a>
-    </h1>
-
-    <hr>
-
-    <h1>
-        <a href="editadmin.php">[EDIT ADMIN ACCOUNT]</a>
     </h1>
 
     <hr>

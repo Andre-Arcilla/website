@@ -57,7 +57,7 @@
                     //Tells user if email is already in-use
                 if ($stmt->num_rows > 0) {
                     echo '<span>Email already exists. Please use a different email address.</span><br>
-                    <button type="button" onclick="window.location.href=\'signup.php\'">Return to Sign-Up Page</button>';
+                    <button type="button" onclick="window.location.href=\'../signup.php\'">Return to Sign-Up Page</button>';
                 } else {
                     // Use prepared statements to prevent SQL injection
                     $stmt->close(); // Close the previous statement

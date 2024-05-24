@@ -185,7 +185,7 @@
 
                 // Check if there are any rows returned by the query
                 if (mysqli_num_rows($result) == 0) {
-                    echo "<tr><td colspan='11'>No orders yet!</td></tr>";
+                    echo "<tr><td colspan='12'>No orders yet!</td></tr>";
                 } else {
                     // Loop through each row of the result set
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -220,7 +220,7 @@
                         echo "<tr>
                             <td>";
 
-                            if ($row['orderstatus'] != 'cancelled') {
+                            if ($row['orderstatus'] != 'cancelled' && $row['orderstatus'] != 'delivered') {
                             echo "<form method='post' action=''>
                                 <input type='hidden' name='orderID' value='{$row['orderID']}'>
                                 <input type='hidden' name='newStatus' value='cancelled'>
@@ -252,9 +252,6 @@
                                     case 'shipping':
                                         echo "<input type='hidden' name='newStatus' value='delivered'>
                                             <button type='submit'>Deliver Order</button>";
-                                        break;
-                                    case 'delivered':
-                                        echo "<button>Order Delivered</button>";
                                         break;
                                     default:
                                         break;

@@ -1,5 +1,12 @@
 <?php
     session_start();
+    
+    // Check if the user is not logged in
+    if (!isset($_SESSION["userid"])) {
+        // Redirect to the login page
+        header("Location: login.php");
+        exit(); // Stop further execution
+    }
 
     // Database connection details
     $servername = "localhost";
@@ -124,8 +131,7 @@
                         <th>Order Date</th>
                         <th>Item Details</th>
                         <th>Order Total</th>
-                        <th>Order Status</th>
-                        <th>Cancel Order</th>
+                        <th colspan='2'>Order Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,7 +148,7 @@
                                     <td>{$row['orderStatus']}</td>
                                     <td>";
 
-                                    if ($row['orderStatus'] != 'cancelled') {
+                                    if ($row['orderStatus'] != 'cancelled' && $row['orderStatus'] != 'delivered') {
                                     echo "<form method='post' action=''>
                                         <input type='hidden' name='orderID' value='{$row['orderID']}'>
                                         <input type='hidden' name='newStatus' value='cancelled'>

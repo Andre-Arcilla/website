@@ -5,6 +5,16 @@
     box-sizing: border-box;
 }
 
+/* CSS for the hidden GIF */
+#hidden-gif {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Make sure it appears above other elements */
+}
+
 body {
     background: url('images/backgrounds/bg3.jpg'), url('images/backgrounds/bg2.jpg');
     background-size: cover;
@@ -37,6 +47,7 @@ body {
 
 .header-logo {
     width: 150px; /* Adjust the width as needed */
+    cursor: wait;
 }
 
 .navbar {
@@ -75,7 +86,6 @@ body {
 
 /* Updated Styles */
 .hero {
-    background-image: url(hero.jpg);
     background-size: cover;
     color: black;
     text-align: center;
