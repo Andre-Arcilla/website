@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2024 at 08:02 PM
+-- Generation Time: May 24, 2024 at 05:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`accountID`, `name`, `password`, `phonenumber`, `emailaddress`, `type`, `address`) VALUES
-(1, 'Simp4Suisei123', '$2y$10$0lBECBVGNRSnilAkfAp9Jeele3y1JLGqmGGbQvdGQ.yhPa3v.IwrW', 123, 'hoshimachi.suisei@gmail.com', 'user', '659 Hagenes Orchard, Port Terrellton, IN');
+(1, 'Simp4Suisei123', '$2y$10$0lBECBVGNRSnilAkfAp9Jeele3y1JLGqmGGbQvdGQ.yhPa3v.IwrW', 123, 'hoshimachi.suisei@gmail.com', 'admin', '659 Hagenes Orchard, Port Terrellton, IN');
 
 -- --------------------------------------------------------
 
@@ -64,9 +64,9 @@ CREATE TABLE `items` (
 
 INSERT INTO `items` (`itemID`, `itemPrice`, `itemName`, `itemStock`, `soldAmount`) VALUES
 ('BAND', 20, 'ID Bands', 97, 3),
-('BDGA', 50, 'Adhesive Bandage', 238, 1000),
+('BDGA', 50, 'Adhesive Bandage', 142, 1096),
 ('BDGB', 123, 'Elastic Bandage', 95, 5),
-('CTTN', 50, 'Cotton Applicators', 96, 0),
+('CTTN', 50, 'Cotton Applicators', 94, 2),
 ('FACE', 15, 'Face Masks', 100, 465),
 ('GAUZ', 100, 'Gauze', 15, 0),
 ('GLOV', 75, 'Gloves', 95, 5),
@@ -88,26 +88,20 @@ INSERT INTO `items` (`itemID`, `itemPrice`, `itemName`, `itemStock`, `soldAmount
 
 CREATE TABLE `order_info` (
   `orderID` int(11) NOT NULL,
-  `accountID` int(11) DEFAULT NULL,
+  `accountID` int(11) NOT NULL,
   `orderDate` date NOT NULL,
   `orderTotal` float NOT NULL,
-  `orderComment` text DEFAULT NULL
+  `orderStatus` varchar(20) NOT NULL DEFAULT 'processing'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_info`
 --
 
-INSERT INTO `order_info` (`orderID`, `accountID`, `orderDate`, `orderTotal`, `orderComment`) VALUES
-(1, 1, '2024-05-23', 100, NULL),
-(2, 1, '2024-05-23', 469, NULL),
-(3, 1, '2024-05-23', 3413, NULL),
-(4, 1, '2024-05-23', 200, NULL),
-(5, 1, '2024-05-23', 50, NULL),
-(6, 1, '2024-05-23', 200, NULL),
-(7, 1, '2024-05-23', 800, NULL),
-(8, 1, '2024-05-23', 50000, NULL),
-(9, 1, '2024-05-23', 1080, NULL);
+INSERT INTO `order_info` (`orderID`, `accountID`, `orderDate`, `orderTotal`, `orderStatus`) VALUES
+(11, 1, '2024-05-24', 100, 'cancelled'),
+(12, 1, '2024-05-24', 100, 'cancelled'),
+(13, 1, '2024-05-24', 100, 'processing');
 
 -- --------------------------------------------------------
 
@@ -127,21 +121,9 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`orderID`, `itemID`, `itemAmount`, `totalPrice`) VALUES
-(1, 'CTTN', 2, 100),
-(2, 'BDGB', 3, 369),
-(2, 'CTTN', 2, 100),
-(3, 'BAND', 14, 280),
-(3, 'BDGA', 11, 550),
-(3, 'BDGB', 21, 2583),
-(4, 'CTTN', 4, 200),
-(5, 'CTTN', 1, 50),
-(6, 'CTTN', 4, 200),
-(7, 'GAUZ', 8, 800),
-(8, 'BDGA', 1000, 50000),
-(9, 'BAND', 3, 60),
-(9, 'BDGB', 5, 615),
-(9, 'GLOV', 5, 375),
-(9, 'HEAD', 3, 30);
+(11, 'BDGA', 2, 100),
+(12, 'BDGA', 2, 100),
+(13, 'CTTN', 2, 100);
 
 -- --------------------------------------------------------
 
@@ -161,11 +143,9 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`orderID`, `gcashName`, `gcashNumber`, `gcashReferenceNum`) VALUES
-(5, 'Suisei Hoshimachi', 123456789, '963852741'),
-(6, 'Suisei Hoshimachi', 123456, '456'),
-(7, 'Suisei Hoshimachi', 123456, '963852741'),
-(8, 'Suisei Hoshimachi', 123456, '963852741'),
-(9, 'Suisei Hoshimachi', 123456, '963852741');
+(11, 'Suisei Hoshimachi', 123456, '963852741'),
+(12, 'Suisei Hoshimachi', 123456, '963852741'),
+(13, 'Suisei Hoshimachi', 123456, '963852741');
 
 --
 -- Indexes for dumped tables
@@ -217,7 +197,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `order_info`
 --
 ALTER TABLE `order_info`
-  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
