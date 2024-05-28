@@ -1,91 +1,93 @@
 <?php
-    session_start();
+session_start();
+
+// Check if the user is not logged in
+if (!isset($_SESSION["userid"])) {
+    // Redirect to the login page
+    header("Location: login.php");
+    exit(); // Stop further execution
+}
+
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "delta";
+
+// Connect to the database
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Function to cancel an order
+function cancelOrder($conn, $orderID) {
+    // Sanitize and validate the input
+    $orderID = mysqli_real_escape_string($conn, $orderID);
+
+    // Update the order status to "cancelled"
+    $sql = "UPDATE order_info SET orderStatus = 'cancelled' WHERE orderID = '$orderID'";
+    if ($conn->query($sql) === TRUE) {
+        // Success
+    } else {
+        // Error
+    }
+}
+
+// Check if form is submitted for updating order status
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['orderID']) && isset($_POST['currentStatus'])) {
+    $orderID = $_POST['orderID'];
+    $currentStatus = $_POST['currentStatus'];
     
-    // Check if the user is not logged in
-    if (!isset($_SESSION["userid"])) {
-        // Redirect to the login page
-        header("Location: login.php");
-        exit(); // Stop further execution
+    // Determine the next status
+    $nextStatus = '';
+    if ($currentStatus == 'processing') {
+        $nextStatus = 'shipping';
+    } elseif ($currentStatus == 'shipping') {
+        $nextStatus = 'delivered';
+    } elseif ($currentStatus == 'cancelled') {
+        $nextStatus = 'processing';
     }
 
-    // Database connection details
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "delta";
-
-    // Connect to the database
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Function to cancel an order
-    function cancelOrder($conn, $orderID) {
-        // Sanitize and validate the input
-        $orderID = mysqli_real_escape_string($conn, $orderID);
-
-        // Update the order status to "cancelled"
-        $sql = "UPDATE order_info SET orderStatus = 'cancelled' WHERE orderID = '$orderID'";
-        if ($conn->query($sql) === TRUE) {
-        } else {
-        }
-    }
-
-    // Check if form is submitted for updating order status
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['orderID']) && isset($_POST['currentStatus'])) {
-        $orderID = $_POST['orderID'];
-        $currentStatus = $_POST['currentStatus'];
-        
-        // Determine the next status
-        $nextStatus = '';
-        if ($currentStatus == 'processing') {
-            $nextStatus = 'shipping';
-        } elseif ($currentStatus == 'shipping') {
-            $nextStatus = 'delivered';
-        } elseif ($currentStatus == 'cancelled') {
-            $nextStatus = 'processing';
-        }
-
-        if ($nextStatus) {
-            // SQL query to update the order status
-            $updateSql = "UPDATE order_info SET orderstatus = ? WHERE orderID = ?";
-            $stmt = mysqli_prepare($conn, $updateSql);
-            mysqli_stmt_bind_param($stmt, 'si', $nextStatus, $orderID);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-        }
-    }
-
-    // Check if form is submitted for canceling orders
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['orderID']) && isset($_POST['newStatus']) && $_POST['newStatus'] == 'cancelled') {
-        $orderID = $_POST['orderID'];
-        $newStatus = $_POST['newStatus'];
-        
-        // SQL query to update the order status to 'cancelled'
+    if ($nextStatus) {
+        // SQL query to update the order status
         $updateSql = "UPDATE order_info SET orderstatus = ? WHERE orderID = ?";
         $stmt = mysqli_prepare($conn, $updateSql);
-        mysqli_stmt_bind_param($stmt, 'si', $newStatus, $orderID);
+        mysqli_stmt_bind_param($stmt, 'si', $nextStatus, $orderID);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
+}
 
-    // Retrieve the user ID from the session
-    $userId = isset($_SESSION["userid"]) ? $_SESSION["userid"] : null;
+// Check if form is submitted for canceling orders
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['orderID']) && isset($_POST['newStatus']) && $_POST['newStatus'] == 'cancelled') {
+    $orderID = $_POST['orderID'];
+    $newStatus = $_POST['newStatus'];
+    
+    // SQL query to update the order status to 'cancelled'
+    $updateSql = "UPDATE order_info SET orderstatus = ? WHERE orderID = ?";
+    $stmt = mysqli_prepare($conn, $updateSql);
+    mysqli_stmt_bind_param($stmt, 'si', $newStatus, $orderID);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
 
-    // Query to fetch orders and their items for the user
-    $sql = "SELECT oi.orderID, oi.orderDate, oi.orderTotal, oi.orderStatus, oi.accountID,
-                    GROUP_CONCAT(CONCAT(items.itemName, ' ', oit.itemAmount, 'x') SEPARATOR ' | ') AS itemDetails
-            FROM order_info oi
-            JOIN order_items oit ON oi.orderID = oit.orderID
-            JOIN items ON oit.itemID = items.itemID
-            WHERE oi.accountID = $userId
-            GROUP BY oi.orderID";
+// Retrieve the user ID from the session
+$userId = isset($_SESSION["userid"]) ? $_SESSION["userid"] : null;
 
-    // Execute the query
-    $result = $conn->query($sql);
+// Query to fetch orders and their items for the user
+$sql = "SELECT oi.orderID, oi.orderDate, oi.orderAddress, oi.orderTotal, oi.orderStatus, oi.accountID,
+                GROUP_CONCAT(CONCAT(it.itemName, ' - ', oit.itemAmount, 'x - ', oit.totalPrice) SEPARATOR '|') AS itemDetails
+        FROM order_info oi
+        JOIN order_items oit ON oi.orderID = oit.orderID
+        JOIN items it ON oit.itemID = it.itemID
+        WHERE oi.accountID = $userId
+        GROUP BY oi.orderID";
+
+// Execute the query
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -95,7 +97,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Supplies Online</title>
-    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="orders.css">
 </head>
 <body>
     <header class="header">
@@ -124,11 +126,12 @@
 
     <div class="contents">
         <div class="table-wrapper">
-            <table>
+            <table class="outer-table">
                 <thead>
                     <tr>
                         <th>Order ID</th>
                         <th>Order Date</th>
+                        <th>Order Address</th>
                         <th>Item Details</th>
                         <th>Order Total</th>
                         <th colspan='2'>Order Status</th>
@@ -143,8 +146,35 @@
                                 echo "<tr>
                                     <td>{$row['orderID']}</td>
                                     <td>{$row['orderDate']}</td>
-                                    <td>{$row['itemDetails']}</td>
-                                    <td>{$row['orderTotal']}</td>
+                                    <td>{$row['orderAddress']}</td>
+                                    <td>
+                                        <div class='itemslist-table'>
+                                            <table class='inner-table'>
+                                            <thead>
+                                                <tr>
+                                                    <th>Item Name</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>";
+                                            
+                                            // Split the itemDetails into an array
+                                            $items = explode('|', $row['itemDetails']);
+                                            foreach ($items as $item) {
+                                                list($itemName, $itemQuantity, $itemPrice) = explode(' - ', $item);
+                                                echo "<tr>
+                                                    <td>$itemName</td>
+                                                    <td>$itemQuantity</td>
+                                                    <td>PHP ".number_format($itemPrice, 2)."</td>
+                                                </tr>";
+                                            }
+                                            
+                                            echo "</tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                    <td>PHP ".number_format($row['orderTotal'], 2)."</td>
                                     <td>{$row['orderStatus']}</td>
                                     <td>";
 
@@ -159,7 +189,7 @@
                                 </tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='6'>No orders found for this user.</td></tr>";
+                            echo "<tr><td colspan='7'>No orders found for this user.</td></tr>";
                         }
                         // Close the database connection
                         $conn->close();

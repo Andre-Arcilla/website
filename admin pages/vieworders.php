@@ -66,6 +66,23 @@
 <head>
     <title>Admin Page</title>
     <style>
+        /* Apply custom scrollbar styles to all scrollbars */
+        *::-webkit-scrollbar {
+            width: 10px; /* Set the width of the scrollbar */
+        }
+
+        *::-webkit-scrollbar-track {
+            background-color: #f1f1f1; /* Set the color of the scrollbar track */
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: #888; /* Set the color of the scrollbar thumb */
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+            background-color: #555; /* Set the color of the scrollbar thumb on hover */
+        }
+
         body {
             background-color: hsl(180, 12%, 45%);
             margin-top: 5vh;
@@ -105,6 +122,14 @@
 
         th {
             position: sticky;
+            z-index: 2;
+            top: 0; /* Stick the header row to the top of the viewport */
+            background-color: deepskyblue  /* Optional: Change background color to distinguish from table body */
+        }
+
+        .itemslist-table th {
+            position: sticky;
+            z-index: 1;
             top: 0; /* Stick the header row to the top of the viewport */
             background-color: deepskyblue  /* Optional: Change background color to distinguish from table body */
         }
@@ -136,6 +161,32 @@
             height: 100%; /* Make buttons take up full height of their container */
         }
 
+        .itemslist-table {
+            max-height: 120px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .itemslist-table table {
+            border: 1px solid #333;
+            width: 101%;
+        }
+
+        .itemslist-table::-webkit-scrollbar {
+            width: 10px; /* Set the width of the scrollbar */
+        }
+
+        .itemslist-table::-webkit-scrollbar-track {
+            background-color: #f1f1f1; /* Set the color of the scrollbar track */
+        }
+
+        .itemslist-table::-webkit-scrollbar-thumb {
+            background-color: #888; /* Set the color of the scrollbar thumb */
+        }
+
+        .itemslist-table::-webkit-scrollbar-thumb:hover {
+            background-color: #555; /* Set the color of the scrollbar thumb on hover */
+        }
     </style>
 </head>
 <body>
@@ -148,12 +199,12 @@
                 <th>CANCEL ORDERS</th>
                 <th>Order ID</th>
                 <th>Customer Name</th>
-                <th>Customer Address</th>
                 <th>Customer Email</th>
                 <th>Customer Phone Number</th>
+                <th>Order Address</th>
                 <th>Order Date</th>
-                <th>Order Total</th>
                 <th>Item Details</th>
+                <th>Order Total</th>
                 <th>Order GCash</th>
                 <th>Order Status</th>
                 <th>Action</th>
@@ -164,12 +215,12 @@
                 // SQL query to retrieve order information along with customer and item details, grouped by orderID
                 $sql = "SELECT order_info.orderID, 
                     accounts.name AS customerName, 
-                    accounts.address AS customerAddress, 
                     accounts.emailaddress AS customerEmail, 
                     accounts.phonenumber AS customerPhoneNumber, 
+                    order_info.orderAddress, 
                     order_info.orderDate, 
-                    order_info.orderTotal, 
-                    GROUP_CONCAT(CONCAT(items.itemName, ' ', order_items.itemAmount, 'x') SEPARATOR '<br>') AS itemDetails,
+                    order_info.orderTotal,
+                    GROUP_CONCAT(CONCAT(items.itemName, ' - ', order_items.itemAmount, 'x - ', order_items.totalPrice) SEPARATOR '|') AS itemDetails,
                     order_info.orderstatus,
                     GROUP_CONCAT(CONCAT(payments.gcashName, '<br><br>GCASH NUM: ', payments.gcashNumber, '<br><br>REF NUM: ', payments.gcashReferenceNum) SEPARATOR '|') AS gcashInfo
                 FROM order_info 
@@ -193,11 +244,21 @@
                         $itemDetails = explode('|', $row['itemDetails']);
                         
                         // Start the list
-                        $itemList = "<ul>";
+                        $itemList = "<table>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>";
                         foreach ($itemDetails as $item) {
-                            $itemList .= "<li>$item</li>";
+                            list($itemName, $itemQuantity, $itemPrice) = explode(' - ', $item);
+                            $itemList .= "<tr>";
+                            $itemList .= "<td>$itemName</td>";
+                            $itemList .= "<td>$itemQuantity</td>";
+                            $itemList .= "<td>$itemPrice</td>";
+                            $itemList .= "</tr>";
                         }
-                        $itemList .= "</ul>";
+                        $itemList .= "</table>";
 
                         // Split the gcash info into an array
                         $gcashInfo = explode('|', $row['gcashInfo']);
@@ -231,12 +292,16 @@
                             echo "</td>
                             <td>{$row['orderID']}</td>
                             <td>{$row['customerName']}</td>
-                            <td>{$row['customerAddress']}</td>
                             <td>{$row['customerEmail']}</td>
                             <td>{$row['customerPhoneNumber']}</td>
+                            <td>{$row['orderAddress']}</td>
                             <td>{$row['orderDate']}</td>
+                            <td>
+                                <div class='itemslist-table'>
+                                    $itemList
+                                </div>
+                            </td>
                             <td>{$row['orderTotal']}</td>
-                            <td>$itemList</td>
                             <td>$gcash</td>
                             <td>{$row['orderstatus']}</td>
                             <td>

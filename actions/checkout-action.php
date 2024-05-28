@@ -21,6 +21,9 @@ if (isset($_POST["checkout"])) {
     $gcashName = $_POST["gcashName"];
     $gcashNumber = $_POST["gcashNumber"];
     $gcashReferenceNum = $_POST["gcashReferenceNum"];
+    $address = $_POST["address"];
+    $total = $_POST["total"];
+
 
     // Get customer information from the accounts table based on session
     $userID = $_SESSION['userid']; // Assuming you have stored the user's ID in the session
@@ -30,9 +33,8 @@ if (isset($_POST["checkout"])) {
 
     // Insert order information into order_info table
     $orderDate = date("Y-m-d");
-    $orderTotal = 0; // Initialize order total
-    $insertOrderQuery = "INSERT INTO order_info (accountID, orderDate, orderTotal) 
-                        VALUES ('$userID', '$orderDate', '$orderTotal')";
+    $insertOrderQuery = "INSERT INTO order_info (accountID, orderAddress, orderDate, orderTotal) 
+                        VALUES ('$userID', '$address', '$orderDate', '$total')";
     if ($conn->query($insertOrderQuery) === TRUE) {
         $orderID = $conn->insert_id; // Get the last inserted orderID
         foreach ($_SESSION["cart"] as $itemID => $quantity) {
@@ -41,7 +43,6 @@ if (isset($_POST["checkout"])) {
             $itemPriceResult = $conn->query($itemPriceQuery);
             $itemPrice = $itemPriceResult->fetch_assoc()['itemPrice'];
             $totalPrice = $itemPrice * $quantity;
-            $orderTotal += $totalPrice;
 
             // Insert item into order_items table
             $insertItemQuery = "INSERT INTO order_items (orderID, itemID, itemAmount, totalPrice) 
@@ -56,10 +57,6 @@ if (isset($_POST["checkout"])) {
             $updateSoldAmountQuery = "UPDATE items SET soldAmount = soldAmount + '$quantity' WHERE itemID = '$itemID'";
             $conn->query($updateSoldAmountQuery);
         }
-
-        // Update order total in order_info table
-        $updateOrderTotalQuery = "UPDATE order_info SET orderTotal = '$orderTotal' WHERE orderID = '$orderID'";
-        $conn->query($updateOrderTotalQuery);
 
         // Insert payment details into payments table
         $insertPaymentQuery = "INSERT INTO payments (orderID, gcashName, gcashNumber, gcashReferenceNum) 

@@ -1,7 +1,25 @@
+/* General Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* Apply custom scrollbar styles to all scrollbars */
+*::-webkit-scrollbar {
+    width: 10px; /* Set the width of the scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Set the color of the scrollbar track */
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #888; /* Set the color of the scrollbar thumb */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Set the color of the scrollbar thumb on hover */
 }
 
 body {
@@ -28,7 +46,7 @@ body {
 }
 
 .header {
-    background-color: #333;
+    background-color: #4d4c4c;
     color: white;
     padding: 1rem 0;
     width: 100%;
@@ -76,122 +94,20 @@ body {
     margin-top: 7.8vh;
     padding: 2rem 0;
     text-align: center;
-    justify-content: space-around;
+    justify-content: center;
     background-color: #499399c2;
     min-height: 85vh;
     align-items: flex-start;
 }
 
-
-.contents .form-box {
-    background-color: aliceblue;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    padding: 50px;
-    border-radius: 50px;
-}
-
-.contents .qr-box {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    gap: 5rem;
-}
-
-.contents .qr-code {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.contents .qr {
-    width: 250px;
-}
-
-.contents .payment-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 300px;
-}
-
-.payment-info label {
-
-    display: flex;
-    flex-direction: column;
-}
-
-.payment-info input[type="text"] {
-    height: 35px; /* Change the height to 35px */
-    padding: 8px; /* Change the padding to 8px */
-    border: 2px solid #999; /* Change the border to 2px solid with a different color */
-    border-radius: 10px; /* Change the border radius to 10px */
-    font-size: 16px; /* Change the font size to 14px */
-}
-
-.product-grid {
-    display: grid;
-    justify-items: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin-right: 25vw;
-}
-
-.product {
-    display: flex;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 50px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin: 1rem;
-    padding: 1rem;
-    text-align: center;
-    width: 250px;
-    height: 450px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.cart-box {
-    background-color: white;
-    border-radius: 50px 0 0 50px;
-    padding: 25px;
-    margin: 1rem;
-    position: fixed;
-    top: 50%;
-    right: 2rem;
-    transform: translateY(-50%);
-    width: 300px;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    max-height: 600px;
-    overflow: hidden; /* Ensure the overall box doesn't scroll */
-}
-
-.cart-items {
-    max-height: 400px; /* Adjust this height as needed */
-    overflow-y: auto;  /* This makes the list scrollable */
-}
-
-ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.cart-box li {
-    text-align: left;
-    margin-left: 60px;
-}
-
 .table-wrapper {
-    border-radius: 25px;
-    overflow: hidden; /* Ensure overflow is hidden to round the corners properly */
-    margin: 0.5rem 2rem;
     width: 80vw;
+}
+
+.table-wrapper .outer-table thead {
+    position: sticky;
+    z-index: 2;
+    top: 4.8rem; /* Stick the header row to the top of the viewport */
 }
 
 .table-wrapper table {
@@ -224,13 +140,36 @@ ul {
 }
 
 .itemslist-table {
-    padding-left: 20px !important;
-    text-align: left !important; 
+    max-height: 120px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
+.itemslist-table .inner-table thead {
+    position: sticky;
+    z-index: 1;
+    border-top: 0;
+    top: 0; /* Stick the header row to the top of the viewport */
+}
 
-.product img {
-    width: 200px;
+.itemslist-table .inner-table table {
+    border: 10px solid #333;
+    border-top: 0;
+    width: 101%;
+}
+
+.itemslist-table .inner-table th,
+.itemslist-table .inner-table td {
+    padding: 1px;
+    text-align: center;
+}
+
+.itemslist-table .inner-table th {
+    background-color: #333;
+}
+
+th, td {
+    border: 1px solid black; /* Set border for cells */
 }
 
 button {

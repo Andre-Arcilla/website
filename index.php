@@ -73,8 +73,7 @@
     <div class="hero">
         <div class="hero-container">
             <img src="images/DCT no bg.png" alt="Hero Image">
-            <h1>Find the Best Medical Supplies</h1>
-            <b>Your one-stop shop for quality medical supplies.</b>
+            <h3>Your one-stop shop for quality medical supplies.</h3>
             <?php
                 if (isset($_GET["success"]) && $_GET["success"] == 1) {
                     echo "<hr><p class='success-message'>Order placed successfully!</p>";
@@ -109,8 +108,8 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-nav">
-                <a href="#">Home</a>
-                <a href="#">Store</a>
+                Contact Number: <a>0976-525-4721</a>
+                Email Address: <a>delta.trading@gmail.com</a>
             </div>
             <img class="easter-egg" src="images\arisbm.gif">
         </div>

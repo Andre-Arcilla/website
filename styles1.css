@@ -28,7 +28,7 @@ body {
 
 .container {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     margin: 0 0 0 2vw;
 
@@ -227,6 +227,10 @@ footer a {
 .footer-section {
     display: inline-block;
     margin: 0 2rem;
+}
+
+.footer-nav{
+    margin-bottom: 0.5rem;
 }
 
 .footer-section h3 {

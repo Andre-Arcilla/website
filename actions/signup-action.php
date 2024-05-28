@@ -25,17 +25,15 @@
                 }
 
                 // Get POST data and sanitize it
-                $username = $_POST['username'];
+                $username = $_POST['Fname'].' '.$_POST['Lname'];
                 $phone = $_POST['phone'];
                 $email = $_POST['email1'];
                 $password = $_POST['password1'];
-                $address = $_POST['address'];
 
                 // Validate and sanitize inputs
                 $username = htmlspecialchars(strip_tags($username));
                 $phone = htmlspecialchars(strip_tags($phone));
                 $email = htmlspecialchars(strip_tags($email));
-                $address = htmlspecialchars(strip_tags($address));
 
                 // Hash the password
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
@@ -62,8 +60,8 @@
                     // Use prepared statements to prevent SQL injection
                     $stmt->close(); // Close the previous statement
 
-                    $stmt = $conn->prepare("INSERT INTO accounts (name, password, phonenumber, emailaddress, address, type) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt->bind_param("ssssss", $username, $hashed_password, $phone, $email, $address, $type);
+                    $stmt = $conn->prepare("INSERT INTO accounts (name, password, phonenumber, emailaddress, type) VALUES (?, ?, ?, ?, ?)");
+                    $stmt->bind_param("sssss", $username, $hashed_password, $phone, $email, $type);
 
                     if ($stmt->execute()) {
                         header("Location: ../index.php");

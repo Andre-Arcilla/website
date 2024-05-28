@@ -16,20 +16,32 @@
             <div class="error-message" id="match-error"></div>
 
             <div>
-                <label for="username">NAME:</label>
-                <input type="text" id="username" name="username" required>
+                <div class="name-box">
+                    <label for="username">
+                        FIRST NAME:
+                        <input type="text" name="Fname" placeholder="Rudeus" required>
+                    </label>
 
-                <label for="username">ADDRESS:</label>
-                <input type="text" id="address" name="address" required>
+                    <label for="username">
+                        LAST NAME:
+                        <input type="text" name="Lname" placeholder="Greyrat" required>
+                    </label>
+                </div>
+
+                <hr>
 
                 <label for="phone">PHONE NUMBER:</label>
-                <input type="tel" id="phone" name="phone" pattern="[0-9]{4}-?[0-9]{3}-?[0-9]{4}" placeholder="e.g., 0123-456-7890" required>
+                <input type="tel" name="phone" pattern="[0-9]{4}-?[0-9]{3}-?[0-9]{4}" placeholder="0123-456-7890" required>
+
+                <hr>
 
                 <label for="email1">EMAIL:</label>
-                <input type="email" id="email1" name="email1" required>
+                <input type="email" id="email1" name="email1" placeholder="email@email.com" required>
                 <label for="email2">CONFIRM EMAIL:</label>
-                <input type="email" id="email2" name="email2" required>
-        
+                <input type="email" id="email2" name="email2" placeholder="email@email.com" required>
+
+                <hr>
+
                 <div class="show-password">
                     <label for="password1">PASSWORD:</label>
                     <input type="password" id="password1" name="password1" required>
@@ -47,7 +59,7 @@
 
             <a href="login.php" class="login-signup">already have an account?</a>
 
-            <button type="submit"><img class="easter-egg" src="images\arisbm.gif">sign up<img class="easter-egg" src="images\arisbm.gif"></button>
+            <button type="submit">Sign up</button>
         </form>
     </div>
 

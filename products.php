@@ -72,6 +72,7 @@
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $itemPrice = $row["itemPrice"];
+                
                 // Calculate the total price for this item (price * quantity)
                 $totalPrice += $itemPrice * $quantity;
             }
@@ -153,30 +154,32 @@
             <div class="cart-summary">
                 <h2>Cart Summary</h2>
                 <?php if (isset($_SESSION["cart"]) && !empty($_SESSION["cart"])): ?>
-                    <ul>
-                        <?php foreach ($_SESSION["cart"] as $itemID => $quantity): ?>
-                            <?php
-                            // Retrieve item details from the database
-                            $sql = "SELECT itemName, itemPrice FROM items WHERE itemID = '$itemID'";
-                            $result = $conn->query($sql);
-                            if ($result->num_rows > 0) {
-                                $row = $result->fetch_assoc();
-                                $itemName = $row["itemName"];
-                                $itemPrice = $row["itemPrice"];
-                                ?>
-                                <li>
-                                    <b><?php echo $itemName; ?></b>
-                                    <br>
-                                    Quantity: <b><?php echo $quantity; ?></b>
-                                    <br>
-                                    Price: <b>PHP <?php echo $itemPrice * $quantity; ?></b>
-                                </li>
-                                <br>
+                    <div class="cart-items">
+                        <ul>
+                            <?php foreach ($_SESSION["cart"] as $itemID => $quantity): ?>
                                 <?php
-                            }
-                            ?>
-                        <?php endforeach; ?>
-                    </ul>
+                                // Retrieve item details from the database
+                                $sql = "SELECT itemName, itemPrice FROM items WHERE itemID = '$itemID'";
+                                $result = $conn->query($sql);
+                                if ($result->num_rows > 0) {
+                                    $row = $result->fetch_assoc();
+                                    $itemName = $row["itemName"];
+                                    $itemPrice = $row["itemPrice"];
+                                    ?>
+                                    <li>
+                                        <b><?php echo $itemName; ?></b>
+                                        <br>
+                                        Quantity: <b><?php echo $quantity; ?></b>
+                                        <br>
+                                        Price: <b>PHP <?php echo $itemPrice * $quantity; ?></b>
+                                    </li>
+                                    <br>
+                                    <?php
+                                }
+                                ?>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
                     <h4>Total Price: PHP <?php echo calculateTotalPrice(); ?></h4>
                     
                     <form action="checkout.php" method="post">
@@ -190,6 +193,7 @@
                 <?php endif; ?>
             </div>
         </div>
+
     </div>
 
     <footer class="footer">
