@@ -26,12 +26,12 @@ body {
     line-height: 1.6;
 }
 
+/**/
 .container {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     margin: 0 0 0 2vw;
-
 }
 
 .header {
@@ -62,8 +62,10 @@ body {
     margin-right: 1rem;
 }
 
+/**/
 .navigation {
     display: flex;
+    gap: 10px;
 }
 
 .navigation a{
@@ -73,9 +75,12 @@ body {
     margin-top: 0;
 }
 
+/**/
 .account-info {
     display: flex;
     align-items: center;
+    gap: 10px;
+    padding-right: 10px;
 }
 
 .account-info a {
@@ -134,7 +139,7 @@ hr {
     margin-top: 46vh;
     padding: 2rem 0;
     text-align: center;
-    background-color: #499399c2;
+    background-color: #6a92b8c2;
     border-radius: 100px 100px 0 0;
 }
 
@@ -269,4 +274,29 @@ a:hover {
 .easter-egg {
     display: flex;
     width: 20px;
+}
+
+.sidebar-button {
+    display: block;
+    width: 7.5rem;
+    height: 2.5rem;
+    padding: 10px;
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 10px;
+    border-bottom: 3px solid #bbb;
+    border-left: 3px solid #bbb;
+    background-color: #686868;
+    margin-top: 0 !important;
+}
+
+.sidebar-button:hover {
+    background-color: #bbb;
+    font-weight: bolder;
+    color: black;
 }

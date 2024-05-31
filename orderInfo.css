@@ -1,0 +1,299 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('images/backgrounds/bg3.jpg'), url('images/backgrounds/bg2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    background-color: #c98f8f;
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 0 2vw;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    padding: 1rem 0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-logo {
+    width: 150px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navigation {
+    display: flex;
+    gap: 10px;
+}
+
+.navigation a {
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+    margin-top: 0;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 10px;
+}
+
+.account-info a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    margin-top: 0;
+}
+
+.contents {
+    display: flex;
+    margin-top: 7.8vh;
+    padding: 2rem 0;
+    text-align: center;
+    background-color: #6a92b8c2;
+    min-height: 85vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.contents-row1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80vw;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    width: 80vw;
+    font-size: xx-large;
+    font-weight: 900;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title a {
+    color: black !important;
+}
+
+.contents .confirm-box {
+    border: 5px solid #333;
+    background-color: white;
+    padding: 25px;
+    border-radius: 25px;
+    width: 80vw;
+}
+
+.confirm-box .form-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.address-box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.contents input[type="text"]{
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.address-box label {
+    display: flex;
+    height: 2rem;
+    align-items: flex-end;
+    white-space: nowrap; /* Prevent label from wrapping */
+}
+
+.address-box .input-box {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+}
+
+.discount-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.pwd-cs-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.pwd-cs-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+
+.contents .qr-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5rem;
+    width: 100%;
+    align-items: center;
+}
+
+.contents .qr-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contents .qr {
+    width: 250px;
+}
+
+.contents .payment-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 300px;
+}
+
+.payment-info label {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-info input[type="text"] {
+    height: 35px; /* Change the height to 35px */
+    padding: 8px; /* Change the padding to 8px */
+    border: 2px solid #999; /* Change the border to 2px solid with a different color */
+    border-radius: 10px; /* Change the border radius to 10px */
+    font-size: 16px; /* Change the font size to 14px */
+}
+
+.hidden {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 8rem;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    width: 100%;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+    margin-top: 0;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.easter-egg {
+    display: flex;
+    width: 20px;
+}
+
+hr {
+    width: 100%;
+    border: 1px solid black;
+}
+
+.sidebar-button {
+    display: block;
+    width: 7.5rem;
+    height: 2.5rem;
+    padding: 10px;
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 10px;
+    border-bottom: 3px solid #bbb;
+    border-left: 3px solid #bbb;
+    background-color: #686868;
+    margin-top: 0 !important;
+}
+
+.sidebar-button:hover {
+    background-color: #bbb;
+    font-weight: bolder;
+    color: black;
+}

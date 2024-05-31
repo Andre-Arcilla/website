@@ -24,7 +24,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 2vw;
+    margin: 0 0 0 2vw;
+
 }
 
 .header {
@@ -50,6 +51,7 @@ body {
 
 .navigation {
     display: flex;
+    gap: 10px;
 }
 
 .navigation a {
@@ -62,6 +64,8 @@ body {
 .account-info {
     display: flex;
     align-items: center;
+    gap: 10px;
+    padding-right: 10px;
 }
 
 .account-info a {
@@ -146,7 +150,7 @@ body {
     border-radius: 50px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin: 1rem;
-    padding: 1rem;
+    padding: 2rem;
     text-align: center;
     width: 250px;
     height: 450px;
@@ -165,14 +169,22 @@ body {
     right: 2rem;
     transform: translateY(-50%);
     width: 300px;
+    height: 508px;
+    max-height: 508px;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    max-height: 600px;
     overflow: hidden; /* Ensure the overall box doesn't scroll */
 }
 
+.cart-summary {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .cart-items {
-    max-height: 400px; /* Adjust this height as needed */
+    max-height: 300px;
     overflow-y: auto;  /* This makes the list scrollable */
 }
 
@@ -288,4 +300,29 @@ a:hover {
 .easter-egg {
     display: flex;
     width: 20px;
+}
+
+.sidebar-button {
+    display: block;
+    width: 7.5rem;
+    height: 2.5rem;
+    padding: 10px;
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 10px;
+    border-bottom: 3px solid #bbb;
+    border-left: 3px solid #bbb;
+    background-color: #686868;
+    margin-top: 0 !important;
+}
+
+.sidebar-button:hover {
+    background-color: #bbb;
+    font-weight: bolder;
+    color: black;
 }

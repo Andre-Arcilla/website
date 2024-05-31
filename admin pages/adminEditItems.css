@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 10vh 1fr;
+    grid-template-columns: 15vw 1fr;
+}
+
+header {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #666;
+    color: white;
+    padding: 0 25px;
+    height: 10%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+header img {
+    height: 100%;
+}
+
+header .main-website a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.sidebar {
+    grid-row: 2 / -1;
+    background-color: #ccc;
+    width: 15%;
+    position: fixed;
+    top: 10vh;
+    bottom: 0vh;
+}
+
+.sidebar-button {
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: 25px;
+    color: black;
+    cursor: pointer;
+    font-weight: 500;
+    border-bottom: 1px solid #bbb;
+}
+
+.sidebar-button:hover {
+    background-color: #bbb;
+    font-weight: bolder;
+}
+
+#selected {
+    background-color: #bbb;
+    font-weight: bolder;
+}
+
+.main-content {
+    grid-column: 2 / -1;
+    grid-row: 2 / -1;
+    overflow-y: auto;
+    background-color: #729bad;
+}
+
+table {
+    margin: 0;
+    border-collapse: collapse; /* Ensure borders are collapsed into a single border */
+    width: 100%;
+    font-size: 20px;
+}
+
+th, td {
+    padding: .5vw;
+    font-size: 4vh;
+    height: 2rem;
+    width: 5rem;
+    border: 1px solid black; /* Set border for cells */
+}
+
+tr {
+    background-color: inherit; /* Reset background color */
+}
+
+tr.even {
+    background-color: lightblue;
+}
+
+tr.odd {
+    background-color: #8fcadd;
+}
+
+tr:hover {
+    background-color: #73aabb;
+}
+
+th {
+    position: sticky;
+    z-index: 2;
+    top: 0; /* Stick the header row to the top of the viewport */
+    background-color: deepskyblue; /* Optional: Change background color to distinguish from table body */
+}
+
+input[type='text'],
+input[type='number'] {
+    text-align: center;
+    height: 75%;
+    font-size: 1rem;
+    background-color: transparent;
+    border: none;
+}
+
+.text-box {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+}
+
+#hidden {
+    visibility: hidden;
+}

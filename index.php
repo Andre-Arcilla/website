@@ -51,20 +51,20 @@
             <div class="navbar">
                 <img id="header-logo" class="header-logo" src="images/DCT no bg v2.png" alt="Logo">
                 <nav class="navigation">
-                    <a href="index.php">Home</a>
-                    <a href="products.php">Store</a>
-                    <a href="orders.php">Your Orders</a>
+                    <button class="sidebar-button" onclick="location.href='index.php';">Home</button>
+                    <button class="sidebar-button" onclick="location.href='products.php';">Store</button>
+                    <button class="sidebar-button" onclick="location.href='orders.php';">Your Orders</button>
                 </nav>
             </div>
             <nav class="account-info">
                 <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
-                    <a href="admin pages/adminmain.php">Admin Page</a>
+                    <button class="sidebar-button" onclick="location.href='pages/adminmain.php';">Admin Page</button>
                 <?php endif; ?>
                 <?php if (isset($_SESSION["userid"])): ?>
-                    <a href="actions/logout-action.php">Logout</a>
+                    <button class="sidebar-button" onclick="location.href='actions/logout-action.php';">Logout</button>
                 <?php else: ?>
-                    <a href="login.php">Login</a>
-                    <a href="signup.php">Signup</a>
+                    <button class="sidebar-button" onclick="location.href='login.php';">Login</button>
+                    <button class="sidebar-button" onclick="location.href='signup.php';">Signup</button>
                 <?php endif; ?>
             </nav>
         </div>

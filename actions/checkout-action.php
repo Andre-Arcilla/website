@@ -1,28 +1,40 @@
 <?php
-session_start();
+    session_start();
 
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "delta";
+    // Database connection details
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "delta";
 
-// Connect to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
+    // Connect to the database
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-// Check if the checkout form was submitted
-if (isset($_POST["checkout"])) {
     // Get GCash details from the form
-    $gcashName = $_POST["gcashName"];
-    $gcashNumber = $_POST["gcashNumber"];
-    $gcashReferenceNum = $_POST["gcashReferenceNum"];
-    $address = $_POST["address"];
-    $total = $_POST["total"];
+    $gcashName = $_SESSION["gcashName"];
+    $gcashNumber = $_SESSION["gcashNumber"];
+    $gcashReferenceNum = $_SESSION["gcashReferenceNum"];
+    $address = $_SESSION["address"];
+    $total = $_SESSION["total"];
+    $pwdDiscount = $_SESSION["pwdID"];
+    $scDiscount = $_SESSION["scID"];
+
+    if (isset($pwdDiscount)) {
+        $pwdDiscount = "PWD ID: ".$pwdDiscount;
+    } else {
+        $pwdDiscount = "PWD ID: NO PWD";
+    }
+
+    if (isset($scDiscount)) {
+        $scDiscount = "Senior Citizen ID: ".$scDiscount;
+    } else {
+        $scDiscount = "Senior Citizen ID: NO SC";
+    }
 
 
     // Get customer information from the accounts table based on session
@@ -33,8 +45,8 @@ if (isset($_POST["checkout"])) {
 
     // Insert order information into order_info table
     $orderDate = date("Y-m-d");
-    $insertOrderQuery = "INSERT INTO order_info (accountID, orderAddress, orderDate, orderTotal) 
-                        VALUES ('$userID', '$address', '$orderDate', '$total')";
+    $insertOrderQuery = "INSERT INTO order_info (accountID, orderAddress, orderDate, orderTotal, orderPWD, orderSeniorCitizen) 
+                        VALUES ('$userID', '$address', '$orderDate', '$total', '$pwdDiscount', '$scDiscount')";
     if ($conn->query($insertOrderQuery) === TRUE) {
         $orderID = $conn->insert_id; // Get the last inserted orderID
         foreach ($_SESSION["cart"] as $itemID => $quantity) {
@@ -42,7 +54,21 @@ if (isset($_POST["checkout"])) {
             $itemPriceQuery = "SELECT itemPrice FROM items WHERE itemID = '$itemID'";
             $itemPriceResult = $conn->query($itemPriceQuery);
             $itemPrice = $itemPriceResult->fetch_assoc()['itemPrice'];
-            $totalPrice = $itemPrice * $quantity;
+
+            $discount = 0;
+            if ($quantity >= 200) {
+                $discount = 0.2;
+            } elseif ($quantity >= 100) {
+                $discount = 0.1;
+            } elseif ($quantity >= 50) {
+                $discount = 0.05;
+            } elseif ($quantity >= 25) {
+                $discount = 0.025;
+            }
+
+            $subtotal = $itemPrice * $quantity;
+            $discountprice = $subtotal * $discount;
+            $totalPrice = $subtotal - $discountprice;
 
             // Insert item into order_items table
             $insertItemQuery = "INSERT INTO order_items (orderID, itemID, itemAmount, totalPrice) 
@@ -72,5 +98,4 @@ if (isset($_POST["checkout"])) {
     } else {
         echo "Error: " . $insertOrderQuery . "<br>" . $conn->error;
     }
-}
 ?>

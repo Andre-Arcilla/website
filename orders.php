@@ -22,52 +22,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Function to cancel an order
-function cancelOrder($conn, $orderID) {
-    // Sanitize and validate the input
-    $orderID = mysqli_real_escape_string($conn, $orderID);
-
-    // Update the order status to "cancelled"
-    $sql = "UPDATE order_info SET orderStatus = 'cancelled' WHERE orderID = '$orderID'";
-    if ($conn->query($sql) === TRUE) {
-        // Success
-    } else {
-        // Error
-    }
-}
-
-// Check if form is submitted for updating order status
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['orderID']) && isset($_POST['currentStatus'])) {
-    $orderID = $_POST['orderID'];
-    $currentStatus = $_POST['currentStatus'];
-    
-    // Determine the next status
-    $nextStatus = '';
-    if ($currentStatus == 'processing') {
-        $nextStatus = 'shipping';
-    } elseif ($currentStatus == 'shipping') {
-        $nextStatus = 'delivered';
-    } elseif ($currentStatus == 'cancelled') {
-        $nextStatus = 'processing';
-    }
-
-    if ($nextStatus) {
-        // SQL query to update the order status
-        $updateSql = "UPDATE order_info SET orderstatus = ? WHERE orderID = ?";
-        $stmt = mysqli_prepare($conn, $updateSql);
-        mysqli_stmt_bind_param($stmt, 'si', $nextStatus, $orderID);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    }
-}
-
 // Check if form is submitted for canceling orders
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['orderID']) && isset($_POST['newStatus']) && $_POST['newStatus'] == 'cancelled') {
     $orderID = $_POST['orderID'];
-    $newStatus = $_POST['newStatus'];
+    $newStatus = 'cancelled';
     
     // SQL query to update the order status to 'cancelled'
-    $updateSql = "UPDATE order_info SET orderstatus = ? WHERE orderID = ?";
+    $updateSql = "UPDATE order_info SET orderStatus = ? WHERE orderID = ?";
     $stmt = mysqli_prepare($conn, $updateSql);
     mysqli_stmt_bind_param($stmt, 'si', $newStatus, $orderID);
     mysqli_stmt_execute($stmt);
@@ -103,22 +64,22 @@ $result = $conn->query($sql);
     <header class="header">
         <div class="container">
             <div class="navbar">
-                <img class="header-logo" src="images\DCT no bg v2.png">
+                <img id="header-logo" class="header-logo" src="images/DCT no bg v2.png" alt="Logo">
                 <nav class="navigation">
-                    <a href="index.php">Home</a>
-                    <a href="products.php">Store</a>
-                    <a href="orders.php">Your Orders</a>
+                    <button class="sidebar-button" onclick="location.href='index.php';">Home</button>
+                    <button class="sidebar-button" onclick="location.href='products.php';">Store</button>
+                    <button class="sidebar-button" onclick="location.href='orders.php';">Your Orders</button>
                 </nav>
             </div>
             <nav class="account-info">
                 <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
-                    <a href="admin pages/adminmain.php">Admin Page</a>
+                    <button class="sidebar-button" onclick="location.href='pages/adminmain.php';">Admin Page</button>
                 <?php endif; ?>
                 <?php if (isset($_SESSION["userid"])): ?>
-                    <a href="actions/logout-action.php">Logout</a>
+                    <button class="sidebar-button" onclick="location.href='actions/logout-action.php';">Logout</button>
                 <?php else: ?>
-                    <a href="login.php">Login</a>
-                    <a href="signup.php">Signup</a>
+                    <button class="sidebar-button" onclick="location.href='login.php';">Login</button>
+                    <button class="sidebar-button" onclick="location.href='signup.php';">Signup</button>
                 <?php endif; ?>
             </nav>
         </div>
@@ -154,7 +115,7 @@ $result = $conn->query($sql);
                                                 <tr>
                                                     <th>Item Name</th>
                                                     <th>Quantity</th>
-                                                    <th>Price</th>
+                                                    <th>Subtotal</th>
                                                 </tr>
                                             </thead>
                                             <tbody>";
@@ -178,12 +139,19 @@ $result = $conn->query($sql);
                                     <td>{$row['orderStatus']}</td>
                                     <td>";
 
-                                    if ($row['orderStatus'] != 'cancelled' && $row['orderStatus'] != 'delivered') {
-                                    echo "<form method='post' action=''>
-                                        <input type='hidden' name='orderID' value='{$row['orderID']}'>
-                                        <input type='hidden' name='newStatus' value='cancelled'>
-                                        <button type='submit'>Cancel</button>
-                                    </form>";
+                                    if ($row['orderStatus'] != 'cancelled' && $row['orderStatus'] != 'shipping' && $row['orderStatus'] != 'delivered') {
+                                    echo "
+                                        <form method='post' action=''>
+                                            <input type='hidden' name='orderID' value='{$row['orderID']}'>
+                                            <input type='hidden' name='newStatus' value='cancelled'>
+                                            <button type='submit'>Cancel</button>
+                                        </form>";
+                                    } elseif ($row['orderStatus'] == 'cancelled') {
+                                        echo "ORDER<BR>CANCELED";
+                                    } elseif ($row['orderStatus'] == 'shipping') {
+                                        echo "ORDER<BR>SHIPPING";
+                                    } elseif ($row['orderStatus'] == 'delivered') {
+                                        echo "ORDER<BR>DELIVERED";
                                     }
                                     echo "</td>
                                 </tr>";
@@ -202,10 +170,10 @@ $result = $conn->query($sql);
     <footer class="footer">
         <div class="container">
             <div class="footer-nav">
-                <a href="#">Home</a>
-                <a href="#">Store</a>
+                Contact Number: <a>0976-525-4721</a>
+                Email Address: <a>delta.trading@gmail.com</a>
             </div>
-            <img class="easter-egg" src="images\arisbm.gif">
+            <img class="easter-egg" src="images/arisbm.gif">
         </div>
     </footer>
 </body>

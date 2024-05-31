@@ -46,7 +46,7 @@
             mysqli_close($conn);
 
             // Redirect back to the previous page with success parameter
-            header("Location: edititems.php?success=1");
+            header("Location: adminEditItems.php?success=1");
             exit();
         } else {
             echo "Form fields are not set";
