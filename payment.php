@@ -15,8 +15,9 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $address = $_POST['street'].', '.$_POST['barangay'].' '.$_POST['city'].', '.$_POST['province'].', '.$_POST['postal'];
-    $total = $_POST['total'];
+    $address = $_SESSION['address'];
+    $pwdDiscount = $_SESSION['pwdDiscount'];
+    $scDiscount = $_SESSION['scDiscount'];
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +55,13 @@
     </header>
 
     <div class="contents">
-        <form class="form-box" action="actions/checkout-action.php" method="post" onsubmit="return validateForm()">
+        <div class="title">
+            <button onclick="location.href='orderTotal.php';">Previous Step</button>
+            <span>ORDER INFORMATION</span>
+            <button class="invisible"></button>
+        </div>
+
+        <form class="form-box" action="orderReceipt.php" method="post" onsubmit="return validateForm()">
             <div class="qr-box">
                 <div class="qr-code">
                     <img src="images\qrcode.png" class="qr">
@@ -81,7 +88,10 @@
             </label>
             <input type="hidden" name="address" value="<?php echo $address; ?>">
             <input type="hidden" name="total" value="<?php echo $total; ?>">
+            <input type="hidden" name="pwdDiscount" value="<?php echo $pwdDiscount; ?>">
+            <input type="hidden" name="scDiscount" value="<?php echo $scDiscount; ?>">
             <button type="submit" name="checkout">Checkout</button>
+            <?php echo $_SESSION['scDiscount']; ?>
         </form>
     </div>
 

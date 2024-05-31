@@ -134,6 +134,12 @@
             background-color: deepskyblue  /* Optional: Change background color to distinguish from table body */
         }
 
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
         a {
             color: black;
             text-decoration: none !important;
@@ -158,7 +164,8 @@
 
         button {
             flex: 1;
-            height: 100%; /* Make buttons take up full height of their container */
+            width: 6rem;
+            height: 2.5rem;
         }
 
         .itemslist-table {
@@ -169,7 +176,7 @@
 
         .itemslist-table table {
             border: 1px solid #333;
-            width: 101%;
+            width: 100%;
         }
 
         .itemslist-table::-webkit-scrollbar {
@@ -187,6 +194,15 @@
         .itemslist-table::-webkit-scrollbar-thumb:hover {
             background-color: #555; /* Set the color of the scrollbar thumb on hover */
         }
+
+        hr {
+            width: 100%;
+            border: 1px solid black;
+        }
+        
+        .item-alignment {
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -196,16 +212,14 @@
     <table>
         <thead>
             <tr>
-                <th>CANCEL ORDERS</th>
                 <th>Order ID</th>
-                <th>Customer Name</th>
-                <th>Customer Email</th>
-                <th>Customer Phone Number</th>
+                <th>Customer Info</th>
                 <th>Order Address</th>
                 <th>Order Date</th>
+                <th>Discounts Details</th>
+                <th>Order GCash</th>
                 <th>Item Details</th>
                 <th>Order Total</th>
-                <th>Order GCash</th>
                 <th>Order Status</th>
                 <th>Action</th>
             </tr>
@@ -214,15 +228,14 @@
             <?php
                 // SQL query to retrieve order information along with customer and item details, grouped by orderID
                 $sql = "SELECT order_info.orderID, 
-                    accounts.name AS customerName, 
-                    accounts.emailaddress AS customerEmail, 
-                    accounts.phonenumber AS customerPhoneNumber, 
+                    CONCAT('<b>Name:</b><br>', accounts.name, '<br><br><b>Email:</b><br>', accounts.emailaddress, '<br><br><b>Phone Number:</b><br>', accounts.phonenumber) AS customerInfo,
                     order_info.orderAddress, 
                     order_info.orderDate, 
+                    CONCAT(order_info.orderPWD, '<br><br>', order_info.orderSeniorCitizen) AS orderDiscounts,
                     order_info.orderTotal,
                     GROUP_CONCAT(CONCAT(items.itemName, ' - ', order_items.itemAmount, 'x - ', order_items.totalPrice) SEPARATOR '|') AS itemDetails,
                     order_info.orderstatus,
-                    GROUP_CONCAT(CONCAT(payments.gcashName, '<br><br>GCASH NUM: ', payments.gcashNumber, '<br><br>REF NUM: ', payments.gcashReferenceNum) SEPARATOR '|') AS gcashInfo
+                    CONCAT('<b>Account Name:</b><br>', payments.gcashName, '<br><br><b>GCASH NUM:</b><br>', payments.gcashNumber, '<br><br><b>REF NUM:</b><br>', payments.gcashReferenceNum) AS gcashInfo
                 FROM order_info 
                 INNER JOIN order_items ON order_info.orderID = order_items.orderID 
                 INNER JOIN accounts ON order_info.accountID = accounts.accountID 
@@ -248,14 +261,14 @@
                             <tr>
                                 <th>Item Name</th>
                                 <th>Quantity</th>
-                                <th>Price</th>
+                                <th>Subtotal</th>
                             </tr>";
                         foreach ($itemDetails as $item) {
                             list($itemName, $itemQuantity, $itemPrice) = explode(' - ', $item);
                             $itemList .= "<tr>";
                             $itemList .= "<td>$itemName</td>";
                             $itemList .= "<td>$itemQuantity</td>";
-                            $itemList .= "<td>$itemPrice</td>";
+                            $itemList .= "<td>".number_format($itemPrice, 2)."</td>";
                             $itemList .= "</tr>";
                         }
                         $itemList .= "</table>";
@@ -265,49 +278,37 @@
                         $orderID1 = ($row['orderID']);
                         
                         // Start the list
-                        $gcash = "<ul>";
+                        $gcash = "";
                         $orderID2 = '';
                         foreach ($gcashInfo as $item) {
                             if ($orderID1 == $orderID2) {
                                 $orderID2 = $orderID1;
                                 break;
                             }
-                            $gcash .= "<li>$item</li>";
+                            $gcash .= $item;
                             $orderID2 = $orderID1;
                         }
-                        $gcash .= "</ul>";
                         
                         // Output the table row
                         echo "<tr>
-                            <td>";
-
-                            if ($row['orderstatus'] != 'cancelled' && $row['orderstatus'] != 'delivered') {
-                            echo "<form method='post' action=''>
-                                <input type='hidden' name='orderID' value='{$row['orderID']}'>
-                                <input type='hidden' name='newStatus' value='cancelled'>
-                                <button type='submit'>Cancel</button>
-                            </form>";
-                            }
-
-                            echo "</td>
                             <td>{$row['orderID']}</td>
-                            <td>{$row['customerName']}</td>
-                            <td>{$row['customerEmail']}</td>
-                            <td>{$row['customerPhoneNumber']}</td>
-                            <td>{$row['orderAddress']}</td>
+                            <td class='item-alignment'>{$row['customerInfo']}</td>
+                            <td class='item-alignment'>{$row['orderAddress']}</td>
                             <td>{$row['orderDate']}</td>
+                            <td class='item-alignment'>$gcash</td>
+                            <td class='item-alignment'>{$row['orderDiscounts']}</td>
                             <td>
                                 <div class='itemslist-table'>
                                     $itemList
                                 </div>
                             </td>
-                            <td>{$row['orderTotal']}</td>
-                            <td>$gcash</td>
+                            <td>".number_format($row['orderTotal'], 2)."</td>
                             <td>{$row['orderstatus']}</td>
                             <td>
-                                <form method='post' action=''>
-                                    <input type='hidden' name='orderID' value='{$row['orderID']}'>
-                                    <input type='hidden' name='currentStatus' value='{$row['orderstatus']}'>";
+                                <div class='buttons'>
+                                    <form method='post' action=''>
+                                        <input type='hidden' name='orderID' value='{$row['orderID']}'>
+                                        <input type='hidden' name='currentStatus' value='{$row['orderstatus']}'>";
 
                                 switch ($row['orderstatus']) {
                                     case 'processing':
@@ -319,12 +320,20 @@
                                             <button type='submit'>Deliver Order</button>";
                                         break;
                                     default:
+                                        echo "<h4>ORDER DELIVERED</h4>";
                                         break;
-
-                        }
+                                }
                         echo "</form>";
+
+                        if ($row['orderstatus'] != 'cancelled' && $row['orderstatus'] != 'delivered') {
+                            echo "<hr><form method='post' action=''>
+                                <input type='hidden' name='orderID' value='{$row['orderID']}'>
+                                <input type='hidden' name='newStatus' value='cancelled'>
+                                <button type='submit'>Cancel Order</button>
+                            </form>";
+                            }
                     }
-                    echo "</td></tr>";
+                    echo "</div></td></tr>";
                     }
 
                 // Close database connection

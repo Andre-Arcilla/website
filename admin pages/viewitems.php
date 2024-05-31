@@ -70,7 +70,6 @@
     <a href="adminmain.php">[RETURN]</a>
 
     <table>
-
         <thead>
             <tr>
                 <th>Item ID</th>

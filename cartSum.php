@@ -31,7 +31,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Supplies Online</title>
-    <link rel="stylesheet" href="checkout.css">
+    <link rel="stylesheet" href="cartSum.css">
 </head>
 <body>
     <header class="header">
@@ -39,7 +39,7 @@
             <div class="navbar">
                 <img class="header-logo" src="images/DCT no bg v2.png">
                 <nav class="navigation">
-                    <a href="indexa.php">Home</a>
+                    <a href="index.php">Home</a>
                     <a href="products.php">Store</a>
                     <a href="orders.php">Your Orders</a>
                 </nav>
@@ -59,10 +59,11 @@
     </header>
 
     <div class="contents">
-        <div class="contents-row1">
+        <form action="orderInfo.php" method="post" class="contents-row1">
             <div class="title">
-                <button onclick="location.href='products.php';">Back to Store</button>
-                <span>CART SUMMARY</span>
+                <button onclick="location.href='products.php';">Previous Step</button>
+                <span>Order Summary</span>
+                <button type="submit" name="submit">Next Step</button>
             </div>
         
             <div class="table-wrapper">
@@ -73,6 +74,8 @@
                             <th>Item Name</th>
                             <th>Item Amount</th>
                             <th>Price per Item</th>
+                            <th>Discount</th>
+                            <th>Discount Price</th>
                             <th>Subtotal</th>
                         </tr>
                     </thead>
@@ -92,9 +95,21 @@
                                     $row = $result->fetch_assoc();
                                     $itemName = $row["itemName"];
                                     $itemPrice = $row["itemPrice"];
-                                    $subtotal = number_format($itemPrice * $quantity, 2);
+
+                                    $discount = 0;
+                                    if ($quantity >= 150) {
+                                        $discount = 0.15;
+                                    } elseif ($quantity >= 100) {
+                                        $discount = 0.1;
+                                    } elseif ($quantity >= 50) {
+                                        $discount = 0.05;
+                                    }
+
+                                    $subtotal = $itemPrice * $quantity;
+                                    $discountprice = $subtotal*$discount;
+                                    $subtotal = $subtotal - $discountprice;
                                     $total = $subtotal + $total;
-                                
+
                                     echo "<tr>
                                             <td>
                                                 <form method='post'>
@@ -105,62 +120,42 @@
                                             <td>$itemName</td>
                                             <td>$quantity</td>
                                             <td>PHP " . number_format($itemPrice, 2) . "</td>
+                                            <td>" . ($discount*100) . "%</td>
+                                            <td>PHP " . number_format($discountprice, 2) . "</td>
                                             <td>PHP " . number_format($subtotal, 2) . "</td>
                                         </tr>";
                                 }
                                 $stmt->close();
                             }
                         } else {
-                            echo "<tr><td colspan='5'>Your cart is empty</td></tr>";
+                            echo "<tr><td colspan='7'>Your cart is empty</td></tr><tr>";
                         }
-                        ?>
 
-                        <tr>
-                            <?php echo "<th colspan='5' class='total-row'>Total: PHP ".number_format($total, 2)."</th>"; ?>
+                            echo
+                            "<th colspan='6' class='total-row'>
+                                <div class='row-info'>
+                                    <div class='checkbox'>
+                                        <label>
+                                            <input type='checkbox' name='pwd-checkbox' id='pwd-checkbox'>
+                                            PWD DISCOUNT
+                                        </label>
+                                        <label>
+                                            <input type='checkbox' name='sc-checkbox' id='sc-checkbox'>
+                                            SENIOR CITIZEN DISCOUNT 
+                                        </label>
+                                    </div>
+                                    <p>5% off for 50+ quantity  |  10% off for 100+ quantity  |  15% off for 150+ quantity</p>
+                                </div>
+                            </th>
+                            <th class='total-row'>
+                                <p>Total: PHP ".number_format($total, 2)."</p>
+                            </th>";
+                            ?>
                         </tr>
                     </tbody>
                 </table>
 
-            
             </div>
-        </div>
-
-        <div class="confirm-box">
-            <form action="payment.php" method="post" onsubmit="return validateForm()">
-                <div class="address-box">
-                    <div class="input-box">
-                        <label>STREET ADDRESS: </label>
-                        <input type="text" name="street" placeholder="456 Sunset Boulevard" required>
-                    </div>
-
-                    <div class="input-box">
-                        <label>BARANGAY: </label>
-                        <input type="text" name="barangay" placeholder="Barangay Sunshine" required>
-
-                        
-                        <label>CITY: </label>
-                        <input type="text" name="city" placeholder="Manila" required>
-                    </div>
-
-                    <div class="input-box">
-                        <label>PROVINCE: </label>
-                        <input type="text" name="province" placeholder="Metro Manila" required>
-
-                        <label>POSTAL CODE: </label>
-                        <input type="text" name="postal" placeholder="1008" required>
-                    </div>
-                </div>
-
-                <div class="consent-box">
-                    <input type="checkbox" name="refund_agreement" id="refund_agreement">
-                    <label for="refund_agreement">
-                        I understand that Delta Chemical Trading is not obligated to issue a refund for a canceled order.
-                    </label>
-                    <br>
-                    <input type="hidden" name="total" value="<?php echo $total; ?>">
-                    <button type="submit" name="submit">Submit</button>
-                </div>
-            </form>
         </div>
     </div>
 

@@ -76,22 +76,40 @@ body {
     margin-top: 7.8vh;
     padding: 2rem 0;
     text-align: center;
-    justify-content: space-around;
-    background-color: #499399c2;
+    justify-content: flex-start;
+    background-color: #6a92b8c2;
     min-height: 85vh;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    width: 80vw;
+    font-size: xx-large;
+    font-weight: 900;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title a {
+    color: black !important;
 }
 
 
 .contents .form-box {
-    background-color: aliceblue;
+    border: 5px solid #333;
+    background-color: white;
+    padding: 25px;
+    border-radius: 25px;
+    width: 80vw;
+    height: 65vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
-    justify-content: center;
-    margin: auto;
-    padding: 50px;
-    border-radius: 50px;
 }
 
 .contents .qr-box {
@@ -132,15 +150,19 @@ body {
     font-size: 16px; /* Change the font size to 14px */
 }
 
+.invisible {
+    visibility: hidden;
+}
+
 button {
     background-color: #333;
     color: white;
     border: none;
     border-radius: 5px;
     padding: 0.5rem 1rem;
-    margin-top: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 8rem;
 }
 
 button:hover {
