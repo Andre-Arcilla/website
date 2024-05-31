@@ -93,7 +93,9 @@
 <body>
     <header>
         <img src="..\images\DCT no bg v3.png">
-        <div class="main-website"><a href="#">back to main website</a></div>
+        <div class="main-website">
+            <button class="index-button" onclick="location.href='../index.php';">back to main website</button>
+        </div>
     </header>
     <div class="sidebar">
         <button class="sidebar-button" id="hidden">aaaa</button>

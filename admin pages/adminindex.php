@@ -9,17 +9,16 @@
 <body>
     <header>
         <img src="..\images\DCT no bg v3.png">
-        <div class="main-website"><a href="#">back to main website</a></div>
+        <div class="main-website">
+            <button class="index-button" onclick="location.href='../index.php';">back to main website</button>
+        </div>
     </header>
     <div class="sidebar">
         <button class="sidebar-button" id="hidden">aaaa</button>
-        <button class="sidebar-button" onclick="location.href='';">statistics</button>
-        <button class="sidebar-button" onclick="location.href='';">view items</button>
-        <button class="sidebar-button" onclick="location.href='';">edit items</button>
-        <button class="sidebar-button" onclick="location.href='';">view orders</button>
-    </div>
-    <div class="main-content">
-        <!-- Main content goes here -->
+        <button class="sidebar-button" onclick="location.href='adminStatistics.php';">statistics</button>
+        <button class="sidebar-button" onclick="location.href='adminViewItems.php';">view items</button>
+        <button class="sidebar-button" onclick="location.href='adminEditItems.php';">edit items</button>
+        <button class="sidebar-button" onclick="location.href='adminViewOrders.php';">view orders</button>
     </div>
 </body>
 </html>

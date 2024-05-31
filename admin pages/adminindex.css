@@ -11,7 +11,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #666;
+    background-color: #333;
     color: white;
     padding: 0 25px;
     height: 10%;
@@ -20,6 +20,31 @@ header {
     left: 0;
     right: 0;
     z-index: 1000;
+}
+
+.index-button {
+    display: block;
+    width: 15rem;
+    height: 3rem;
+    padding: 10px;
+    border: none;
+    background: none;
+    text-align: center;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 10px;
+    border-bottom: 3px solid #bbb;
+    border-left: 3px solid #bbb;
+    background-color: #686868;
+    margin-top: 0 !important;
+}
+
+.index-button:hover {
+    background-color: #bbb;
+    font-weight: bolder;
+    color: black;
 }
 
 header img {
@@ -35,7 +60,7 @@ header .main-website a {
 .sidebar {
     grid-row: 2 / -1;
     background-color: #ccc;
-    width: 15%;
+    width: 100%;
     position: fixed;
     top: 10vh;
     bottom: 0vh;
@@ -64,13 +89,6 @@ header .main-website a {
 #selected {
     background-color: #bbb;
     font-weight: bolder;
-}
-
-.main-content {
-    grid-column: 2 / -1;
-    grid-row: 2 / -1;
-    overflow-y: auto;
-    background-color: #729bad;
 }
 
 #hidden {
