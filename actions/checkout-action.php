@@ -15,6 +15,9 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
+    // Disable foreign key checks
+    $conn->query('SET FOREIGN_KEY_CHECKS=0');
+
     // Get GCash details from the form
     $gcashName = $_SESSION["gcashName"];
     $gcashNumber = $_SESSION["gcashNumber"];
@@ -91,6 +94,9 @@
 
         // Clear the session's cart
         unset($_SESSION["cart"]);
+
+        // Enable foreign key checks
+        $conn->query('SET FOREIGN_KEY_CHECKS=1');
 
         // Redirect to success page
         header("Location: ../index.php?success=1");

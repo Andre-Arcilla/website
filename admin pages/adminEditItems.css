@@ -105,7 +105,15 @@ table {
     font-size: 20px;
 }
 
-th, td {
+th {
+    padding: .5vw;
+    font-size: 4vh;
+    height: 2rem;
+    width: 5rem;
+    border: 1px solid black; /* Set border for cells */
+}
+
+td {
     padding: .5vw;
     font-size: 4vh;
     height: 2rem;
@@ -145,8 +153,16 @@ input[type='number'] {
     border: none;
 }
 
+#new_item_id,
+#new_item_name,
+#new_item_price,
+#new_item_stock {
+    background-color: white;
+}
+
 .text-box {
     height: 100%;
+    width: 147px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
