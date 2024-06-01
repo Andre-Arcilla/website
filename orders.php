@@ -38,14 +38,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['orderID']) && isset($_
 // Retrieve the user ID from the session
 $userId = isset($_SESSION["userid"]) ? $_SESSION["userid"] : null;
 
-// Query to fetch orders and their items for the user
-$sql = "SELECT oi.orderID, oi.orderDate, oi.orderAddress, oi.orderTotal, oi.orderStatus, oi.accountID,
-                GROUP_CONCAT(CONCAT(it.itemName, ' - ', oit.itemAmount, 'x - ', oit.totalPrice) SEPARATOR '|') AS itemDetails
-        FROM order_info oi
-        JOIN order_items oit ON oi.orderID = oit.orderID
-        JOIN items it ON oit.itemID = it.itemID
-        WHERE oi.accountID = $userId
-        GROUP BY oi.orderID";
+// SQL query to retrieve order information along with customer and item details, grouped by orderID
+$sql = "SELECT order_info.orderID, 
+    CONCAT('<b>Name:</b><br>', accounts.name, '<br><br><b>Email:</b><br>', accounts.emailaddress, '<br><br><b>Phone Number:</b><br>', accounts.phonenumber) AS customerInfo,
+    order_info.orderAddress, 
+    order_info.orderDate, 
+    CONCAT(order_info.orderPWD, '<br><br>', order_info.orderSeniorCitizen) AS orderDiscounts,
+    order_info.orderTotal,
+    GROUP_CONCAT(CONCAT(items.itemName, ' - ', order_items.itemAmount, 'x - ', order_items.totalPrice) SEPARATOR '|') AS itemDetails,
+    order_info.orderstatus,
+    CONCAT('<b>Account Name:</b><br>', payments.gcashName, '<br><br><b>GCASH NUM:</b><br>', payments.gcashNumber, '<br><br><b>REF NUM:</b><br>', payments.gcashReferenceNum) AS gcashInfo
+FROM order_info 
+INNER JOIN order_items ON order_info.orderID = order_items.orderID 
+INNER JOIN accounts ON order_info.accountID = accounts.accountID 
+INNER JOIN items ON order_items.itemID = items.itemID 
+LEFT JOIN payments ON order_info.orderID = payments.orderID
+GROUP BY order_info.orderID 
+ORDER BY order_info.orderID ASC;";
 
 // Execute the query
 $result = $conn->query($sql);
@@ -59,6 +68,26 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Supplies Online</title>
     <link rel="stylesheet" href="orders.css">
+    <script src="html2canvas.min.js"></script>
+    <script>
+        function saveRowAsImage(rowId) {
+            var rowElement = document.getElementById(rowId);
+
+            html2canvas(rowElement).then(function(canvas) {
+                var imgData = canvas.toDataURL('image/png');
+
+                // Create a link element
+                var link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'order_receipt.png';
+
+                // Simulate a click on the link to trigger the download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+    </script>
 </head>
 <body>
     <header class="header">
@@ -89,13 +118,16 @@ $result = $conn->query($sql);
         <div class="table-wrapper">
             <table class="outer-table">
                 <thead>
-                    <tr>
+                    <tr id="header-row">
                         <th>Order ID</th>
                         <th>Order Date</th>
                         <th>Order Address</th>
+                        <th>Order GCash</th>
+                        <th>Discounts Details</th>
                         <th>Item Details</th>
                         <th>Order Total</th>
                         <th colspan='2'>Order Status</th>
+                        <th>Print Receipt</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,10 +136,32 @@ $result = $conn->query($sql);
                         if ($result->num_rows > 0) {
                             // Output data of each row
                             while($row = $result->fetch_assoc()) {
-                                echo "<tr>
+
+                                // Split the gcash info into an array
+                                $gcashInfo = explode('|', $row['gcashInfo']);
+                                $orderID1 = ($row['orderID']);
+                                
+                                // Start the list
+                                $gcash = "";
+                                $orderID2 = '';
+                                foreach ($gcashInfo as $item) {
+                                    if ($orderID1 == $orderID2) {
+                                        $orderID2 = $orderID1;
+                                        break;
+                                    }
+                                    $gcash .= $item;
+                                    $orderID2 = $orderID1;
+                                }
+
+                                // Assign a unique ID to each row
+                                $rowId = "row-{$row['orderID']}";
+
+                                echo "<tr id='$rowId'>
                                     <td>{$row['orderID']}</td>
                                     <td>{$row['orderDate']}</td>
                                     <td>{$row['orderAddress']}</td>
+                                    <td>$gcash</td>
+                                    <td class='item-alignment'>{$row['orderDiscounts']}</td>
                                     <td>
                                         <div class='itemslist-table'>
                                             <table class='inner-table'>
@@ -136,28 +190,31 @@ $result = $conn->query($sql);
                                         </div>
                                     </td>
                                     <td>PHP ".number_format($row['orderTotal'], 2)."</td>
-                                    <td>{$row['orderStatus']}</td>
+                                    <td>{$row['orderstatus']}</td>
                                     <td>";
 
-                                    if ($row['orderStatus'] != 'cancelled' && $row['orderStatus'] != 'shipping' && $row['orderStatus'] != 'delivered') {
+                                    if ($row['orderstatus'] != 'cancelled' && $row['orderstatus'] != 'shipping' && $row['orderstatus'] != 'delivered') {
                                     echo "
                                         <form method='post' action=''>
                                             <input type='hidden' name='orderID' value='{$row['orderID']}'>
                                             <input type='hidden' name='newStatus' value='cancelled'>
                                             <button type='submit'>Cancel</button>
                                         </form>";
-                                    } elseif ($row['orderStatus'] == 'cancelled') {
+                                    } elseif ($row['orderstatus'] == 'cancelled') {
                                         echo "ORDER<BR>CANCELED";
-                                    } elseif ($row['orderStatus'] == 'shipping') {
+                                    } elseif ($row['orderstatus'] == 'shipping') {
                                         echo "ORDER<BR>SHIPPING";
-                                    } elseif ($row['orderStatus'] == 'delivered') {
+                                    } elseif ($row['orderstatus'] == 'delivered') {
                                         echo "ORDER<BR>DELIVERED";
                                     }
                                     echo "</td>
-                                </tr>";
+                                    <td>
+                                        <button onclick=\"saveDivAsImage('$rowId')\">Print Receipt</button>
+                                    </td>
+                                </tr>";                                
                             }
                         } else {
-                            echo "<tr><td colspan='7'>No orders found for this user.</td></tr>";
+                            echo "<tr><td colspan='10'>No orders found for this user.</td></tr>";
                         }
                         // Close the database connection
                         $conn->close();
@@ -176,5 +233,32 @@ $result = $conn->query($sql);
             <img class="easter-egg" src="images/arisbm.gif">
         </div>
     </footer>
+
+    <script src="html2canvas.min.js"></script>
+
+    <script>
+        function saveDivAsImage(divId) {
+            var divElement = document.getElementById(divId);
+            document.querySelector('.itemslist-table').style.maxHeight = '100rem';
+
+            // Capture the image
+            html2canvas(divElement).then(function(canvas) {
+                var imgData = canvas.toDataURL('image/png');
+
+                // Create a link element
+                var link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'download.png';
+
+                // Simulate a click on the link to trigger the download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Set max-height back to 15rem after capturing the image
+                document.querySelector('.itemslist-table').style.maxHeight = '15rem';
+            });
+        }
+    </script>
 </body>
 </html>

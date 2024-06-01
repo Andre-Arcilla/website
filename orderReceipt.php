@@ -109,11 +109,11 @@
             <div class="title">
                 <button onclick="location.href='orderInfo.php';">Previous Step</button>
                 <span>Order Receipt</span>
-                <button onclick="location.href='actions/checkout-action.php';">Next Step</button>
+                <button onclick="location.href='actions/checkout-action.php';">CHECKOUT</button>
             </div>
         
             <div class="table-wrapper">
-                <table class="itemslist-table">
+                <table class="itemslist-table" id="receipt">
                     <thead>
                         <tr>
                             <th>Item Name</th>
@@ -242,7 +242,8 @@
                         ?>
                     </tbody>
                 </table>
-
+                <br>
+            <button onclick="saveDivAsImage('receipt')">Print Receipt</button>
             </div>
         </div>
     </div>
@@ -257,6 +258,8 @@
         </div>
     </footer>
 
+    <script src="html2canvas.min.js"></script>
+
     <script>
         function validateForm() {
             var refund_agreement = document.getElementById("refund_agreement").checked;
@@ -268,6 +271,24 @@
             // Additional validations or form submission logic can be added here
             
             return true; // Allow form submission
+        }
+        
+        function saveDivAsImage(divId) {
+            var divElement = document.getElementById(divId);
+
+            html2canvas(divElement).then(function(canvas) {
+                var imgData = canvas.toDataURL('image/png');
+
+                // Create a link element
+                var link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'download.png';
+
+                // Simulate a click on the link to trigger the download
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
         }
     </script>
 </body>

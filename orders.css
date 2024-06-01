@@ -143,7 +143,7 @@ body {
 }
 
 .itemslist-table {
-    max-height: 120px;
+    max-height: 15rem;
     overflow-y: auto;
     overflow-x: hidden;
 }

@@ -112,8 +112,8 @@
                     <th>Customer Info</th>
                     <th>Order Address</th>
                     <th>Order Date</th>
-                    <th>Discounts Details</th>
                     <th>Order GCash</th>
+                    <th>Discounts Details</th>
                     <th>Item Details</th>
                     <th>Order Total</th>
                     <th>Order Status</th>
