@@ -92,7 +92,7 @@
             </div>
             <nav class="account-info">
                 <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
-                    <button class="sidebar-button" onclick="location.href='pages/adminmain.php';">Admin Page</button>
+                    <button class="sidebar-button" onclick="location.href='admin pages/adminIndex.php';">Admin Page</button>
                 <?php endif; ?>
                 <?php if (isset($_SESSION["userid"])): ?>
                     <button class="sidebar-button" onclick="location.href='actions/logout-action.php';">Logout</button>

@@ -94,7 +94,7 @@ function calculateTotalPrice() {
             </div>
             <nav class="account-info">
                 <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
-                    <button class="sidebar-button" onclick="location.href='pages/adminmain.php';">Admin Page</button>
+                    <button class="sidebar-button" onclick="location.href='admin pages/adminIndex.php';">Admin Page</button>
                 <?php endif; ?>
                 <?php if (isset($_SESSION["userid"])): ?>
                     <button class="sidebar-button" onclick="location.href='actions/logout-action.php';">Logout</button>
@@ -125,8 +125,8 @@ function calculateTotalPrice() {
                         <img src="images/products/<?php echo $row["itemName"]; ?>.png" alt="<?php echo $row["itemName"]; ?>">
                         <div>
                             <h3><?php echo $row["itemName"]; ?></h3>
-                            <p>Price: PHP <?php echo $row["itemPrice"]; ?></p>
-                            <p>Stock: <?php echo $itemStock; ?></p>
+                            <p>Price: PHP <?php echo number_format($row["itemPrice"], 2); ?></p>
+                            <p>Stock: <?php echo number_format($itemStock); ?></p>
                             <!-- Add to cart form -->
                             <form method="post" onsubmit="updateQuantity('<?php echo $row["itemID"]; ?>')">
                                 <input type="hidden" name="item_id" value="<?php echo $row["itemID"]; ?>">
@@ -167,7 +167,7 @@ function calculateTotalPrice() {
                                     <li>
                                         <b><?php echo $itemName; ?></b>
                                         <br>
-                                        Quantity: <b><?php echo $quantity; ?></b>
+                                        Quantity: <b><?php echo number_format($quantity); ?></b>
                                         <br>
                                         Price: <b>PHP <?php echo number_format(($itemPrice * $quantity), 2); ?></b>
                                     </li>

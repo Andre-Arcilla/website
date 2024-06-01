@@ -4,6 +4,23 @@
     box-sizing: border-box;
 }
 
+/* Apply custom scrollbar styles to all scrollbars */
+*::-webkit-scrollbar {
+    width: 10px; /* Set the width of the scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Set the color of the scrollbar track */
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #888; /* Set the color of the scrollbar thumb */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Set the color of the scrollbar thumb on hover */
+}
+
 body {
     background: url('images/backgrounds/bg3.jpg'), url('images/backgrounds/bg2.jpg');
     background-size: cover;

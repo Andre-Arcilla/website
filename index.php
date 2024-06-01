@@ -93,11 +93,11 @@
                     </div>
                     <div class="description">
                         <h3>
-                            <h2><?php echo $item['soldAmount']; ?> BOXES SOLD!</h2>
+                            <h2><?php echo number_format($item['soldAmount']); ?> BOXES SOLD!</h2>
                             <br>
-                            Price per box: PHP<?php echo $item['itemPrice']; ?>
+                            Price per box: PHP<?php echo number_format($item['itemPrice'], 2); ?>
                             <br>
-                            Stock: <?php echo $item['itemStock']; ?> boxes
+                            Stock: <?php echo number_format($item['itemStock']); ?> boxes
                         </h3>
                     </div>
                 </div>
