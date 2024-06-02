@@ -47,6 +47,13 @@
                     <button class="sidebar-button" onclick="location.href='orders.php';">Your Orders</button>
                 </nav>
             </div>
+
+            <?php if (isset($_SESSION["userid"])): ?>
+                <div>
+                    <b>Please enter your information, <?php echo $_SESSION["name"]; ?>.</b>
+                </div>
+            <?php endif; ?>
+
             <nav class="account-info">
                 <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
                     <button class="sidebar-button" onclick="location.href='admin pages/adminIndex.php';">Admin Page</button>

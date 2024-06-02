@@ -19,9 +19,9 @@
     $conn->query('SET FOREIGN_KEY_CHECKS=0');
 
     // Get GCash details from the form
-    $gcashName = $_SESSION["gcashName"];
-    $gcashNumber = $_SESSION["gcashNumber"];
-    $gcashReferenceNum = $_SESSION["gcashReferenceNum"];
+    $gcashName = $_POST["gcashName"];
+    $gcashNumber = $_POST["gcashNumber"];
+    $gcashReferenceNum = $_POST["gcashReferenceNum"];
     $address = $_POST['street'] . ', ' . $_POST['barangay'] . ' ' . $_POST['city'] . ', ' . $_POST['province'] . ', ' . $_POST['postal'];
     $total = $_SESSION["total"];
     $pwdDiscount = $_POST["pwdID"];
@@ -96,12 +96,15 @@
         unset($_SESSION["cart"]);
         $_SESSION['pwd-token'] = 0;
         $_SESSION['sc-token'] = 0;
+        $_SESSION['pwd-checkbox'] = "";
+        $_SESSION['sc-checkbox'] = "";
+        $_SESSION["total"] = 0;
 
         // Enable foreign key checks
         $conn->query('SET FOREIGN_KEY_CHECKS=1');
 
         // Redirect to success page
-        header("Location: ../index.php?success=1");
+        header("Location: ../orderreceipt.php?success=1&orderID=$orderID");
         exit();
     } else {
         echo "Error: " . $insertOrderQuery . "<br>" . $conn->error;

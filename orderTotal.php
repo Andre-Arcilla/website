@@ -34,6 +34,14 @@
         }
     }
 
+    if (!isset($_SESSION['pwd-checkbox'])) {
+        $_SESSION['pwd-token'] = 1;
+    }
+
+    if (!isset($_SESSION['sc-checkbox'])) {
+        $_SESSION['sc-token'] = 1;
+    }
+
     //checks if pwd
     if ($_SESSION['pwd-checkbox'] == "checked" && $_SESSION['pwd-token'] == 0) {
         $_SESSION['pwd-checkbox'] = "checked";
@@ -95,6 +103,13 @@
                     <button class="sidebar-button" onclick="location.href='orders.php';">Your Orders</button>
                 </nav>
             </div>
+
+            <?php if (isset($_SESSION["userid"])): ?>
+                <div>
+                    <b>Found everything you need, <?php echo $_SESSION["name"]; ?> ?</b>
+                </div>
+            <?php endif; ?>
+
             <nav class="account-info">
                 <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
                     <button class="sidebar-button" onclick="location.href='admin pages/adminIndex.php';">Admin Page</button>

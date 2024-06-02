@@ -128,6 +128,7 @@
                     } else {
                         // Loop through each row of the result set
                         while ($row = mysqli_fetch_assoc($result)) {
+
                             // Split the item details into an array
                             $itemDetails = explode('|', $row['itemDetails']);
                             
@@ -140,6 +141,7 @@
                                 </tr>";
                             foreach ($itemDetails as $item) {
                                 list($itemName, $itemQuantity, $itemPrice) = explode(' - ', $item);
+                                
                                 $itemList .= "<tr>";
                                 $itemList .= "<td>$itemName</td>";
                                 $itemList .= "<td>$itemQuantity</td>";

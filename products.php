@@ -28,17 +28,18 @@ if (isset($_POST["add_to_cart"])) {
     $itemID = $_POST["item_id"];
     $quantity = $_POST["quantity"];
 
-    // Ensure the quantity is greater than 0
     if ($quantity > 0) {
         // Update the quantity in the cart to match the input field value
         $_SESSION["cart"][$itemID] = $quantity;
-
-        // Redirect to prevent form resubmission on page refresh
-        header("Location: " . $_SERVER["PHP_SELF"]);
-        exit();
+    } elseif ($quantity == 0) {
+        // Remove the item from the cart
+        unset($_SESSION["cart"][$itemID]);
     }
-}
 
+    // Redirect to prevent form resubmission on page refresh
+    header("Location: " . $_SERVER["PHP_SELF"]);
+    exit();
+}
 
 // Check if the "empty_cart" button is clicked
 if (isset($_POST["empty_cart"])) {
@@ -92,6 +93,13 @@ function calculateTotalPrice() {
                     <button class="sidebar-button" onclick="location.href='orders.php';">Your Orders</button>
                 </nav>
             </div>
+
+            <?php if (isset($_SESSION["userid"])): ?>
+                <div>
+                    <b>Planning to buy some medical supplies, <?php echo $_SESSION["name"]; ?> ?</b>
+                </div>
+            <?php endif; ?>
+
             <nav class="account-info">
                 <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
                     <button class="sidebar-button" onclick="location.href='admin pages/adminIndex.php';">Admin Page</button>

@@ -1,73 +1,79 @@
 <?php
-    session_start();
+session_start();
 
-    // Database connection details
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "delta";
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "delta";
 
-    // Connect to the database
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// Connect to the database
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-    // Remove item from cart if remove button is clicked
-    if (isset($_POST["remove_item"]) && isset($_POST["itemID"])) {
-        $itemIDToRemove = $_POST["itemID"];
-        if (isset($_SESSION["cart"][$itemIDToRemove])) {
-            unset($_SESSION["cart"][$itemIDToRemove]);
-        }
-    }
+if (isset($_POST['orderID'])) {
+    $orderID = $_POST['orderID'];
+}
 
-    //checks if pwd
-    if ($_SESSION['pwd-checkbox'] == "checked" && $_SESSION['pwd-token'] == 0) {
-        $_SESSION['pwd-checkbox'] = "checked";
-        $pwd = 0.10;
-        $_SESSION['pwd-token'] = 1;
-    } elseif (isset($_POST['pwdID'])) {
-        $_SESSION['pwd-checkbox'] = "checked";
-        $pwd = 0.10;
-        $_SESSION['pwd-token'] = 1;
-    } else {
-        $_SESSION['pwd-checkbox'] = "";
-        $pwd = 0;
-        $_SESSION['pwd-token'] = 1;
-    }
+if (isset($_GET['orderID'])) {
+    $orderID = $_GET['orderID'];
+}
 
-    //checks if sc
-    if ($_SESSION['sc-checkbox'] == "checked" && $_SESSION['sc-token'] == 0) {
-        $_SESSION['sc-checkbox'] = "checked";
-        $sc = 0.10;
-        $_SESSION['sc-token'] = 1;
-    } elseif (isset($_POST['scID'])) {
-        $_SESSION['sc-checkbox'] = "checked";
-        $sc = 0.10;
-        $_SESSION['sc-token'] = 1;
-    } else {
-        $_SESSION['sc-checkbox'] = "";
-        $sc = 0;
-        $_SESSION['sc-token'] = 1;
-    }
+// SQL query to retrieve order information along with customer and item details, grouped by orderID
+$sql = "SELECT order_info.orderID, 
+        accounts.name,
+        accounts.emailaddress,
+        accounts.phonenumber,
+        order_info.orderAddress, 
+        order_info.orderDate, 
+        order_info.orderPWD,
+        order_info.orderSeniorCitizen,
+        order_info.orderTotal,
+        order_info.orderstatus,
+        payments.gcashName,
+        payments.gcashNumber,
+        payments.gcashReferenceNum
+    FROM order_info 
+    INNER JOIN order_items ON order_info.orderID = order_items.orderID 
+    INNER JOIN accounts ON order_info.accountID = accounts.accountID 
+    INNER JOIN items ON order_items.itemID = items.itemID 
+    LEFT JOIN payments ON order_info.orderID = payments.orderID
+    WHERE order_info.orderID = ?
+    GROUP BY order_info.orderID";
 
-    if (isset($_POST['pwdID'])) {
-        $_SESSION['pwdID'] = $_POST['pwdID'];
-    } else {
-        $_SESSION['pwdID'] = 'NO ID';
-    }
+// Prepare and bind
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $orderID);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    if (isset($_POST['scID'])) {
-        $_SESSION['scID'] = $_POST['scID'];
-    } else {
-        $_SESSION['scID'] = 'NO ID';
-    }
+// Fetch order details
+$orderDetails = $result->fetch_assoc();
 
-    $_SESSION['gcashName'] = $_POST['gcashName'];
-    $_SESSION['gcashNumber'] = $_POST['gcashNumber'];
-    $_SESSION['gcashReferenceNum'] = $_POST['gcashReferenceNum'];
+$stmt->close();
+
+// Retrieve items in the order
+$sql_items = "SELECT items.itemName, items.itemPrice, order_items.itemAmount, order_items.totalPrice 
+                FROM order_items 
+                INNER JOIN items ON order_items.itemID = items.itemID 
+                WHERE order_items.orderID = ?";
+$stmt_items = $conn->prepare($sql_items);
+$stmt_items->bind_param("i", $orderID);
+$stmt_items->execute();
+$result_items = $stmt_items->get_result();
+
+// Fetch all order items
+$orderItems = [];
+while ($row = $result_items->fetch_assoc()) {
+    $orderItems[] = $row;
+}
+
+$stmt_items->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -90,6 +96,18 @@
                     <button class="sidebar-button" onclick="location.href='orders.php';">Your Orders</button>
                 </nav>
             </div>
+
+
+            <?php if (isset($_GET["success"]) && $_GET["success"] == 1): ?>
+                <div>
+                    <b>Thank you for shopping, <?php echo $_SESSION["name"]; ?> !</b>
+                </div>
+            <?php elseif (isset($_SESSION["userid"])): ?>
+                <div>
+                    <b>Here's the order information, <?php echo $_SESSION["name"]; ?>.</b>
+                </div>
+            <?php endif; ?>
+
             <nav class="account-info">
                 <?php if (isset($_SESSION["usertype"]) && $_SESSION["usertype"] == 'admin'): ?>
                     <button class="sidebar-button" onclick="location.href='admin pages/adminIndex.php';">Admin Page</button>
@@ -107,9 +125,9 @@
     <div class="contents">
         <div class="contents-row1">
             <div class="title">
-                <button onclick="location.href='orderInfo.php';">Previous Step</button>
-                <span>Order Receipt</span>
-                <button onclick="location.href='actions/checkout-action.php';">CHECKOUT</button>
+                <button onclick="location.href='orderInfo.php';" class="invisible">Previous Step</button>
+                <span>Order <?php echo $orderID; ?> Receipt</span>
+                <button onclick="location.href='actions/checkout-action.php';" class="invisible">CHECKOUT</button>
             </div>
         
             <div class="table-wrapper">
@@ -128,122 +146,115 @@
                         <?php
                         $total = 0;
 
-                        if (isset($_SESSION["cart"]) && !empty($_SESSION["cart"])) {
-                            foreach ($_SESSION["cart"] as $itemID => $quantity) {
-                                // Retrieve item details from the database
-                                $sql = "SELECT itemName, itemPrice FROM items WHERE itemID = ?";
-                                $stmt = $conn->prepare($sql);
-                                $stmt->bind_param("s", $itemID);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-                                if ($result->num_rows > 0) {
-                                    $row = $result->fetch_assoc();
-                                    $itemName = $row["itemName"];
-                                    $itemPrice = $row["itemPrice"];
+                        foreach ($orderItems as $item) {
+                            $itemName = $item['itemName'];
+                            $itemAmount = $item['itemAmount'];
+                            $itemPrice = $item['itemPrice'];
+                            $subtotal = $itemPrice * $itemAmount;
 
-                                    $discount = 0;
-                                    if ($quantity >= 200) {
-                                        $discount = 0.2;
-                                    } elseif ($quantity >= 100) {
-                                        $discount = 0.1;
-                                    } elseif ($quantity >= 50) {
-                                        $discount = 0.05;
-                                    } elseif ($quantity >= 25) {
-                                        $discount = 0.025;
-                                    }
-
-                                    $subtotal = $itemPrice * $quantity;
-                                    $discountprice = $subtotal * $discount;
-                                    $subtotal = $subtotal - $discountprice;
-                                    $total = $subtotal + $total;
-
-                                    $pwdDiscount = $total * $pwd;
-                                    $scDiscount = $total * $sc;
-
-                                    $discounts = $pwdDiscount + $scDiscount;
-                                    $discountedTotal = $total - $discounts;
-
-                                    $vatTotal = $discountedTotal * 0.12;
-                                    $grandTotal = $discountedTotal + $vatTotal;
-
-                                    echo "<tr>
-                                            <td>$itemName</td>
-                                            <td>$quantity</td>
-                                            <td>PHP " . number_format($itemPrice, 2) . "</td>
-                                            <td>" . ($discount*100) . "%</td>
-                                            <td>PHP " . number_format($discountprice, 2) . "</td>
-                                            <td>PHP " . number_format($subtotal, 2) . "</td>
-                                        </tr>";
-                                }
-                                $stmt->close();
+                            $discount = 0;
+                            if ($itemAmount >= 200) {
+                                $discount = 0.2;
+                            } elseif ($itemAmount >= 100) {
+                                $discount = 0.1;
+                            } elseif ($itemAmount >= 50) {
+                                $discount = 0.05;
+                            } elseif ($itemAmount >= 25) {
+                                $discount = 0.025;
                             }
-                        } else {
-                            echo "<tr><td colspan='5'>Your cart is empty</td></tr>";
+
+                            $discountAmount = $subtotal * $discount;
+                            $discountedSubtotal = $subtotal - $discountAmount;
+                            $total = $total + $discountedSubtotal;
+
+                            echo "<tr>
+                                    <td>$itemName</td>
+                                    <td>$itemAmount</td>
+                                    <td>PHP " . number_format($itemPrice, 2) . "</td>
+                                    <td>" . ($discount * 100) . "%</td>
+                                    <td>PHP " . number_format($discountAmount, 2) . "</td>
+                                    <td>PHP " . number_format($discountedSubtotal, 2) . "</td>
+                                </tr>";
                         }
-                        
+
+                        $pwd = 0;
+                        if ($orderDetails['orderPWD'] !== "PWD ID: NO PWD") {
+                            $pwd = 0.10;
+                        }
+
+                        $sc = 0;
+                        if ($orderDetails['orderSeniorCitizen'] !== "Senior Citizen ID: NO SC") {
+                            $sc = 0.10;
+                        }
+
+                        $pwdDiscount = $total * $pwd;
+                        $scDiscount = $total * $sc;
+
+                        $discounts = $pwdDiscount + $scDiscount;
+                        $discountedTotal = $total - $discounts;
+
+                        $vatTotal = $discountedTotal * 0.12;
+                        $grandTotal = $discountedTotal + $vatTotal;
+
                         echo "<tr>
                             <td colspan='5'><h3>Total:</h3></td>
-                            <td><h3>PHP ".$total."</h3></td>
+                            <td><h3>PHP " . number_format($total, 2) . "</h3></td>
                         </tr>";
 
-                        if (isset($_POST['pwdID'])) {
-                            echo "<tr>
-                                <td colspan='5'><h3>PWD Discount (10%):</h3></td>
-                                <td><h3>-PHP ".number_format($pwdDiscount, 2)."</h3></td>
-                            </tr>";
-                        }
+                        echo "<tr>
+                            <td colspan='5'><h3>PWD Discount (10%):</h3></td>
+                            <td><h3>-PHP " . number_format($pwdDiscount, 2) . "</h3></td>
+                        </tr>";
 
-                        if (isset($_POST['scID'])) {
-                            echo "<tr>
-                                <td colspan='5'><h3>Senior Citizen Discount (10%):</h3></td>
-                                <td><h3>-PHP ".number_format($scDiscount, 2)."</h3></td>
-                            </tr>";
-                        }
-                        
+                        echo "<tr>
+                            <td colspan='5'><h3>Senior Citizen Discount (10%):</h3></td>
+                            <td><h3>-PHP " . number_format($scDiscount, 2) . "</h3></td>
+                        </tr>";
+
                         echo "<tr>
                             <td colspan='5'><h3>VAT (12%):</h3></td>
-                            <td><h3>PHP ".number_format($vatTotal, 2)."</h3></td>
+                            <td><h3>PHP " . number_format($vatTotal, 2) . "</h3></td>
                         </tr>";
-                        
+
                         echo "<tr>
                             <td colspan='5'><h3>Grand Total:</h3></td>
-                            <td><h3>PHP ".number_format($grandTotal, 2)."</h3></td>
+                            <td><h3>PHP " . number_format($grandTotal, 2) . "</h3></td>
                         </tr>";
-                        
+
                         echo "<tr>
                             <td colspan='2'><h3>Address</h3></td>
-                            <td colspan='4'><h3>".$_SESSION['address']."</h3></td>
+                            <td colspan='4'><h3>" . $orderDetails['orderAddress'] . "</h3></td>
                         </tr>";
 
                         echo "<tr>
                             <td colspan='2'><h3>PWD ID</h3></td>
-                            <td colspan='4'><h3>".$_SESSION['pwdID']."</h3></td>
+                            <td colspan='4'><h3>" . $orderDetails['orderPWD'] . "</h3></td>
                         </tr>";
-                        
+
                         echo "<tr>
                             <td colspan='2'><h3>Senior Citizen ID</h3></td>
-                            <td colspan='4'><h3>".$_SESSION['scID']."</h3></td>
+                            <td colspan='4'><h3>" . $orderDetails['orderSeniorCitizen'] . "</h3></td>
                         </tr>";
-                        
+
                         echo "<tr>
                             <td colspan='2'><h3>Gcash Name</h3></td>
-                            <td colspan='4'><h3>".$_SESSION['gcashName']."</h3></td>
+                            <td colspan='4'><h3>" . $orderDetails['gcashName'] . "</h3></td>
                         </tr>";
-                        
+
                         echo "<tr>
                             <td colspan='2'><h3>Gcash Number</h3></td>
-                            <td colspan='4'><h3>".$_SESSION['gcashNumber']."</h3></td>
+                            <td colspan='4'><h3>" . $orderDetails['gcashNumber'] . "</h3></td>
                         </tr>";
-                        
+
                         echo "<tr>
                             <td colspan='2'><h3>Gcash Reference Number</h3></td>
-                            <td colspan='4'><h3>".$_SESSION['gcashReferenceNum']."</h3></td>
+                            <td colspan='4'><h3>" . $orderDetails['gcashReferenceNum'] . "</h3></td>
                         </tr>";
                         ?>
                     </tbody>
                 </table>
                 <br>
-            <button onclick="saveDivAsImage('receipt')">Print Receipt</button>
+                <button onclick="saveDivAsImage('receipt')">Print Receipt</button>
             </div>
         </div>
     </div>
@@ -261,18 +272,6 @@
     <script src="html2canvas.min.js"></script>
 
     <script>
-        function validateForm() {
-            var refund_agreement = document.getElementById("refund_agreement").checked;
-            if (!refund_agreement) {
-                alert("Please agree to the refund policy.");
-                return false; // Prevent form submission
-            }
-            
-            // Additional validations or form submission logic can be added here
-            
-            return true; // Allow form submission
-        }
-        
         function saveDivAsImage(divId) {
             var divElement = document.getElementById(divId);
 
@@ -282,12 +281,10 @@
                 // Create a link element
                 var link = document.createElement('a');
                 link.href = imgData;
-                link.download = 'download.png';
+                link.download = 'order_<?php echo $orderID; ?>_receipt.png';
 
-                // Simulate a click on the link to trigger the download
-                document.body.appendChild(link);
+                // Trigger the download by simulating a click
                 link.click();
-                document.body.removeChild(link);
             });
         }
     </script>

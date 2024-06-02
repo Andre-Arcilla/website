@@ -234,6 +234,10 @@ a:hover {
     width: 20px;
 }
 
+.invisible {
+    visibility: hidden;
+}
+
 .sidebar-button {
     display: block;
     width: 7.5rem;

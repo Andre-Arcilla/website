@@ -36,15 +36,15 @@
                     $email = htmlspecialchars(strip_tags($email));
 
                     // Check if email exists
-                    $sql = "SELECT accountID, password, type FROM accounts WHERE emailaddress = ?";
+                    $sql = "SELECT accountID, name, password, type FROM accounts WHERE emailaddress = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("s", $email);
                     $stmt->execute();
                     $stmt->store_result();
 
                     if ($stmt->num_rows > 0) {
-                        // Email found, now fetch the hashed password
-                        $stmt->bind_result($accountID, $hashed_password_from_db, $type);
+                        // Email found, now fetch the details
+                        $stmt->bind_result($accountID, $name, $hashed_password_from_db, $type);
                         $stmt->fetch();
 
                         // Verify the hashed password
@@ -53,12 +53,13 @@
                             $_SESSION["usertype"] = $type;
                             $_SESSION["userid"] = $accountID;
                             $_SESSION["email"] = $email;
+                            $_SESSION["name"] = $name;
 
                             header("Location: ../index.php");
                             exit();
                         } else {
                             echo '<span>Incorrect password.</span><br>
-                            <button type="button" onclick="window.location.href=\'/..login.php\'">Return to Login Page</button>';
+                            <button type="button" onclick="window.location.href=\'../login.php\'">Return to Login Page</button>';
                         }
                     } else {
                         echo '<span>Email not found.</span><br>

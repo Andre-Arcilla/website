@@ -117,6 +117,7 @@ header .main-website a {
 
 table {
     margin: 0;
+    width: 100%;
     border-collapse: collapse; /* Ensure borders are collapsed into a single border */
 }
 
