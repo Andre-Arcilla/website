@@ -22,10 +22,10 @@
     $gcashName = $_SESSION["gcashName"];
     $gcashNumber = $_SESSION["gcashNumber"];
     $gcashReferenceNum = $_SESSION["gcashReferenceNum"];
-    $address = $_SESSION["address"];
+    $address = $_POST['street'] . ', ' . $_POST['barangay'] . ' ' . $_POST['city'] . ', ' . $_POST['province'] . ', ' . $_POST['postal'];
     $total = $_SESSION["total"];
-    $pwdDiscount = $_SESSION["pwdID"];
-    $scDiscount = $_SESSION["scID"];
+    $pwdDiscount = $_POST["pwdID"];
+    $scDiscount = $_POST["scID"];
 
     if (isset($pwdDiscount)) {
         $pwdDiscount = "PWD ID: ".$pwdDiscount;
@@ -94,6 +94,8 @@
 
         // Clear the session's cart
         unset($_SESSION["cart"]);
+        $_SESSION['pwd-token'] = 0;
+        $_SESSION['sc-token'] = 0;
 
         // Enable foreign key checks
         $conn->query('SET FOREIGN_KEY_CHECKS=1');

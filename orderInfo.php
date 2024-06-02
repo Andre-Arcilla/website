@@ -62,7 +62,7 @@
     </header>
 
     <div class="contents">
-        <form action="orderReceipt.php" method="post" onsubmit="return validateForm()">
+        <form action="actions/checkout-action.php" method="post" onsubmit="return validateForm()">
             <div class="title">
                 <button onclick="location.href='orderTotal.php';">Previous Step</button>
                 <span>ORDER INFORMATION</span>
