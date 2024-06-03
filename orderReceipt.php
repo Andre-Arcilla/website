@@ -253,8 +253,14 @@ $conn->close();
                         ?>
                     </tbody>
                 </table>
+
                 <br>
-                <button onclick="saveDivAsImage('receipt')">Print Receipt</button>
+
+                <form action='receiptPDF.php' method='post'>
+                    <input type='hidden' name='orderID' value='<?php echo $orderID; ?>'>
+                    <button type='submit' name='submit'>View Receipt</button>
+                </form>
+                
             </div>
         </div>
     </div>
@@ -268,25 +274,5 @@ $conn->close();
             <img class="easter-egg" src="images\arisbm.gif">
         </div>
     </footer>
-
-    <script src="html2canvas.min.js"></script>
-
-    <script>
-        function saveDivAsImage(divId) {
-            var divElement = document.getElementById(divId);
-
-            html2canvas(divElement).then(function(canvas) {
-                var imgData = canvas.toDataURL('image/png');
-
-                // Create a link element
-                var link = document.createElement('a');
-                link.href = imgData;
-                link.download = 'order_<?php echo $orderID; ?>_receipt.png';
-
-                // Trigger the download by simulating a click
-                link.click();
-            });
-        }
-    </script>
 </body>
 </html>

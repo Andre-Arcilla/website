@@ -36,10 +36,12 @@
 
     if (!isset($_SESSION['pwd-checkbox'])) {
         $_SESSION['pwd-token'] = 1;
+        $_SESSION['pwd-checkbox'] = "";
     }
 
     if (!isset($_SESSION['sc-checkbox'])) {
         $_SESSION['sc-token'] = 1;
+        $_SESSION['sc-checkbox'] = "";
     }
 
     //checks if pwd

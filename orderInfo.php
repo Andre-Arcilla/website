@@ -169,6 +169,7 @@
                             <b>I understand that Delta Chemical Trading is not obligated to issue a refund for a canceled order.</b>
                         </label>
                         <br>
+                        <br>
                         <button type="submit" name="submit">Submit</button>
                     </div>
                 </div>
