@@ -93,6 +93,7 @@
         <h2>Best Sellers</h2>
         <div class="product-grid">
             <?php foreach ($topItems as $item): ?>
+
                 <div class="product" onclick="toggleProduct(this, 0)">
                     <div>
                         <img src="images/products/<?php echo $item['itemName']; ?>.png" alt="Product">
@@ -126,6 +127,8 @@
     <img id="hidden-gif" src="images\arisbm.gif">
 
     <script>
+
+        //event listener for the item box
         document.addEventListener("DOMContentLoaded", function() {
             const products = document.querySelectorAll(".product");
 
@@ -151,6 +154,8 @@
             });
         });
 
+
+        //hidden shit, forget about it
         document.addEventListener('DOMContentLoaded', (event) => {
             const logo = document.getElementById('header-logo');
             const hiddenGif = document.getElementById('hidden-gif');

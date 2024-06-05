@@ -30,7 +30,7 @@
         // SQL query to update the order status to 'cancelled'
         $updateSql = "UPDATE order_info SET orderStatus = ? WHERE orderID = ?";
         $stmt = mysqli_prepare($conn, $updateSql);
-        mysqli_stmt_bind_param($stmt, 'si', $newStatus, $orderID);
+        mysqli_stmt_bind_param($stmt, 'ii', $newStatus, $orderID);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
     }
@@ -72,26 +72,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Supplies Online</title>
     <link rel="stylesheet" href="orders.css">
-    <script src="html2canvas.min.js"></script>
-    <script>
-        function saveRowAsImage(rowId) {
-            var rowElement = document.getElementById(rowId);
-
-            html2canvas(rowElement).then(function(canvas) {
-                var imgData = canvas.toDataURL('image/png');
-
-                // Create a link element
-                var link = document.createElement('a');
-                link.href = imgData;
-                link.download = 'order_receipt.png';
-
-                // Simulate a click on the link to trigger the download
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-        }
-    </script>
 </head>
 <body>
     <header class="header">
@@ -146,10 +126,11 @@
                         if ($result->num_rows > 0) {
                             // Output data of each row
                             while($row = $result->fetch_assoc()) {
+                                
+                                $orderID1 = ($row['orderID']);
 
                                 // Split the gcash info into an array
                                 $gcashInfo = explode('|', $row['gcashInfo']);
-                                $orderID1 = ($row['orderID']);
                                 
                                 // Start the list
                                 $gcash = "";
@@ -163,10 +144,8 @@
                                     $orderID2 = $orderID1;
                                 }
 
-                                // Assign a unique ID to each row
-                                $rowId = "row-{$row['orderID']}";
 
-                                echo "<tr id='$rowId'>
+                                echo "<tr>
                                     <td>{$row['orderID']}</td>
                                     <td>{$row['orderDate']}</td>
                                     <td>{$row['orderAddress']}</td>

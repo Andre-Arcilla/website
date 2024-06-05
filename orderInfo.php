@@ -14,14 +14,6 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
-    // Remove item from cart if remove button is clicked
-    if (isset($_POST["remove_item"]) && isset($_POST["itemID"])) {
-        $itemIDToRemove = $_POST["itemID"];
-        if (isset($_SESSION["cart"][$itemIDToRemove])) {
-            unset($_SESSION["cart"][$itemIDToRemove]);
-        }
-    }
     
     $_SESSION['pwd-token'] = 0;
     $_SESSION['sc-token'] = 0;
@@ -135,6 +127,8 @@
                     <br>
                     <hr>
                     <br>';}
+                    
+                    $conn->close();
                     ?>
 
                     <h1>PAYMENT INFORMATION</h1>
@@ -202,7 +196,3 @@
     </script>
 </body>
 </html>
-
-<?php
-    $conn->close();
-?>

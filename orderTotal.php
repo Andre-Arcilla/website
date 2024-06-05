@@ -1,6 +1,13 @@
 <?php
     session_start();
 
+    // Check if the user is not logged in
+    if (!isset($_SESSION["userid"])) {
+        // Redirect to the login page
+        header("Location: login.php");
+        exit(); // Stop further execution
+    }
+
     // Database connection details
     $servername = "localhost";
     $username = "root";
@@ -74,11 +81,6 @@
         $_SESSION['sc-token'] = 1;
     }
 
-    // Sets the address taken from orderInfo.php into a session item
-    if (isset($_POST['street'])) {
-        $_SESSION['address'] = $_POST['street'] . ', ' . $_POST['barangay'] . ' ' . $_POST['city'] . ', ' . $_POST['province'] . ', ' . $_POST['postal'];
-    }
-
     $pwdDiscount = 0;
     $scDiscount = 0;
     $vatTotal = 0;
@@ -140,7 +142,7 @@
                         <tr>
                             <th colspan='7'>
                                 <div class='total-row'>
-                                <b>2.5% off for 25+ units</b>
+                                <b>2.5% off for 25+ </b>
                                 <b>|</b>
                                 <b>5% off for 50+ units</b>
                                 <b>|</b>
@@ -190,18 +192,25 @@
                                     }
 
                                     $subtotal = $itemPrice * $quantity;
+
                                     $discountprice = $subtotal * $discount;
+
                                     $subtotal = $subtotal - $discountprice;
+
                                     $total = $subtotal + $total;
 
                                     $pwdDiscount = $total * $pwd;
+
                                     $scDiscount = $total * $sc;
 
                                     $discounts = $pwdDiscount + $scDiscount;
+
                                     $discountedTotal = $total - $discounts;
 
                                     $vatTotal = $discountedTotal * 0.12;
+
                                     $grandTotal = $discountedTotal + $vatTotal;
+
                                     $_SESSION['total'] = $grandTotal;
 
                                     echo "<tr>
@@ -308,6 +317,8 @@
                                 </h3>
                             </td>
                         </tr>";
+                        
+                        $conn->close();
                         ?>
                     </tbody>
                 </table>
@@ -326,15 +337,6 @@
     </footer>
 
     <script>
-        function validateForm() {
-            var refund_agreement = document.getElementById("refund_agreement").checked;
-            if (!refund_agreement) {
-                alert("Please agree to the refund policy.");
-                return false; // Prevent form submission
-            }
-            return true; // Allow form submission
-        }
-
         document.getElementById('pwd-checkbox').addEventListener('change', function(event) {
             document.getElementById('discount-form').submit(); // Submit the form
         });
@@ -345,7 +347,3 @@
     </script>
 </body>
 </html>
-
-<?php
-    $conn->close();
-?>

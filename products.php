@@ -158,7 +158,7 @@ function calculateTotalPrice() {
         <div class="cart-box">
             <!-- Cart summary -->
             <div class="cart-summary">
-                <h2>Cart Summary:</h2>
+                <h2>Mario Kart:</h2>
                 <?php if (isset($_SESSION["cart"]) && !empty($_SESSION["cart"])): ?>
                     <div class="cart-items">
                         <ul>
