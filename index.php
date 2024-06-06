@@ -58,7 +58,7 @@
             </div>
             
             <?php if (isset($_SESSION["userid"])): ?>
-                <div>
+                <div class="message">
                     <b>Hello <?php echo $_SESSION["name"]; ?> !</b>
                 </div>
             <?php endif; ?>

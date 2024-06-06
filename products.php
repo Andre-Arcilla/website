@@ -95,7 +95,7 @@ function calculateTotalPrice() {
             </div>
 
             <?php if (isset($_SESSION["userid"])): ?>
-                <div>
+                <div class="message">
                     <b>Planning to buy some medical supplies, <?php echo $_SESSION["name"]; ?> ?</b>
                 </div>
             <?php endif; ?>
@@ -158,7 +158,7 @@ function calculateTotalPrice() {
         <div class="cart-box">
             <!-- Cart summary -->
             <div class="cart-summary">
-                <h2>Mario Kart:</h2>
+                <h2>Shopping Cart:</h2>
                 <?php if (isset($_SESSION["cart"]) && !empty($_SESSION["cart"])): ?>
                     <div class="cart-items">
                         <ul>
@@ -189,10 +189,10 @@ function calculateTotalPrice() {
                     <div>
                         <h4>Total Price: PHP <?php echo number_format(calculateTotalPrice(), 2); ?></h4>
                         <form action="orderTotal.php" method="post">
-                            <button type="submit" name="checkout">Checkout</button>
+                            <button type="submit" name="checkout" class="button2">Checkout</button>
                         </form>
                         <form method="post">
-                            <button type="submit" name="empty_cart">Empty Cart</button>
+                            <button type="submit" name="empty_cart" class="button2">Empty Cart</button>
                         </form>
                     </div>
                 <?php else: ?>

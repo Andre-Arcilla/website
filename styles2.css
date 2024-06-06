@@ -6,7 +6,7 @@
 
 /* Apply custom scrollbar styles to all scrollbars */
 *::-webkit-scrollbar {
-    width: 10px; /* Set the width of the scrollbar */
+    width: 1vw;
 }
 
 *::-webkit-scrollbar-track {
@@ -31,25 +31,19 @@ body {
     line-height: 1.6;
 }
 
-.bg-mask {
-    background-color: #499399c2;
-    margin-top: -15px;
-    height: 115vh;
-}
-
 .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0 0 0 2vw;
-
 }
 
 .header {
     background-color: #333;
     color: white;
-    padding: 1rem 0;
+    padding: 2vh;
     width: 100%;
+    height: 10vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -57,18 +51,22 @@ body {
 }
 
 .header-logo {
-    width: 150px;
+    width: 10vw;
 }
 
 .navbar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 1vw;
 }
 
 .navigation {
     display: flex;
-    gap: 10px;
+    gap: 1vw;
+}
+
+.message {
+    font-size: 2vh;
 }
 
 .navigation a {
@@ -81,8 +79,8 @@ body {
 .account-info {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding-right: 10px;
+    gap: 1vw;
+    padding-right: 1vw;
 }
 
 .account-info a {
@@ -94,70 +92,22 @@ body {
 
 .contents {
     display: flex;
-    margin-top: 7.8vh;
-    padding: 2rem 0;
+    padding: 10vh 0;
     text-align: center;
-    justify-content: space-around;
-    background-color: #499399c2;
-    min-height: 85vh;
+    background-color: #6a92b8c2;
+    min-height: 100vh;
     align-items: flex-start;
-}
-
-
-.contents .form-box {
-    background-color: aliceblue;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    padding: 50px;
-    border-radius: 50px;
-}
-
-.contents .qr-box {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    gap: 5rem;
-}
-
-.contents .qr-code {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.contents .qr {
-    width: 250px;
-}
-
-.contents .payment-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 300px;
-}
-
-.payment-info label {
-
-    display: flex;
-    flex-direction: column;
-}
-
-.payment-info input[type="text"] {
-    height: 35px; /* Change the height to 35px */
-    padding: 8px; /* Change the padding to 8px */
-    border: 2px solid #999; /* Change the border to 2px solid with a different color */
-    border-radius: 10px; /* Change the border radius to 10px */
-    font-size: 16px; /* Change the font size to 14px */
+    justify-content: flex-start;
 }
 
 .product-grid {
-    display: grid;
+    display: flex;
+    width: 80vw;
+    margin: 2vw;
     justify-items: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin-right: 25vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .product {
@@ -178,19 +128,19 @@ body {
 
 .cart-box {
     background-color: white;
-    border-radius: 50px 0 0 50px;
-    padding: 25px;
-    margin: 1rem;
+    border-radius: 3vh 0 0 3vh;
+    padding: 2vh;
+    margin: 1vh;
     position: fixed;
-    top: 50%;
-    right: 2rem;
+    font-size: 2vh;
+    top: 54%;
+    right: 2vw;
     transform: translateY(-50%);
-    width: 300px;
-    height: 508px;
-    max-height: 508px;
+    width: 15vw;
+    height: 70vh;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow: hidden; /* Ensure the overall box doesn't scroll */
+    overflow: hidden;
 }
 
 .cart-summary {
@@ -201,8 +151,8 @@ body {
 }
 
 .cart-items {
-    max-height: 300px;
-    overflow-y: auto;  /* This makes the list scrollable */
+    max-height: 60%;
+    overflow-y: auto;
 }
 
 ul {
@@ -213,7 +163,7 @@ ul {
 
 .cart-box li {
     text-align: left;
-    margin-left: 60px;
+    margin-left: 4vh;
 }
 
 .table-wrapper {
@@ -273,6 +223,20 @@ button {
     transition: background-color 0.3s;
 }
 
+.button2 {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 2vh;
+    padding: 0;
+    margin-top: 1vh;
+    font-size: 1vw;
+    cursor: pointer;
+    width: 7vw;
+    height: 5vh;
+    transition: background-color 0.3s;
+}
+
 button:hover {
     background-color: #555;
 }
@@ -280,15 +244,17 @@ button:hover {
 footer {
     background-color: #333;
     color: white;
-    padding: 1rem 0;
+    padding: 2vh 0;
     text-align: center;
     width: 100%;
+    height: 7vh;
+    font-size: 2vh;
 }
 
 footer a {
     color: white;
     text-decoration: none;
-    margin-right: 1rem;
+    margin-right: 1vw;
     margin-top: 0;
 }
 
@@ -316,24 +282,24 @@ a:hover {
 
 .easter-egg {
     display: flex;
-    width: 20px;
+    width: 1vw;
 }
 
 .sidebar-button {
     display: block;
-    width: 7.5rem;
-    height: 2.5rem;
-    padding: 10px;
+    width: 8vw;
+    height: 5vh;
+    padding: 1vh;
     border: none;
     background: none;
     text-align: center;
-    font-size: 15px;
+    font-size: 1vw;
     color: rgb(255, 255, 255);
     cursor: pointer;
     font-weight: 500;
-    border-radius: 10px;
-    border-bottom: 3px solid #bbb;
-    border-left: 3px solid #bbb;
+    border-radius: 2vh;
+    border-bottom: 0.5vh solid #bbb;
+    border-left: 0.5vh solid #bbb;
     background-color: #686868;
     margin-top: 0 !important;
 }

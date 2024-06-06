@@ -99,11 +99,11 @@ $conn->close();
 
 
             <?php if (isset($_GET["success"]) && $_GET["success"] == 1): ?>
-                <div>
+                <div class="message">
                     <b>Thank you for shopping, <?php echo $_SESSION["name"]; ?> !</b>
                 </div>
             <?php elseif (isset($_SESSION["userid"])): ?>
-                <div>
+                <div class="message">
                     <b>Here's the order information, <?php echo $_SESSION["name"]; ?>.</b>
                 </div>
             <?php endif; ?>

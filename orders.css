@@ -48,8 +48,9 @@ body {
 .header {
     background-color: #333;
     color: white;
-    padding: 1rem 0;
+    padding: 2vh;
     width: 100%;
+    height: 10vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -57,18 +58,22 @@ body {
 }
 
 .header-logo {
-    width: 150px;
+    width: 10vw;
 }
 
 .navbar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 1vw;
 }
 
 .navigation {
     display: flex;
-    gap: 10px;
+    gap: 1vw;
+}
+
+.message {
+    font-size: 2vh;
 }
 
 .navigation a {
@@ -81,8 +86,8 @@ body {
 .account-info {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding-right: 10px;
+    gap: 1vw;
+    padding-right: 1vw;
 }
 
 .account-info a {
@@ -98,7 +103,7 @@ body {
     padding: 2rem 0;
     text-align: center;
     justify-content: center;
-    background-color: #499399c2;
+    background-color: #6a92b8c2;
     min-height: 85vh;
     align-items: flex-start;
 }
@@ -110,7 +115,7 @@ body {
 .table-wrapper .outer-table thead {
     position: sticky;
     z-index: 2;
-    top: 4.8rem; /* Stick the header row to the top of the viewport */
+    top: 10vh;
 }
 
 .table-wrapper table {
@@ -193,15 +198,17 @@ button:hover {
 footer {
     background-color: #333;
     color: white;
-    padding: 1rem 0;
+    padding: 2vh 0;
     text-align: center;
     width: 100%;
+    height: 7vh;
+    font-size: 2vh;
 }
 
 footer a {
     color: white;
     text-decoration: none;
-    margin-right: 1rem;
+    margin-right: 1vw;
     margin-top: 0;
 }
 
@@ -229,24 +236,24 @@ a:hover {
 
 .easter-egg {
     display: flex;
-    width: 20px;
+    width: 1vw;
 }
 
 .sidebar-button {
     display: block;
-    width: 7.5rem;
-    height: 2.5rem;
-    padding: 10px;
+    width: 8vw;
+    height: 5vh;
+    padding: 1vh;
     border: none;
     background: none;
     text-align: center;
-    font-size: 15px;
+    font-size: 1vw;
     color: rgb(255, 255, 255);
     cursor: pointer;
     font-weight: 500;
-    border-radius: 10px;
-    border-bottom: 3px solid #bbb;
-    border-left: 3px solid #bbb;
+    border-radius: 2vh;
+    border-bottom: 0.5vh solid #bbb;
+    border-left: 0.5vh solid #bbb;
     background-color: #686868;
     margin-top: 0 !important;
 }

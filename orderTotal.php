@@ -109,7 +109,7 @@
             </div>
 
             <?php if (isset($_SESSION["userid"])): ?>
-                <div>
+                <div class="message">
                     <b>Found everything you need, <?php echo $_SESSION["name"]; ?> ?</b>
                 </div>
             <?php endif; ?>

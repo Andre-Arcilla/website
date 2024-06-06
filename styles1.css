@@ -7,7 +7,7 @@
 
 /* Apply custom scrollbar styles to all scrollbars */
 *::-webkit-scrollbar {
-    width: 10px; /* Set the width of the scrollbar */
+    width: 1vw;
 }
 
 *::-webkit-scrollbar-track {
@@ -62,48 +62,55 @@ body {
     z-index: 1000; /* Ensure it stays above other elements */
 }
 
+.header {
+    background-color: #333;
+    color: white;
+    padding: 2vh;
+    width: 100%;
+    height: 10vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
 
 .header-logo {
-    width: 150px; /* Adjust the width as needed */
-    cursor: wait;
+    width: 10vw;
 }
 
 .navbar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 1vw;
 }
 
-.logo {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-}
-
-/**/
 .navigation {
     display: flex;
-    gap: 10px;
+    gap: 1vw;
 }
 
-.navigation a{
+.message {
+    font-size: 2vh;
+}
+
+.navigation a {
     color: white;
     text-decoration: none;
     margin-right: 1rem;
     margin-top: 0;
 }
 
-/**/
 .account-info {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding-right: 10px;
+    gap: 1vw;
+    padding-right: 1vw;
 }
 
 .account-info a {
     color: white;
     text-decoration: none;
-    margin-right: 1rem;
+    margin-left: 1rem;
     margin-top: 0;
 }
 
@@ -130,8 +137,9 @@ hr {
     background-color: rgba(255, 255, 255, 0.623);
     width: 35vw;
     margin: auto;
-    padding: 20px;
-    border-radius: 75px;
+    padding: 2vh;
+    font-size: 2vh;
+    border-radius: 10vh;
 }
 
 .hero-container img {
@@ -157,7 +165,7 @@ hr {
     padding: 2rem 0;
     text-align: center;
     background-color: #6a92b8c2;
-    border-radius: 100px 100px 0 0;
+    border-radius: 5vw 5vw 0 0;
 }
 
 .product-grid {
@@ -235,42 +243,18 @@ button:hover {
 footer {
     background-color: #333;
     color: white;
-    padding: 1rem 0 0 0;
+    padding: 2vh 0;
     text-align: center;
+    width: 100%;
+    height: 7vh;
+    font-size: 2vh;
 }
 
 footer a {
     color: white;
     text-decoration: none;
-    margin-right: 1rem;
+    margin-right: 1vw;
     margin-top: 0;
-}
-
-.footer-section {
-    display: inline-block;
-    margin: 0 2rem;
-}
-
-.footer-nav{
-    margin-bottom: 0.5rem;
-}
-
-.footer-section h3 {
-    margin-bottom: 1rem;
-}
-
-.footer-section ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-section ul li a {
-    color: white;
-    text-decoration: none;
 }
 
 .shopping-cart {
@@ -290,24 +274,24 @@ a:hover {
 
 .easter-egg {
     display: flex;
-    width: 20px;
+    width: 1vw;
 }
 
 .sidebar-button {
     display: block;
-    width: 7.5rem;
-    height: 2.5rem;
-    padding: 10px;
+    width: 8vw;
+    height: 5vh;
+    padding: 1vh;
     border: none;
     background: none;
     text-align: center;
-    font-size: 15px;
+    font-size: 1vw;
     color: rgb(255, 255, 255);
     cursor: pointer;
     font-weight: 500;
-    border-radius: 10px;
-    border-bottom: 3px solid #bbb;
-    border-left: 3px solid #bbb;
+    border-radius: 2vh;
+    border-bottom: 0.5vh solid #bbb;
+    border-left: 0.5vh solid #bbb;
     background-color: #686868;
     margin-top: 0 !important;
 }

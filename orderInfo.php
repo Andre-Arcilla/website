@@ -41,7 +41,7 @@
             </div>
 
             <?php if (isset($_SESSION["userid"])): ?>
-                <div>
+                <div class="message">
                     <b>Please enter your information, <?php echo $_SESSION["name"]; ?>.</b>
                 </div>
             <?php endif; ?>
