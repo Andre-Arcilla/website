@@ -44,14 +44,14 @@
 
                 <div class="show-password">
                     <label for="password1">PASSWORD:</label>
-                    <input type="password" id="password1" name="password1" required>
+                    <input type="password" pattern="(?=.*\d).{8,}" title="Password must be at least 8 characters long and contain at least one digit." id="password1" name="password1" required>
                     <input type="checkbox" id="show-password1" onclick="togglePassword('password1')">
                     <label for="show-password1">show password</label>
                 </div>
         
                 <div class="show-password">
                     <label for="password2">CONFIRM PASSWORD:</label>
-                    <input type="password" id="password2" name="password2" required>
+                    <input type="password" pattern="(?=.*\d).{8,}" title="Password must be at least 8 characters long and contain at least one digit." id="password2" name="password2" required>
                     <input type="checkbox" id="show-password2" onclick="togglePassword('password2')">
                     <label for="show-password2">show password</label>
                 </div>
